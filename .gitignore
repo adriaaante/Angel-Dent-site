@@ -1,0 +1,9 @@
+# Generated single-file preview (built from index.html via /tmp/build_preview.py)
+preview.html
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
