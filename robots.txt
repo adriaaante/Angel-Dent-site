@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /legal.html
+Allow: /doctors/
+Allow: /services/
+
+# Технические страницы — для индексации не требуются
+Disallow: /404.html
+
+Sitemap: https://angel-denta.ru/sitemap.xml
+Host: angel-denta.ru
