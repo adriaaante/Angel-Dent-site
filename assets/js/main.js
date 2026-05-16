@@ -69,11 +69,13 @@
     });
   }
 
-  // Highlight active nav link
+  // Highlight active nav link (compare resolved pathnames so relative hrefs work)
   var path = location.pathname.replace(/\/+$/, '') || '/';
   document.querySelectorAll('[data-nav] a').forEach(function (a) {
-    var href = a.getAttribute('href').replace(/\/+$/, '') || '/';
-    if (href === path) a.classList.add('is-active');
+    try {
+      var linkPath = new URL(a.href).pathname.replace(/\/+$/, '') || '/';
+      if (linkPath === path) a.classList.add('is-active');
+    } catch (e) {}
   });
 
   // Smooth-scroll for in-page anchors only
