@@ -73,7 +73,7 @@ p { margin: 0 0 1em; }
 .header__inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; gap: 20px; }
 .logo { display: flex; align-items: center; gap: 10px; color: var(--c-text); font-weight: 700; font-size: 19px; letter-spacing: -.01em; }
 .logo:hover { color: var(--c-text); }
-.logo__mark { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--c-primary) 0%, var(--c-primary-light) 100%); display: grid; place-items: center; color: #fff; }
+.logo__mark { width: 42px; height: 42px; border-radius: 10px; background: #0f1f3a; display: grid; place-items: center; color: #c8dcf4; }
 .logo__name small { display: block; font-size: 11px; font-weight: 500; color: var(--c-text-muted); letter-spacing: .04em; text-transform: uppercase; }
 
 .nav { display: flex; gap: 22px; }
