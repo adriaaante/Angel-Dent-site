@@ -24,4 +24,8 @@
   <url><loc>https://angel-denta.ru/reviews.html</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://angel-denta.ru/contacts.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://angel-denta.ru/legal.html</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://angel-denta.ru/privacy.html</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://angel-denta.ru/oferta.html</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://angel-denta.ru/consent.html</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://angel-denta.ru/cookies.html</loc><priority>0.4</priority><changefreq>yearly</changefreq></url>
 </urlset>
