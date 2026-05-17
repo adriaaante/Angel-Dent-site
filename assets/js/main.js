@@ -30,48 +30,85 @@
   }
   document.querySelectorAll('input[type="tel"]').forEach(maskPhone);
 
-  // Form submit — sends a nicely formatted email to angel.dent@bk.ru
-  // via FormSubmit.co (static-site mailer, no backend needed).
-  // First submission triggers an activation email — recipient must
-  // click the link once to enable real delivery.
-  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/adriaaante@gmail.com';
+  // Form submit — posts via a hidden <iframe> to bypass CORS on
+  // FormSubmit.co. Works from any origin (including localhost /
+  // github.io) and the very first time, without requiring the
+  // recipient to pre-activate. FormSubmit will still send one
+  // confirmation email on first submission — the recipient must
+  // click "Confirm" inside it once; after that delivery is direct.
+  var LEAD_EMAIL = 'adriaaante@gmail.com';
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var success = form.querySelector('[data-form-success]');
       var submitBtn = form.querySelector('button[type="submit"]');
-      var formData = new FormData(form);
+      var origLabel = submitBtn ? submitBtn.textContent : 'Отправить';
 
-      // FormSubmit meta fields — subject line, pretty email template, anti-spam
-      var page = location.pathname || '/';
-      formData.append('_subject', 'Заявка с сайта Ангел-Дент · ' + page);
-      formData.append('_template', 'table');
-      formData.append('_captcha', 'false');
-      formData.append('_honey', '');
-      formData.append('Страница', page);
-      if (document.title) formData.append('Раздел', document.title);
+      // Build the payload
+      var fd = new FormData(form);
+      fd.append('_subject', 'Заявка с сайта Ангел-Дент · ' + (location.pathname || '/'));
+      fd.append('_template', 'table');
+      fd.append('_captcha', 'false');
+      fd.append('_honey', '');
+      fd.append('_next', location.href + '?lead=ok'); // benign redirect inside the hidden iframe
+      fd.append('Страница', location.pathname || '/');
+      if (document.title) fd.append('Раздел', document.title);
 
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.dataset._label = submitBtn.textContent; submitBtn.textContent = 'Отправляем…'; }
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
 
-      fetch(LEAD_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: formData
-      })
-      .then(function (r) { return r.json().catch(function () { return {}; }); })
-      .then(function () {
+      // Hidden iframe target
+      var ifr = document.createElement('iframe');
+      ifr.name = '_lead_target_' + Date.now();
+      ifr.style.display = 'none';
+      document.body.appendChild(ifr);
+
+      // Temporary form posting to FormSubmit's non-AJAX endpoint
+      var tmp = document.createElement('form');
+      tmp.method = 'POST';
+      tmp.action = 'https://formsubmit.co/' + LEAD_EMAIL;
+      tmp.target = ifr.name;
+      tmp.style.display = 'none';
+      fd.forEach(function (v, k) {
+        var inp = document.createElement('input');
+        inp.type = 'hidden';
+        inp.name = k;
+        inp.value = v;
+        tmp.appendChild(inp);
+      });
+      document.body.appendChild(tmp);
+
+      var done = false;
+      var cleanup = function () {
+        if (tmp.parentNode) tmp.parentNode.removeChild(tmp);
+        // Keep the iframe a bit longer so the request completes server-side
+        setTimeout(function () { if (ifr.parentNode) ifr.parentNode.removeChild(ifr); }, 1500);
+      };
+
+      ifr.addEventListener('load', function () {
+        if (done) return;
+        done = true;
         if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
         if (success) success.classList.add('is-active');
         form.reset();
         setTimeout(function () { if (success) success.classList.remove('is-active'); }, 6000);
-      })
-      .catch(function () {
-        if (success) { success.textContent = 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08'; success.classList.add('is-active'); }
-      })
-      .finally(function () {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtn.dataset._label || 'Отправить'; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
+        cleanup();
       });
+
+      // Hard timeout — fallback message
+      setTimeout(function () {
+        if (done) return;
+        done = true;
+        if (success) {
+          success.textContent = 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08';
+          success.classList.add('is-active');
+        }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
+        cleanup();
+      }, 15000);
+
+      tmp.submit();
     });
   });
 
