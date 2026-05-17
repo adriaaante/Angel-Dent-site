@@ -34,7 +34,7 @@
   // via FormSubmit.co (static-site mailer, no backend needed).
   // First submission triggers an activation email — recipient must
   // click the link once to enable real delivery.
-  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/angel.dent@bk.ru';
+  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/adriaaante@gmail.com';
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
