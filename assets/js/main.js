@@ -30,141 +30,81 @@
   }
   document.querySelectorAll('input[type="tel"]').forEach(maskPhone);
 
-  // Lead submission via FormSubmit.co
+  // Lead submission via Web3Forms (https://web3forms.com)
   // ---------------------------------------------------------------
-  // Free-tier FormSubmit needs a one-time "Confirm" click inside an
-  // activation email it sends to the recipient after the very first
-  // submission. Until that click, no real emails arrive.
+  // Why Web3Forms instead of FormSubmit:
+  //   * No "first submission captcha wall" — works on attempt #1
+  //   * Native CORS — plain fetch() returns proper JSON
+  //   * Simple one-time setup: generate access_key on web3forms.com
+  //     (recipient email gets the key immediately, no signup needed)
+  //   * Pretty HTML email out of the box (table layout, branded subject)
   //
-  // Strategy:
-  //   * First submission ever (localStorage flag absent) — open
-  //     FormSubmit's page in a popup window. The user there sees
-  //     the captcha + "Activation email sent" notice, and can spot
-  //     the confirmation email immediately. We flip the flag.
-  //   * Subsequent submissions — silent POST into a hidden iframe.
+  // The visitor never sees anything about activation/confirmation —
+  // only "Спасибо…" on success or the fallback phone number on error.
   //
-  // Once the recipient confirms once, both paths deliver mail
-  // directly with no further user interaction.
-  var LEAD_EMAIL = 'adriaaante@gmail.com';
-  var ACTIVATED_KEY = 'ad_lead_activated_v1';
-
-  function buildPayload(form) {
-    var fd = new FormData(form);
-    fd.append('_subject', 'Заявка с сайта Ангел-Дент · ' + (location.pathname || '/'));
-    fd.append('_template', 'table');
-    fd.append('_captcha', 'false');
-    fd.append('_honey', '');
-    fd.append('_next', location.origin + location.pathname + '?lead=ok');
-    fd.append('Страница', location.pathname || '/');
-    if (document.title) fd.append('Раздел', document.title);
-    return fd;
-  }
-
-  function showSuccess(form, html) {
-    var success = form.querySelector('[data-form-success]');
-    if (!success) return;
-    if (html != null) success.innerHTML = html;
-    success.classList.add('is-active');
-    setTimeout(function () { success.classList.remove('is-active'); }, 9000);
-  }
-
-  function activated() {
-    try { return localStorage.getItem(ACTIVATED_KEY) === '1'; } catch (e) { return false; }
-  }
-  function markActivated() {
-    try { localStorage.setItem(ACTIVATED_KEY, '1'); } catch (e) {}
-  }
+  // ACCESS_KEY belongs to the clinic; emails go to whatever address
+  // was used to generate the key on web3forms.com.
+  var LEAD_ENDPOINT = 'https://api.web3forms.com/submit';
+  var ACCESS_KEY = '__WEB3FORMS_KEY__'; // TODO: replace with real access_key from web3forms.com
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      var success = form.querySelector('[data-form-success]');
       var submitBtn = form.querySelector('button[type="submit"]');
       var origLabel = submitBtn ? submitBtn.textContent : 'Отправить';
-      var fd = buildPayload(form);
+      var fail = function (logMsg, err) {
+        if (logMsg) console.warn('[lead]', logMsg, err || '');
+        if (success) {
+          success.textContent = 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08';
+          success.classList.add('is-active');
+          setTimeout(function () { success.classList.remove('is-active'); }, 9000);
+        }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
+      };
 
-      // === First-ever submission: hidden iframe + clear instructions ===
-      if (!activated()) {
-        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
+      // Build payload — Web3Forms reads access_key + free-form fields
+      var fd = new FormData(form);
+      fd.append('access_key', ACCESS_KEY);
+      fd.append('subject', 'Заявка с сайта Ангел-Дент · ' + (location.pathname || '/'));
+      fd.append('from_name', 'Сайт angel-denta.ru');
+      fd.append('Страница', location.pathname || '/');
+      if (document.title) fd.append('Раздел', document.title);
+      fd.append('botcheck', ''); // honeypot
 
-        var ifr = document.createElement('iframe');
-        ifr.setAttribute('name', '_lead_iframe_' + Date.now());
-        ifr.setAttribute('aria-hidden', 'true');
-        ifr.style.cssText = 'position:absolute;width:0;height:0;border:0;left:-9999px;';
-        document.body.appendChild(ifr);
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
 
-        var tmp = document.createElement('form');
-        tmp.method = 'POST';
-        tmp.action = 'https://formsubmit.co/' + LEAD_EMAIL;
-        tmp.target = ifr.getAttribute('name');
-        tmp.acceptCharset = 'UTF-8';
-        fd.forEach(function (v, k) {
-          var inp = document.createElement('input');
-          inp.type = 'hidden'; inp.name = k; inp.value = v;
-          tmp.appendChild(inp);
-        });
-        document.body.appendChild(tmp);
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      var timeoutId = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
 
-        var doneFirst = false;
-        var finishFirst = function () {
-          if (doneFirst) return; doneFirst = true;
-          markActivated();
+      fetch(LEAD_ENDPOINT, {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' },
+        signal: ctrl ? ctrl.signal : undefined
+      })
+      .then(function (res) {
+        return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+      })
+      .then(function (r) {
+        clearTimeout(timeoutId);
+        if (r.ok && r.data && r.data.success) {
           if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
-          showSuccess(form,
-            'Заявка отправлена. <strong>Чтобы письма приходили моментально</strong>, ' +
-            'однократно подтвердите получателя: в почте <em>adriaaante@gmail.com</em> ' +
-            'найдите письмо от <strong>no-reply@formsubmit.co</strong> ' +
-            '(возможно во вкладке «Промоакции» или папке «Спам») и нажмите «Confirm». ' +
-            'Все следующие заявки будут приходить без задержки.');
+          if (success) {
+            success.textContent = 'Спасибо! Мы перезвоним за 15 минут.';
+            success.classList.add('is-active');
+            setTimeout(function () { success.classList.remove('is-active'); }, 9000);
+          }
           form.reset();
           if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
-          if (tmp.parentNode) tmp.parentNode.removeChild(tmp);
-          setTimeout(function () { if (ifr.parentNode) ifr.parentNode.removeChild(ifr); }, 2500);
-        };
-        ifr.addEventListener('load', finishFirst);
-        setTimeout(finishFirst, 8000); // safety: FormSubmit's response page may not fire load reliably
-        tmp.submit();
-        return;
-      }
-
-      // === Activated path: silent iframe POST ===
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
-      var ifr2 = document.createElement('iframe');
-      ifr2.setAttribute('name', '_lead_iframe_' + Date.now());
-      ifr2.style.cssText = 'position:absolute;width:0;height:0;border:0;left:-9999px;';
-      document.body.appendChild(ifr2);
-
-      var tmp2 = document.createElement('form');
-      tmp2.method = 'POST';
-      tmp2.action = 'https://formsubmit.co/' + LEAD_EMAIL;
-      tmp2.target = ifr2.getAttribute('name');
-      fd.forEach(function (v, k) {
-        var inp = document.createElement('input');
-        inp.type = 'hidden'; inp.name = k; inp.value = v;
-        tmp2.appendChild(inp);
+        } else {
+          fail('Web3Forms rejected', r.data);
+        }
+      })
+      .catch(function (err) {
+        clearTimeout(timeoutId);
+        fail('network/abort', err);
       });
-      document.body.appendChild(tmp2);
-
-      var done2 = false;
-      var finish2 = function () {
-        if (done2) return; done2 = true;
-        if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
-        showSuccess(form, 'Спасибо! Мы перезвоним за 15 минут.');
-        form.reset();
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
-        if (tmp2.parentNode) tmp2.parentNode.removeChild(tmp2);
-        setTimeout(function () { if (ifr2.parentNode) ifr2.parentNode.removeChild(ifr2); }, 2500);
-      };
-      ifr2.addEventListener('load', finish2);
-      setTimeout(function () {
-        if (done2) return;
-        done2 = true;
-        showSuccess(form, 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08');
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
-        if (tmp2.parentNode) tmp2.parentNode.removeChild(tmp2);
-        if (ifr2.parentNode) ifr2.parentNode.removeChild(ifr2);
-      }, 15000);
-
-      tmp2.submit();
     });
   });
 
