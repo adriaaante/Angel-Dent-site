@@ -30,23 +30,48 @@
   }
   document.querySelectorAll('input[type="tel"]').forEach(maskPhone);
 
-  // Form submit — front-end stub, sends payload to a generic endpoint and shows success
+  // Form submit — sends a nicely formatted email to angel.dent@bk.ru
+  // via FormSubmit.co (static-site mailer, no backend needed).
+  // First submission triggers an activation email — recipient must
+  // click the link once to enable real delivery.
+  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/angel.dent@bk.ru';
+
   document.querySelectorAll('form[data-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var success = form.querySelector('[data-form-success]');
+      var submitBtn = form.querySelector('button[type="submit"]');
       var formData = new FormData(form);
-      var payload = {};
-      formData.forEach(function (v, k) { payload[k] = v; });
-      payload.page = location.pathname;
-      payload.referrer = document.referrer;
-      // Replace endpoint with your backend / Tilda Forms / Yclients / CRM webhook
-      // fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-      console.log('Lead payload (replace with real endpoint):', payload);
-      if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
-      if (success) success.classList.add('is-active');
-      form.reset();
-      setTimeout(function () { if (success) success.classList.remove('is-active'); }, 6000);
+
+      // FormSubmit meta fields — subject line, pretty email template, anti-spam
+      var page = location.pathname || '/';
+      formData.append('_subject', 'Заявка с сайта Ангел-Дент · ' + page);
+      formData.append('_template', 'table');
+      formData.append('_captcha', 'false');
+      formData.append('_honey', '');
+      formData.append('Страница', page);
+      if (document.title) formData.append('Раздел', document.title);
+
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.dataset._label = submitBtn.textContent; submitBtn.textContent = 'Отправляем…'; }
+
+      fetch(LEAD_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      })
+      .then(function (r) { return r.json().catch(function () { return {}; }); })
+      .then(function () {
+        if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
+        if (success) success.classList.add('is-active');
+        form.reset();
+        setTimeout(function () { if (success) success.classList.remove('is-active'); }, 6000);
+      })
+      .catch(function () {
+        if (success) { success.textContent = 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08'; success.classList.add('is-active'); }
+      })
+      .finally(function () {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtn.dataset._label || 'Отправить'; }
+      });
     });
   });
 
