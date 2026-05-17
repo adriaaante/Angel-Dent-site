@@ -313,16 +313,49 @@ p { margin: 0 0 1em; }
 .pf-lightbox__images img { width: 100%; border-radius: var(--radius-sm); display: block; }
 .pf-lightbox__images figcaption { position: absolute; left: 12px; top: 12px; background: var(--c-primary); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 5px 12px; border-radius: 100px; }
 .pf-lightbox__images figure:first-child figcaption { background: rgba(15,31,58,.85); }
-.pf-lightbox h3 { margin: 0 0 8px; }
+.pf-lightbox h3 { margin: 0 0 8px; font-size: 22px; line-height: 1.25; }
 .pf-lightbox p { margin: 0; color: var(--c-text-muted); }
-.pf-lightbox__close { position: fixed; top: 16px; right: 20px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,.95); color: var(--c-text); font-size: 28px; line-height: 1; cursor: pointer; box-shadow: var(--shadow); }
+.pf-lightbox__close { position: fixed; top: 16px; right: 20px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,.95); color: var(--c-text); font-size: 28px; line-height: 1; cursor: pointer; box-shadow: var(--shadow); z-index: 2; }
 .pf-lightbox__close:hover { background: #fff; }
+
+/* Расширенный лайтбокс: заголовок, теги, мета */
+.pf-lightbox__header { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--c-border); }
+.pf-lightbox__desc { font-size: 15.5px; line-height: 1.55; color: var(--c-text) !important; margin: 0 0 12px !important; }
+.pf-lightbox__tags { margin-top: 10px; }
+.pf-lightbox__meta { margin-top: 12px; border-top: 0 !important; padding-top: 0 !important; font-size: 13.5px; }
+
+/* Подробные секции */
+.pf-lightbox__section { margin: 22px 0; }
+.pf-lightbox__section[hidden] { display: none; }
+.pf-lightbox__h { margin: 0 0 8px; font-size: 16px; font-weight: 700; color: var(--c-primary); letter-spacing: .01em; display: flex; align-items: center; gap: 10px; }
+.pf-lightbox__h::before { content: ""; display: inline-block; width: 6px; height: 18px; background: var(--c-primary); border-radius: 3px; }
+.pf-lightbox__section p { font-size: 15px; line-height: 1.6; color: var(--c-text); }
+
+/* Этапы лечения — нумерованный список с круглыми бейджами */
+.pf-lightbox__steps { list-style: none; counter-reset: pf-step; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pf-lightbox__step { counter-increment: pf-step; display: flex; align-items: flex-start; gap: 14px; background: var(--c-primary-50); border-radius: var(--radius-sm); padding: 12px 14px 12px 12px; }
+.pf-lightbox__step::before { content: counter(pf-step); flex: 0 0 32px; width: 32px; height: 32px; border-radius: 50%; background: var(--c-primary); color: #fff; font-weight: 700; font-size: 14px; display: grid; place-items: center; box-shadow: var(--shadow-sm); }
+.pf-lightbox__step-text { font-size: 14.5px; line-height: 1.5; color: var(--c-text); padding-top: 5px; }
+
+/* CTA-блок «Записаться» */
+.pf-lightbox__cta { margin-top: 28px; padding: 22px 24px; background: linear-gradient(135deg, var(--c-primary-50), #fff); border: 1px solid var(--c-primary-light); border-radius: var(--radius); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.pf-lightbox__cta-text { margin: 0 !important; max-width: 560px; color: var(--c-text) !important; font-size: 15px; line-height: 1.5; }
+.pf-lightbox__cta[hidden] { display: none; }
 
 @media (max-width: 720px) {
   .portfolio-grid { grid-template-columns: 1fr; gap: 18px; }
   .pf-lightbox__images { grid-template-columns: 1fr; }
-  .pf-lightbox__inner { padding: 20px; margin: 0; border-radius: 0; }
+  .pf-lightbox__inner { padding: 18px; margin: 0; border-radius: 0; }
   .pf-lightbox { padding: 0; }
+  .pf-lightbox h3 { font-size: 19px; padding-right: 40px; }
+  .pf-lightbox__section { margin: 18px 0; }
+  .pf-lightbox__h { font-size: 15px; }
+  .pf-lightbox__section p { font-size: 14.5px; }
+  .pf-lightbox__step { padding: 10px 12px; gap: 11px; }
+  .pf-lightbox__step::before { flex: 0 0 28px; width: 28px; height: 28px; font-size: 13px; }
+  .pf-lightbox__step-text { font-size: 14px; padding-top: 3px; }
+  .pf-lightbox__cta { padding: 18px 16px; }
+  .pf-lightbox__close { top: 8px; right: 10px; width: 40px; height: 40px; font-size: 26px; }
 }
 
 /* Utility */
