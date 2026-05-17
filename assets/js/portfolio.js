@@ -19,71 +19,92 @@
      date        — дата работы в формате 'MM.YYYY' (необязательно)
 
    Slug-и врачей соответствуют именам HTML-файлов в /doctors/:
-     ortodont      → Дробкова Кристина Олеговна (главврач, ортодонт)
-     emil-mamedov  → Зурначян Арам Арамович (хирург, имплантолог)
-     aram          → Геворкян Санатрук Иванович (хирург, ортопед, имплантолог)
-     rustam        → Рустамли Руслан Рустамович (хирург, имплантолог)
+     ortodont      → Дробкова Кристина Олеговна (главврач, стоматолог-ортодонт)
+     aram          → Геворкян Санатрук Иванович (ген. директор, стоматолог-хирург, имплантолог)
+     rustam        → Рустамли Руслан Рустамович (стоматолог-хирург, имплантолог)
+     emil-mamedov  → Рустамов Эмиль Дилгамович (стоматолог-ортопед)
+     smolyakova    → Смолякова Радана Сергеевна (стоматолог-терапевт)
+     kartlykov     → Картлыков Омар Хасанбиевич (стоматолог-терапевт)
+     stepanenko    → Степаненко Владислав Евгеньевич (стоматолог-терапевт)
    ============================================================ */
 
 window.AD_PORTFOLIO = {
 
-  // === Зурначян Арам Арамович — стоматолог-хирург, имплантолог ===
-  'emil-mamedov': [
+  // === Дробкова Кристина Олеговна — главврач, стоматолог-ортодонт ===
+  'ortodont': [
     {
-      title: 'Имплантация двух жевательных зубов на нижней челюсти',
-      description: 'Установлены импланты премиум-класса. Через 3 месяца — постоянные коронки из диоксида циркония. Пациент жуёт привычно.',
-      services: ['Имплантация', 'Коронки Zr'],
-      duration: '3 месяца',
-      date: '03.2025',
+      title: 'Исправление скученности брекетами Damon Q',
+      description: 'Самолигирующая система Damon Q на обе челюсти. Без удаления зубов, по завершении установлен несъёмный ретейнер.',
+      services: ['Брекеты', 'Damon Q', 'Ретейнер'],
+      duration: '18 месяцев',
+      date: '12.2024',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     },
     {
-      title: 'Синус-лифтинг и одномоментная имплантация',
-      description: 'Восстановление костного объёма верхней челюсти материалом Geistlich Bio-Oss с одновременной установкой импланта.',
-      services: ['Синус-лифтинг', 'Костная пластика', 'Имплантация'],
-      duration: '4 месяца',
-      date: '01.2025',
-      before: '../assets/img/portfolio/placeholder-before.svg',
-      after: '../assets/img/portfolio/placeholder-after.svg'
-    },
-    {
-      title: 'All-on-4 — полное восстановление нижней челюсти',
-      description: 'Установка четырёх имплантов и временного несъёмного протеза за 1 день. Через 4 месяца — постоянный протез.',
-      services: ['All-on-4', 'Имплантация', 'Протезирование'],
-      duration: '4 месяца',
-      date: '11.2024',
-      before: '../assets/img/portfolio/placeholder-before.svg',
-      after: '../assets/img/portfolio/placeholder-after.svg'
-    }
-  ],
-
-  // === Геворкян Санатрук Иванович — стоматолог-хирург, ортопед, имплантолог ===
-  'aram': [
-    {
-      title: 'Имплантация в эстетически значимой зоне',
-      description: 'Установка импланта на место передного зуба с временной коронкой в день операции. Через 4 месяца — постоянная циркониевая коронка.',
-      services: ['Имплантация', 'Эстетика', 'Zr-коронка'],
-      duration: '4 месяца',
+      title: 'Элайнеры Star Smile у взрослого пациента',
+      description: 'Скученность нижнего ряда и лёгкая ротация резцов. 24 каппы по графику смены раз в 10 дней, без удалений.',
+      services: ['Элайнеры', 'Star Smile'],
+      duration: '8 месяцев',
       date: '02.2025',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     },
     {
-      title: 'Протезирование на двух имплантах — мостовидный протез',
-      description: 'Сканер 3Shape Trios, моделирование в CAD/CAM, циркониевый мост на трёх единицах. Точная посадка по цифровому слепку.',
-      services: ['Протезирование', 'Импланты', 'CAD/CAM'],
-      duration: '6 недель',
-      date: '04.2025',
+      title: 'Коррекция дистального прикуса у подростка',
+      description: 'Лечение керамическими брекетами Clarity с межчелюстными тягами. Получен стабильный физиологичный прикус.',
+      services: ['Брекеты Clarity', 'Подросток', 'Дистальный прикус'],
+      duration: '22 месяца',
+      date: '05.2025',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     },
     {
-      title: 'Удаление ретинированного зуба мудрости с одномоментной костной пластикой',
-      description: 'Сложное хирургическое удаление горизонтально расположенного зуба мудрости с сохранением объёма кости для будущей имплантации.',
-      services: ['Хирургия', 'Костная пластика'],
-      duration: '1 визит',
+      title: 'Исправление мезиального прикуса у взрослого',
+      description: 'Комбинированное лечение брекетами Damon Q с использованием микроимплантов для опоры. Прикус нормализован без хирургии.',
+      services: ['Брекеты', 'Damon Q', 'Мезиальный прикус'],
+      duration: '24 месяца',
+      date: '09.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    }
+  ],
+
+  // === Геворкян Санатрук Иванович — ген. директор, стоматолог-хирург, имплантолог ===
+  'aram': [
+    {
+      title: 'All-on-4 — полное восстановление верхней челюсти',
+      description: 'Установка четырёх имплантов Straumann и временного несъёмного протеза за один день. Через 4 месяца — постоянная конструкция.',
+      services: ['All-on-4', 'Straumann', 'Имплантация'],
+      duration: '4 месяца',
       date: '03.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Открытый синус-лифтинг с одномоментной имплантацией',
+      description: 'Восстановление костного объёма верхней челюсти материалом Geistlich Bio-Oss и установка импланта AnyRidge за одну операцию.',
+      services: ['Синус-лифтинг', 'Bio-Oss', 'AnyRidge'],
+      duration: '5 месяцев',
+      date: '11.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Удаление ретинированной восьмёрки с костной пластикой',
+      description: 'Сложное хирургическое удаление горизонтально расположенного зуба мудрости с сохранением объёма кости для будущей имплантации.',
+      services: ['Хирургия', 'Восьмёрки', 'Костная пластика'],
+      duration: '1 визит',
+      date: '01.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Имплантация в эстетически значимой зоне',
+      description: 'Установка импланта Straumann на место центрального резца с временной коронкой в день операции. Сохранён контур десны.',
+      services: ['Имплантация', 'Straumann', 'Эстетика'],
+      duration: '4 месяца',
+      date: '06.2025',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     }
@@ -92,52 +113,198 @@ window.AD_PORTFOLIO = {
   // === Рустамли Руслан Рустамович — стоматолог-хирург, имплантолог ===
   'rustam': [
     {
-      title: 'Установка двух имплантов SNUCONE на нижней челюсти',
-      description: 'Малоинвазивный хирургический протокол, через 3 месяца установлены постоянные коронки. Пациент вернулся к привычному рациону.',
+      title: 'Имплантация двух зубов SNUCONE на нижней челюсти',
+      description: 'Малоинвазивный хирургический протокол по системе Implantium & SuperLine. Через 3 месяца установлены постоянные коронки.',
       services: ['Имплантация', 'SNUCONE'],
       duration: '3 месяца',
+      date: '04.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Одномоментная имплантация Osstem после удаления',
+      description: 'Удаление разрушенного жевательного зуба и установка импланта Osstem в ту же лунку. Сокращение общего срока лечения вдвое.',
+      services: ['Одномоментная имплантация', 'Osstem'],
+      duration: '3 месяца',
+      date: '02.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Костная пластика материалом Bio-Oss',
+      description: 'Восстановление объёма альвеолярного гребня перед имплантацией. Биоматериал Geistlich Bio-Oss и резорбируемая мембрана.',
+      services: ['Костная пластика', 'Bio-Oss'],
+      duration: '4 месяца',
+      date: '10.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Сложное удаление зуба мудрости',
+      description: 'Удаление горизонтально расположенного зуба мудрости с минимальной травмой соседних структур. По авторскому протоколу из курса.',
+      services: ['Хирургия', 'Зубы мудрости'],
+      duration: '1 визит',
+      date: '07.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    }
+  ],
+
+  // === Рустамов Эмиль Дилгамович — стоматолог-ортопед ===
+  'emil-mamedov': [
+    {
+      title: 'Виниры E.max на 8 передних зубов',
+      description: 'Цифровое моделирование улыбки по протоколу Digital Smile Design, керамические виниры E.max минимальной толщины. Естественный результат.',
+      services: ['Виниры', 'E.max', 'DSD'],
+      duration: '6 недель',
       date: '03.2025',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     },
     {
-      title: 'Удаление ретинированного зуба мудрости',
-      description: 'Сложное удаление горизонтально расположенного зуба с минимальной травмой соседних структур. По протоколу из курса в Санкт-Петербурге.',
-      services: ['Хирургия', 'Зубы мудрости'],
+      title: 'Циркониевые коронки на жевательную группу',
+      description: 'Сканирование 3Shape Trios, моделирование в CAD/CAM, четыре коронки из диоксида циркония с точной посадкой по цифровому слепку.',
+      services: ['Коронки Zr', 'CAD/CAM', '3Shape Trios'],
+      duration: '3 недели',
+      date: '05.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Мостовидный протез из диоксида циркония',
+      description: 'Восстановление трёх единиц мостовидной конструкцией на основе циркония. Цифровая фиксация прикуса и эстетичный результат.',
+      services: ['Мост Zr', 'Протезирование'],
+      duration: '4 недели',
+      date: '12.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Протезирование на двух имплантах — циркониевые коронки',
+      description: 'Снятие цифрового слепка 3Shape Trios с имплантов, изготовление индивидуальных абатментов и коронок Zr. Идеальная окклюзия.',
+      services: ['Коронки на имплантах', 'Zr', '3Shape Trios'],
+      duration: '5 недель',
+      date: '08.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    }
+  ],
+
+  // === Смолякова Радана Сергеевна — стоматолог-терапевт ===
+  'smolyakova': [
+    {
+      title: 'Художественная реставрация переднего зуба',
+      description: 'Восстановление скола центрального резца композитом Estelite Asteria с послойным нанесением оттенков. Реставрация неотличима от соседних зубов.',
+      services: ['Реставрация', 'Estelite Asteria', 'Эстетика'],
       duration: '1 визит',
       date: '04.2025',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     },
     {
-      title: 'Костная пластика материалом Geistlich Bio-Oss',
-      description: 'Восстановление объёма альвеолярного гребня перед имплантацией. Биоматериал Bio-Oss обеспечивает прогнозируемый результат.',
-      services: ['Костная пластика', 'Bio-Oss'],
-      duration: '4 месяца',
-      date: '01.2025',
+      title: 'Лечение пульпита под микроскопом',
+      description: 'Эндодонтическое лечение трёхканального моляра под микроскопом Carl Zeiss с инструментами ProTaper. Каналы запломбированы герметично.',
+      services: ['Эндодонтия', 'Микроскоп Zeiss', 'ProTaper'],
+      duration: '2 визита',
+      date: '02.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Лечение глубокого кариеса с сохранением пульпы',
+      description: 'Бережное препарирование под микроскопом, лечебная прокладка и реставрация композитом Estelite Asteria. Зуб сохранён живым.',
+      services: ['Кариес', 'Микроскоп', 'Estelite Asteria'],
+      duration: '1 визит',
+      date: '11.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Перелечивание корневых каналов под микроскопом',
+      description: 'Распломбировка и повторная обработка двухканального премоляра с устранением очага инфекции. Контроль КЛКТ через 6 месяцев — норма.',
+      services: ['Эндодонтия', 'Перелечивание', 'Микроскоп Zeiss'],
+      duration: '3 визита',
+      date: '06.2025',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     }
   ],
 
-  // === Дробкова Кристина Олеговна — стоматолог-ортодонт ===
-  // (страница /doctors/ortodont.html — slug сохранён)
-  'ortodont': [
+  // === Картлыков Омар Хасанбиевич — стоматолог-терапевт ===
+  'kartlykov': [
     {
-      title: 'Исправление прикуса брекетами Damon Q',
-      description: 'Самолигирующая система Damon. Лечение завершено за 18 месяцев, установлен несъёмный ретейнер.',
-      services: ['Брекеты', 'Damon Q'],
-      duration: '18 месяцев',
-      date: '12.2024',
+      title: 'Лечение клиновидных дефектов на 4 зубах',
+      description: 'Восстановление пришеечных дефектов нанокомпозитом с подбором оттенка по шкале Vita. Устранена гиперчувствительность.',
+      services: ['Клиновидный дефект', 'Реставрация'],
+      duration: '1 визит',
+      date: '03.2025',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     },
     {
-      title: 'Элайнеры Star Smile — взрослый пациент',
-      description: 'Скученность нижнего ряда. 24 каппы по графику смены раз в 10 дней. Без удалений.',
-      services: ['Элайнеры', 'Star Smile'],
-      duration: '8 месяцев',
+      title: 'Лечение гиперчувствительности зубов',
+      description: 'Комплексная терапия с десенситайзерами и реминерализирующими аппликациями. Пациент вернулся к холодным и горячим напиткам без боли.',
+      services: ['Чувствительность', 'Реминерализация'],
+      duration: '3 визита',
+      date: '01.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Эндодонтическое лечение четырёхканального моляра',
+      description: 'Поиск и прохождение четвёртого канала с использованием ProTaper Next. Полная герметизация и постановка постоянной пломбы в одно посещение.',
+      services: ['Эндодонтия', 'ProTaper Next'],
+      duration: '2 визита',
+      date: '10.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Реставрация жевательной поверхности после кариеса',
+      description: 'Препарирование по принципам минимальной инвазии и моделирование анатомии бугров композитом. Восстановлены контактные пункты.',
+      services: ['Кариес', 'Реставрация'],
+      duration: '1 визит',
+      date: '07.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    }
+  ],
+
+  // === Степаненко Владислав Евгеньевич — стоматолог-терапевт ===
+  'stepanenko': [
+    {
+      title: 'Отбеливание зубов системой ZOOM',
+      description: 'Профессиональное отбеливание ZOOM 4 за один визит. Осветление эмали на 6 тонов по шкале Vita с сохранением структуры зуба.',
+      services: ['Отбеливание', 'ZOOM'],
+      duration: '1 визит',
+      date: '05.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Защитные каппы при бруксизме',
+      description: 'Диагностика бруксизма и изготовление индивидуальных ночных капп по слепкам. Снижение нагрузки на зубы и жевательные мышцы.',
+      services: ['Бруксизм', 'Каппы'],
+      duration: '2 недели',
       date: '02.2025',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Реставрация скола режущего края резца',
+      description: 'Воссоздание анатомии переднего зуба после травмы композитом с применением силиконового ключа. Эстетика восстановлена за один приём.',
+      services: ['Реставрация', 'Травма', 'Эстетика'],
+      duration: '1 визит',
+      date: '09.2024',
+      before: '../assets/img/portfolio/placeholder-before.svg',
+      after: '../assets/img/portfolio/placeholder-after.svg'
+    },
+    {
+      title: 'Лечение скрытого кариеса под микроскопом',
+      description: 'Обнаружение и лечение апроксимального кариеса между зубами под микроскопом. Сохранены максимально объёмы здоровых тканей.',
+      services: ['Кариес', 'Микроскоп'],
+      duration: '1 визит',
+      date: '12.2024',
       before: '../assets/img/portfolio/placeholder-before.svg',
       after: '../assets/img/portfolio/placeholder-after.svg'
     }
