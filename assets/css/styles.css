@@ -90,7 +90,139 @@ p { margin: 0 0 1em; }
 
 /* Hero */
 .hero { position: relative; padding: 56px 0 64px; background: linear-gradient(135deg, #eaf2fc 0%, #f5f9ff 100%); overflow: hidden; }
-.hero__grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
+.hero__grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: center; }
+
+/* ============================================================
+   Hero animated background
+   — seamless loops (0% ≡ 100%), GPU-only (transform/opacity),
+   — pure CSS, decorative (aria-hidden in markup)
+   ============================================================ */
+.hero__bg {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none; overflow: hidden;
+  contain: layout paint;
+}
+
+/* Drifting color blobs (modern Stripe/Linear-style aesthetic) */
+.hero__blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(72px);
+  will-change: transform;
+}
+.hero__blob--1 { width: 460px; height: 460px; top: -140px; left: -120px;
+  background: radial-gradient(circle, rgba(74,139,217,.55) 0%, rgba(74,139,217,0) 70%);
+  animation: hero-blob-a 22s ease-in-out infinite;
+}
+.hero__blob--2 { width: 380px; height: 380px; bottom: -120px; right: -80px;
+  background: radial-gradient(circle, rgba(245,166,35,.42) 0%, rgba(245,166,35,0) 70%);
+  animation: hero-blob-b 28s ease-in-out infinite;
+}
+.hero__blob--3 { width: 320px; height: 320px; top: 30%; right: 35%;
+  background: radial-gradient(circle, rgba(30,95,179,.30) 0%, rgba(30,95,179,0) 70%);
+  animation: hero-blob-c 34s ease-in-out infinite;
+}
+
+@keyframes hero-blob-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(60px, 40px) scale(1.12); }
+  66%      { transform: translate(-30px, 70px) scale(.94); }
+}
+@keyframes hero-blob-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-80px, -60px) scale(1.18); }
+}
+@keyframes hero-blob-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(-50px, 30px) scale(1.08); }
+  50%      { transform: translate(40px, -40px) scale(.92); }
+  75%      { transform: translate(20px, 50px) scale(1.04); }
+}
+
+/* Floating tooth icons — two stacked animations:
+   the <span> bobs up/down, the inner <svg> slowly spins.
+   Both loops start and end at identical state. */
+.hero__tooth {
+  position: absolute;
+  color: rgba(30, 95, 179, .14);
+  display: block;
+  will-change: transform;
+  animation: hero-tooth-bob ease-in-out infinite;
+}
+.hero__tooth svg {
+  display: block; width: 100%; height: 100%;
+  will-change: transform;
+  animation: hero-tooth-spin linear infinite;
+  transform-origin: 50% 50%;
+}
+.hero__tooth--1 { top:  8%; left:  4%; width: 44px; height: 44px; animation-duration: 7s;  animation-delay: -1s; }
+.hero__tooth--1 svg { animation-duration: 26s; }
+.hero__tooth--2 { top: 18%; right: 6%; width: 28px; height: 28px; animation-duration: 9s;  animation-delay: -3s; color: rgba(245,166,35,.22); }
+.hero__tooth--2 svg { animation-duration: 32s; animation-direction: reverse; }
+.hero__tooth--3 { bottom: 18%; left: 12%; width: 36px; height: 36px; animation-duration: 8s; animation-delay: -5s; }
+.hero__tooth--3 svg { animation-duration: 30s; }
+.hero__tooth--4 { bottom: 8%; right: 18%; width: 24px; height: 24px; animation-duration: 11s; animation-delay: -2s; }
+.hero__tooth--4 svg { animation-duration: 36s; animation-direction: reverse; }
+.hero__tooth--5 { top: 55%; left: 38%; width: 18px; height: 18px; animation-duration: 6s; animation-delay: -4s; color: rgba(245,166,35,.20); }
+.hero__tooth--5 svg { animation-duration: 22s; }
+.hero__tooth--6 { top: 38%; right: 22%; width: 22px; height: 22px; animation-duration: 10s; animation-delay: -6s; }
+.hero__tooth--6 svg { animation-duration: 28s; animation-direction: reverse; }
+
+@keyframes hero-tooth-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-18px); }
+}
+@keyframes hero-tooth-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Twinkling sparkles — opacity + tiny scale pulse */
+.hero__sparkle {
+  position: absolute;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0) 70%);
+  box-shadow: 0 0 8px 2px rgba(255,255,255,.6), 0 0 14px 4px rgba(74,139,217,.35);
+  opacity: 0;
+  will-change: opacity, transform;
+  animation: hero-sparkle ease-in-out infinite;
+}
+.hero__sparkle--1 { top: 22%; left: 25%; animation-duration: 4s;   animation-delay: -.5s; }
+.hero__sparkle--2 { top: 38%; right: 12%; animation-duration: 5.2s; animation-delay: -2.1s; }
+.hero__sparkle--3 { bottom: 26%; left: 30%; animation-duration: 4.6s; animation-delay: -3.3s; }
+.hero__sparkle--4 { top: 12%; right: 40%; animation-duration: 6s;   animation-delay: -1.2s; }
+.hero__sparkle--5 { bottom: 12%; left: 55%; animation-duration: 5s;   animation-delay: -2.8s; }
+
+@keyframes hero-sparkle {
+  0%, 100% { opacity: 0; transform: scale(.6); }
+  50%      { opacity: 1; transform: scale(1.4); }
+}
+
+/* Subtle smile arc — gradient line softly oscillating up/down at the bottom */
+.hero__smile {
+  position: absolute; bottom: -10px; left: 0; right: 0;
+  width: 100%; height: 120px;
+  will-change: transform;
+  animation: hero-smile-shift 16s ease-in-out infinite;
+}
+@keyframes hero-smile-shift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -10px, 0); }
+}
+
+/* Reduce / disable for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .hero__blob, .hero__tooth, .hero__tooth svg, .hero__sparkle, .hero__smile {
+    animation: none !important;
+  }
+  .hero__sparkle { opacity: .8; }
+}
+
+/* Mobile — fewer drifting elements (perf + visual noise) */
+@media (max-width: 720px) {
+  .hero__tooth--3, .hero__tooth--4, .hero__tooth--6, .hero__sparkle--3, .hero__sparkle--5,
+  .hero__blob--3 { display: none; }
+  .hero__blob--1, .hero__blob--2 { filter: blur(50px); opacity: .8; }
+}
 .hero__title { margin-bottom: 18px; }
 .hero__lead { font-size: 18px; color: var(--c-text-muted); margin-bottom: 28px; }
 .hero__badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 26px; }
