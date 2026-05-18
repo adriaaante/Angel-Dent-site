@@ -58,23 +58,31 @@ fi
 
 echo ""
 echo "→ Patching HTML to use local /assets/img/generated/ paths"
+echo "  (og:image / twitter:image → absolute URL,"
+echo "   regular <img> tags → relative path that respects page depth)"
 cd "$ROOT"
+
+SITE_URL="https://angel-denta.ru"
 patched=0
 for url in "${!IMAGES[@]}"; do
   filename="${IMAGES[$url]}"
-  esc_url=$(printf '%s' "$url" | sed 's/[\/&]/\\&/g')
-  # Replace absolute CDN URLs. We use a relative path that works from both
-  # root pages (index.html) and nested pages (services/*, doctors/*, blog/*)
-  # by inserting an extra prefix per file depth below.
+  abs_url="$SITE_URL/assets/img/generated/$filename"
+  esc_url=$(printf '%s' "$url" | sed 's/[\/&|]/\\&/g')
+
   while IFS= read -r html; do
+    # Relative path with ../ for each nested directory level
     rel="assets/img/generated/$filename"
-    # Calculate depth (sub-dirs from root)
     depth=$(awk -F'/' '{print NF-1}' <<<"${html#./}")
     if [[ "$depth" -gt 0 ]]; then
       for ((i=0; i<depth; i++)); do rel="../$rel"; done
     fi
+
     if grep -q "$url" "$html"; then
-      sed -i.bak "s|$esc_url|$rel|g" "$html" && rm -f "$html.bak"
+      # Pass 1 — only on og:image / twitter:image lines → absolute URL
+      sed -i.bak "/og:image\|twitter:image/s|$esc_url|$abs_url|g" "$html"
+      # Pass 2 — remaining occurrences (regular <img> tags) → relative path
+      sed -i "s|$esc_url|$rel|g" "$html"
+      rm -f "$html.bak"
       patched=$((patched+1))
     fi
   done < <(find . -name '*.html' -not -path './node_modules/*' -not -path './.git/*')
