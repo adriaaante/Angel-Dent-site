@@ -148,4 +148,80 @@
       if (nav && nav.classList.contains('is-open')) nav.classList.remove('is-open');
     });
   });
+
+  // Hero promotions carousel
+  document.querySelectorAll('[data-carousel]').forEach(function (root) {
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.hero__slide'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-carousel-dot]'));
+    var prevBtn = root.querySelector('[data-carousel-prev]');
+    var nextBtn = root.querySelector('[data-carousel-next]');
+    var track = root.querySelector('[data-carousel-slides]');
+    if (slides.length < 2) return;
+
+    var idx = 0;
+    var INTERVAL = 7000;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var timer = null;
+    var paused = false;
+
+    function show(i) {
+      idx = (i + slides.length) % slides.length;
+      slides.forEach(function (s, k) {
+        var active = k === idx;
+        s.classList.toggle('is-active', active);
+        s.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      dots.forEach(function (d, k) {
+        var active = k === idx;
+        d.classList.toggle('is-active', active);
+        d.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+    function next() { show(idx + 1); }
+    function prev() { show(idx - 1); }
+    function start() {
+      if (reduceMotion || paused) return;
+      stop();
+      timer = setInterval(next, INTERVAL);
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() { stop(); start(); }
+
+    dots.forEach(function (d, k) {
+      d.addEventListener('click', function () { show(k); restart(); });
+    });
+    if (nextBtn) nextBtn.addEventListener('click', function () { next(); restart(); });
+    if (prevBtn) prevBtn.addEventListener('click', function () { prev(); restart(); });
+
+    root.addEventListener('mouseenter', function () { paused = true; stop(); });
+    root.addEventListener('mouseleave', function () { paused = false; start(); });
+    root.addEventListener('focusin', function () { paused = true; stop(); });
+    root.addEventListener('focusout', function () { paused = false; start(); });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else if (!paused) start();
+    });
+
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); restart(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); restart(); }
+    });
+
+    var touchX = null;
+    if (track) {
+      track.addEventListener('touchstart', function (e) {
+        touchX = e.touches[0].clientX;
+        paused = true; stop();
+      }, { passive: true });
+      track.addEventListener('touchend', function (e) {
+        if (touchX === null) return;
+        var dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 40) { (dx < 0 ? next : prev)(); }
+        touchX = null;
+        paused = false; start();
+      });
+    }
+
+    start();
+  });
 })();

@@ -169,20 +169,103 @@
     </div>
 
     <div class="hero__visual">
-      <div class="hero__offer">
-        <span class="hero__offer-tag">Акция месяца</span>
-        <h2 class="hero__offer-title">Снимок КТ + письменный план лечения</h2>
-        <div class="hero__offer-price">
-          <span class="hero__offer-price-new">1 200&nbsp;₽</span>
-          <span class="hero__offer-price-old">3 700&nbsp;₽</span>
+      <div class="hero__carousel" data-carousel aria-roledescription="carousel" aria-label="Акции месяца">
+        <div class="hero__slides" data-carousel-slides>
+          <article class="hero__offer hero__slide is-active" role="group" aria-roledescription="slide" aria-label="1 из 5: КТ и план лечения за 1 200 ₽">
+            <span class="hero__offer-tag">Акция месяца</span>
+            <h2 class="hero__offer-title">Снимок КТ + письменный план лечения</h2>
+            <div class="hero__offer-price">
+              <span class="hero__offer-price-new">1 200&nbsp;₽</span>
+              <span class="hero__offer-price-old">3 700&nbsp;₽</span>
+            </div>
+            <ul class="hero__offer-list">
+              <li>Компьютерная томография 2 челюстей</li>
+              <li>Осмотр главного врача</li>
+              <li>Письменный план лечения с ценами</li>
+              <li>Срок действия плана — 30 дней</li>
+            </ul>
+            <a href="#" class="btn btn--accent btn--block" data-modal-open>Записаться по акции</a>
+          </article>
+
+          <article class="hero__offer hero__slide" role="group" aria-roledescription="slide" aria-label="2 из 5: Чистка в подарок при имплантации или брекетах" aria-hidden="true">
+            <span class="hero__offer-tag">Подарок</span>
+            <h2 class="hero__offer-title">Профессиональная гигиена в подарок</h2>
+            <div class="hero__offer-price">
+              <span class="hero__offer-price-new">−&nbsp;4 500&nbsp;₽</span>
+              <span class="hero__offer-price-old">экономия</span>
+            </div>
+            <ul class="hero__offer-list">
+              <li>При заключении договора на имплантацию</li>
+              <li>Или на лечение брекет-системой</li>
+              <li>Ультразвук + Air&nbsp;Flow + полировка</li>
+              <li>Фторирование эмали в подарок</li>
+            </ul>
+            <a href="#" class="btn btn--accent btn--block" data-modal-open>Записаться</a>
+          </article>
+
+          <article class="hero__offer hero__slide" role="group" aria-roledescription="slide" aria-label="3 из 5: Скидка 10 процентов пенсионерам, многодетным и военнослужащим" aria-hidden="true">
+            <span class="hero__offer-tag">−10%</span>
+            <h2 class="hero__offer-title">Скидка пенсионерам, многодетным и военнослужащим</h2>
+            <div class="hero__offer-price">
+              <span class="hero__offer-price-new">−&nbsp;10%</span>
+              <span class="hero__offer-price-old">от прайса</span>
+            </div>
+            <ul class="hero__offer-list">
+              <li>Лечение, протезирование, гигиена</li>
+              <li>Пенсионерам и многодетным семьям</li>
+              <li>Военнослужащим и членам их семей</li>
+              <li>По предъявлении удостоверения</li>
+            </ul>
+            <a href="#" class="btn btn--accent btn--block" data-modal-open>Записаться</a>
+          </article>
+
+          <article class="hero__offer hero__slide" role="group" aria-roledescription="slide" aria-label="4 из 5: Бесплатная консультация ортодонта" aria-hidden="true">
+            <span class="hero__offer-tag">Бесплатно</span>
+            <h2 class="hero__offer-title">Консультация ортодонта</h2>
+            <div class="hero__offer-price">
+              <span class="hero__offer-price-new">0&nbsp;₽</span>
+              <span class="hero__offer-price-old">первичный приём</span>
+            </div>
+            <ul class="hero__offer-list">
+              <li>Осмотр и расчёт ТРГ</li>
+              <li>Подбор брекетов или элайнеров</li>
+              <li>Прозрачные элайнеры от 6 месяцев</li>
+              <li>Без обязательств — приходите узнать</li>
+            </ul>
+            <a href="#" class="btn btn--accent btn--block" data-modal-open>Записаться на консультацию</a>
+          </article>
+
+          <article class="hero__offer hero__slide" role="group" aria-roledescription="slide" aria-label="5 из 5: Семейная программа со скидкой 5 процентов" aria-hidden="true">
+            <span class="hero__offer-tag">Семья</span>
+            <h2 class="hero__offer-title">Семейная программа</h2>
+            <div class="hero__offer-price">
+              <span class="hero__offer-price-new">−&nbsp;5%</span>
+              <span class="hero__offer-price-old">всем членам семьи</span>
+            </div>
+            <ul class="hero__offer-list">
+              <li>При лечении 3 и более человек</li>
+              <li>Скидка действует на все услуги</li>
+              <li>Лечим взрослых и детей с 2 лет</li>
+              <li>Семейная карта на год</li>
+            </ul>
+            <a href="#" class="btn btn--accent btn--block" data-modal-open>Подробнее об условиях</a>
+          </article>
         </div>
-        <ul class="hero__offer-list">
-          <li>Компьютерная томография 2 челюстей</li>
-          <li>Осмотр главного врача</li>
-          <li>Письменный план лечения с ценами</li>
-          <li>Срок действия плана — 30 дней</li>
-        </ul>
-        <a href="#" class="btn btn--accent btn--block" data-modal-open>Записаться по акции</a>
+
+        <div class="hero__carousel-nav" role="tablist" aria-label="Переключение акций">
+          <button type="button" class="hero__dot is-active" data-carousel-dot="0" role="tab" aria-selected="true" aria-label="Акция 1 из 5: КТ за 1 200 ₽"></button>
+          <button type="button" class="hero__dot" data-carousel-dot="1" role="tab" aria-selected="false" aria-label="Акция 2 из 5: Чистка в подарок"></button>
+          <button type="button" class="hero__dot" data-carousel-dot="2" role="tab" aria-selected="false" aria-label="Акция 3 из 5: −10% льготникам"></button>
+          <button type="button" class="hero__dot" data-carousel-dot="3" role="tab" aria-selected="false" aria-label="Акция 4 из 5: Консультация ортодонта"></button>
+          <button type="button" class="hero__dot" data-carousel-dot="4" role="tab" aria-selected="false" aria-label="Акция 5 из 5: Семейная программа"></button>
+        </div>
+
+        <button type="button" class="hero__arrow hero__arrow--prev" data-carousel-prev aria-label="Предыдущая акция">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="hero__arrow hero__arrow--next" data-carousel-next aria-label="Следующая акция">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
       </div>
     </div>
   </div>

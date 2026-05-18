@@ -100,6 +100,43 @@ p { margin: 0 0 1em; }
 .hero__note { font-size: 13px; color: var(--c-text-muted); }
 .hero__visual { position: relative; }
 .hero__offer { background: #fff; border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-lg); border: 1px solid var(--c-border); }
+
+/* Hero promotions carousel */
+.hero__carousel { position: relative; }
+.hero__slides { position: relative; }
+.hero__slide { transition: opacity .45s ease, transform .45s ease; }
+.hero__slide:not(.is-active) { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(6px); }
+.hero__slide.is-active { opacity: 1; visibility: visible; transform: translateY(0); }
+.hero__slide:not(:first-child) { position: absolute; top: 0; left: 0; right: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .hero__slide { transition: none; transform: none !important; }
+}
+
+.hero__carousel-nav { display: flex; gap: 8px; justify-content: center; margin-top: 18px; }
+.hero__dot { width: 9px; height: 9px; border-radius: 50%; border: 0; padding: 0; background: var(--c-border-dark); cursor: pointer; transition: background .2s ease, transform .2s ease; }
+.hero__dot:hover, .hero__dot:focus-visible { background: var(--c-primary-light); outline: none; }
+.hero__dot.is-active { background: var(--c-primary); transform: scale(1.25); }
+
+.hero__arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--c-border);
+  box-shadow: var(--shadow);
+  display: grid; place-items: center;
+  color: var(--c-primary);
+  cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, background .2s ease;
+  z-index: 2;
+}
+.hero__arrow--prev { left: -18px; }
+.hero__arrow--next { right: -18px; }
+.hero__carousel:hover .hero__arrow,
+.hero__arrow:focus-visible { opacity: 1; pointer-events: auto; }
+.hero__arrow:hover { background: var(--c-primary); color: #fff; }
+@media (max-width: 720px) {
+  .hero__arrow { display: none; }
+}
 .hero__offer-tag { display: inline-block; background: var(--c-accent); color: #1a2638; font-weight: 700; padding: 4px 12px; border-radius: 100px; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 14px; }
 .hero__offer-title { font-size: 22px; margin-bottom: 8px; }
 .hero__offer-price { display: flex; align-items: baseline; gap: 12px; margin: 14px 0 18px; }
