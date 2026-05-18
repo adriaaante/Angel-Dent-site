@@ -117,37 +117,40 @@ p { margin: 0 0 1em; }
   50%      { transform: scale(1.10) translate(-1.5%, -1%); }
 }
 
-/* Overlay: strong on the left (text side) → near-zero on the right (photo focal area).
-   Keeps headlines readable while preserving the photo's beauty. */
+/* Overlay: a light wash that protects the leftmost column where text
+   sits, but keeps most of the photo visible. */
 .hero__photo-overlay {
   position: absolute; inset: 0;
   background:
     linear-gradient(100deg,
-      rgba(234, 242, 252, 0.97) 0%,
-      rgba(245, 249, 255, 0.92) 40%,
-      rgba(245, 249, 255, 0.55) 70%,
-      rgba(245, 249, 255, 0.20) 100%),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+      rgba(234, 242, 252, 0.55) 0%,
+      rgba(245, 249, 255, 0.30) 35%,
+      rgba(245, 249, 255, 0.10) 65%,
+      rgba(245, 249, 255, 0.00) 100%);
 }
 
-/* Make hero text colours work against the photo backdrop —
-   muted grey #5a6779 was disappearing on light-blue marble.
-   Bump to darker greys; add subtle text-shadow on h1 for safety. */
+/* Dark text colours + crisp white text-shadow so the words stay readable
+   against any part of the photo — without hiding it. */
 .hero .hero__title {
-  color: #0f1f3a;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  color: #0a1729;
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.55),
+    0 0 14px rgba(255, 255, 255, 0.35);
 }
 .hero .hero__lead {
-  color: #2b3a4f;
+  color: #1a2638;
   font-weight: 500;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 .hero .hero__note {
-  color: #2b3a4f;
-  font-weight: 500;
+  color: #1a2638;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 .hero .eyebrow {
   color: var(--c-primary-dark);
   font-weight: 700;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 /* — Drifting micro-particles ("dust") — kept by user request — */
