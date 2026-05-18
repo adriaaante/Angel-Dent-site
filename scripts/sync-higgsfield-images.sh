@@ -19,6 +19,7 @@ mkdir -p "$DEST"
 
 # Map of CDN URL → local filename. Edit when you add new generations.
 declare -A IMAGES=(
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_194252_9fe5f763-f182-4172-886e-4ea08abdb435.png"]="hero-clinic.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_141253_d2cb86d1-e4f8-4193-998c-8f65003b9127.png"]="og-banner.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_141240_375cc91a-d896-41da-8027-03acee48282e.png"]="clinic-reception.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_141247_03248a5d-86dc-40f6-b424-f445b2497550.png"]="clinic-treatment-room.png"

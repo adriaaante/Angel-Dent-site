@@ -164,73 +164,17 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero__bg" aria-hidden="true">
-    <!-- Aurora mesh — 4 large soft gradient blobs slowly drifting -->
-    <span class="hero__aurora hero__aurora--1"></span>
-    <span class="hero__aurora hero__aurora--2"></span>
-    <span class="hero__aurora hero__aurora--3"></span>
-    <span class="hero__aurora hero__aurora--4"></span>
+    <!-- Single cinematic clinic photo with slow ken-burns + soft gradient overlay -->
+    <img class="hero__photo-bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_194252_9fe5f763-f182-4172-886e-4ea08abdb435.png" alt="" loading="eager" fetchpriority="high" decoding="async" width="2752" height="1536">
+    <span class="hero__photo-overlay"></span>
 
-    <!-- Conic spotlight — slow rotating beam, like a soft radar sweep -->
-    <span class="hero__conic"></span>
-
-    <!-- Anatomical wireframe tooth — slowly rocks in 3D space -->
-    <div class="hero__tooth-3d">
-      <svg viewBox="0 0 100 120" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <!-- Tooth silhouette: crown + neck + two roots -->
-        <path d="M50 6 C 28 6, 16 22, 16 44 C 16 54, 20 64, 26 74 L 32 96 C 35 108, 44 108, 47 99 L 50 80 L 53 99 C 56 108, 65 108, 68 96 L 74 74 C 80 64, 84 54, 84 44 C 84 22, 72 6, 50 6 Z"/>
-        <!-- Crown cusps (top ridge) -->
-        <path d="M28 32 C 38 24, 62 24, 72 32"/>
-        <path d="M24 50 C 38 53, 62 53, 76 50"/>
-        <!-- Pulp / inner anatomy -->
-        <path d="M38 64 L 50 52 L 62 64" opacity=".55"/>
-        <!-- Root split (dashed) -->
-        <line x1="50" y1="74" x2="50" y2="104" stroke-dasharray="2 3"/>
-        <!-- Subtle scan ellipse across crown -->
-        <ellipse cx="50" cy="40" rx="28" ry="6" opacity=".35"/>
-      </svg>
-    </div>
-
-    <!-- Stylized dental arch / smile — marching gradient flows along the curve -->
-    <svg class="hero__arch" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      <defs>
-        <linearGradient id="archGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"  stop-color="#1e5fb3" stop-opacity="0"/>
-          <stop offset="35%" stop-color="#1e5fb3" stop-opacity=".55"/>
-          <stop offset="65%" stop-color="#4a8bd9" stop-opacity=".60"/>
-          <stop offset="100%" stop-color="#f5a623" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <!-- Smooth upper dental-arch curve -->
-      <path d="M 30 170 C 60 60, 200 30, 300 30 S 540 60, 570 170"
-            stroke="url(#archGrad)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-      <!-- Inner "energy" line with marching dashes -->
-      <path d="M 30 170 C 60 60, 200 30, 300 30 S 540 60, 570 170"
-            stroke="rgba(30,95,179,.55)" stroke-width="1" fill="none" stroke-linecap="round"
-            stroke-dasharray="6 8"/>
-    </svg>
-
-    <!-- Polish sparkles — twinkle around the tooth like "freshly cleaned" -->
-    <span class="hero__shine hero__shine--1"></span>
-    <span class="hero__shine hero__shine--2"></span>
-    <span class="hero__shine hero__shine--3"></span>
-
-    <!-- Medical EKG-like pulse line sweeping across -->
-    <span class="hero__pulse hero__pulse--top"></span>
-    <span class="hero__pulse hero__pulse--bottom"></span>
-
-    <!-- Subtle vertical grid lines — geometric/precision feel -->
-    <span class="hero__grid-overlay"></span>
-
-    <!-- Drifting micro-particles -->
+    <!-- Drifting micro-particles (white dust, kept from previous version) -->
     <span class="hero__dust hero__dust--1"></span>
     <span class="hero__dust hero__dust--2"></span>
     <span class="hero__dust hero__dust--3"></span>
     <span class="hero__dust hero__dust--4"></span>
     <span class="hero__dust hero__dust--5"></span>
     <span class="hero__dust hero__dust--6"></span>
-
-    <!-- Grain overlay (SVG noise) for tactile premium texture -->
-    <span class="hero__grain"></span>
   </div>
 
   <div class="container hero__grid">
