@@ -25,6 +25,12 @@ declare -A IMAGES=(
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_141608_82a01639-c927-4217-9b03-532c6d78a61e.png"]="implant.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_141613_a55d45f6-fd55-4e6c-887c-96055492bed5.png"]="orthodontics.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_141619_91a31d69-c023-43a3-a00c-ab4fb1d8eaf4.png"]="pediatric.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_143240_c61b0fa7-a73e-4a49-8152-a5de7432f764.png"]="caries-treatment.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_143245_60201c42-7daa-49bb-b0dd-9c9420c12045.png"]="surgery.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_143250_e87b0be6-c221-4378-9036-6672d737a04a.png"]="prosthetics.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_143258_a832387a-a99c-4e5b-ab53-be476d556a52.png"]="veneers.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_143304_59c46749-b25e-43ff-913d-27f572ebfe99.png"]="hygiene.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_143310_31c544fb-50ef-4356-9eb4-f0592f0d7950.png"]="periodontology.png"
 )
 
 echo "→ Downloading ${#IMAGES[@]} images to $DEST"
