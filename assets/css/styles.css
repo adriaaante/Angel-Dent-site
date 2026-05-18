@@ -123,11 +123,31 @@ p { margin: 0 0 1em; }
   position: absolute; inset: 0;
   background:
     linear-gradient(100deg,
-      rgba(234, 242, 252, 0.92) 0%,
-      rgba(245, 249, 255, 0.78) 35%,
-      rgba(245, 249, 255, 0.35) 65%,
-      rgba(245, 249, 255, 0.15) 100%),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0));
+      rgba(234, 242, 252, 0.97) 0%,
+      rgba(245, 249, 255, 0.92) 40%,
+      rgba(245, 249, 255, 0.55) 70%,
+      rgba(245, 249, 255, 0.20) 100%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+}
+
+/* Make hero text colours work against the photo backdrop —
+   muted grey #5a6779 was disappearing on light-blue marble.
+   Bump to darker greys; add subtle text-shadow on h1 for safety. */
+.hero .hero__title {
+  color: #0f1f3a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.hero .hero__lead {
+  color: #2b3a4f;
+  font-weight: 500;
+}
+.hero .hero__note {
+  color: #2b3a4f;
+  font-weight: 500;
+}
+.hero .eyebrow {
+  color: var(--c-primary-dark);
+  font-weight: 700;
 }
 
 /* — Drifting micro-particles ("dust") — kept by user request — */
