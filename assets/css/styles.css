@@ -262,6 +262,23 @@ p { margin: 0 0 1em; }
 .breadcrumbs a:hover { color: var(--c-primary); }
 .breadcrumbs span { margin: 0 6px; }
 
+/* Related services block (internal linking) */
+.related { padding: 48px 0; background: var(--c-bg-soft); }
+.related__title { font-size: 24px; margin-bottom: 6px; text-align: center; }
+.related__lead { text-align: center; color: var(--c-text-muted); margin-bottom: 28px; }
+.related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1000px; margin: 0 auto; }
+.related__card {
+  display: block; background: #fff; border: 1px solid var(--c-border); border-radius: var(--radius);
+  padding: 20px 22px; text-decoration: none; color: var(--c-text);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.related__card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--c-primary-light); }
+.related__name { font-weight: 700; color: var(--c-primary); margin-bottom: 6px; }
+.related__desc { font-size: 14px; color: var(--c-text-muted); }
+@media (max-width: 720px) {
+  .related__grid { grid-template-columns: 1fr; }
+}
+
 /* Page hero (inner pages) */
 .page-hero { padding: 30px 0 50px; background: linear-gradient(135deg, #eaf2fc 0%, #f5f9ff 100%); }
 .page-hero h1 { margin-bottom: 12px; }
