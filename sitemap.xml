@@ -197,4 +197,28 @@
     <priority>0.4</priority>
     <changefreq>yearly</changefreq>
   </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/implantaciya-ili-most.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/kak-vybrat-stomatologa.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/uxod-posle-implantacii.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

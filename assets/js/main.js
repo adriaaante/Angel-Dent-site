@@ -224,4 +224,63 @@
 
     start();
   });
+
+  // Scroll reveal animations (no library, no jank)
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var revealTargets = document.querySelectorAll(
+      '.section h2, .section__lead, .service-card, .doctor-card, .review-quote, .rating-card, .usp, .faq__item, .pf-card, .related__card, .prices-table'
+    );
+    revealTargets.forEach(function (el) { el.classList.add('js-reveal'); });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+
+    revealTargets.forEach(function (el) { io.observe(el); });
+  }
+
+  // Reading progress bar (top of viewport)
+  var progress = document.querySelector('[data-scroll-progress]');
+  if (progress) {
+    var ticking = false;
+    var updateProgress = function () {
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      progress.style.width = pct.toFixed(1) + '%';
+      ticking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { window.requestAnimationFrame(updateProgress); ticking = true; }
+    }, { passive: true });
+    updateProgress();
+  }
+
+  // Floating contact widget (WhatsApp / Telegram / Phone)
+  var fab = document.querySelector('[data-fab]');
+  if (fab) {
+    var fabToggle = fab.querySelector('[data-fab-toggle]');
+    var openFab = function () { fab.classList.add('is-open'); fabToggle.setAttribute('aria-expanded', 'true'); };
+    var closeFab = function () { fab.classList.remove('is-open'); fabToggle.setAttribute('aria-expanded', 'false'); };
+    if (fabToggle) {
+      fabToggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (fab.classList.contains('is-open')) closeFab(); else openFab();
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (!fab.contains(e.target)) closeFab();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeFab();
+    });
+    // Show after small delay (less intrusive on first impression)
+    setTimeout(function () { fab.classList.add('is-ready'); }, 800);
+  }
 })();

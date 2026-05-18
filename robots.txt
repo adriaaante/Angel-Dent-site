@@ -3,6 +3,7 @@ Allow: /
 Allow: /legal.html
 Allow: /doctors/
 Allow: /services/
+Allow: /blog/
 
 # Технические страницы — для индексации не требуются
 Disallow: /404.html
