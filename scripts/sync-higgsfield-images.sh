@@ -49,11 +49,26 @@ echo ""
 echo "→ Optimizing PNG with pngquant (if installed)"
 if command -v pngquant >/dev/null 2>&1; then
   for f in "$DEST"/*.png; do
+    [[ -f "$f" ]] || continue
     pngquant --quality 70-90 --strip --skip-if-larger --force --output "$f" "$f" 2>/dev/null || true
   done
   echo "  ✓ optimized"
 else
   echo "  (skipped — install pngquant for ~50% smaller files: brew install pngquant)"
+fi
+
+echo ""
+echo "→ Converting PNG → WebP (lossy q=82) for ~70% size reduction"
+if command -v cwebp >/dev/null 2>&1; then
+  for f in "$DEST"/*.png; do
+    [[ -f "$f" ]] || continue
+    webp="${f%.png}.webp"
+    cwebp -q 82 -quiet "$f" -o "$webp" || continue
+    rm -f "$f"  # keep only WebP — modern browsers + Yandex/Google support it
+  done
+  echo "  ✓ converted to WebP and removed source PNGs"
+else
+  echo "  (skipped — install webp for smaller files: apt-get install webp / brew install webp)"
 fi
 
 echo ""
@@ -63,11 +78,19 @@ echo "   regular <img> tags → relative path that respects page depth)"
 cd "$ROOT"
 
 SITE_URL="https://angel-denta.ru"
+# WebP is supported by Yandex.Browser, Chrome, Safari 14+, Firefox 65+,
+# Edge — i.e. essentially everyone. We default to .webp; if cwebp wasn't
+# available the files keep .png and we fall back automatically.
+target_ext=".png"
+if [[ -f "$DEST/og-banner.webp" ]]; then target_ext=".webp"; fi
+
 patched=0
 for url in "${!IMAGES[@]}"; do
-  filename="${IMAGES[$url]}"
+  filename="${IMAGES[$url]%.png}${target_ext}"
+  cdn_url_any="${url}"
+  cdn_url_webp="${url%.png}${target_ext}"
   abs_url="$SITE_URL/assets/img/generated/$filename"
-  esc_url=$(printf '%s' "$url" | sed 's/[\/&|]/\\&/g')
+  esc_url=$(printf '%s' "$cdn_url_any" | sed 's/[\/&|]/\\&/g')
 
   while IFS= read -r html; do
     # Relative path with ../ for each nested directory level
@@ -77,7 +100,7 @@ for url in "${!IMAGES[@]}"; do
       for ((i=0; i<depth; i++)); do rel="../$rel"; done
     fi
 
-    if grep -q "$url" "$html"; then
+    if grep -q "$cdn_url_any" "$html"; then
       # Pass 1 — only on og:image / twitter:image lines → absolute URL
       sed -i.bak "/og:image\|twitter:image/s|$esc_url|$abs_url|g" "$html"
       # Pass 2 — remaining occurrences (regular <img> tags) → relative path
@@ -89,6 +112,23 @@ for url in "${!IMAGES[@]}"; do
 done
 
 echo "  ✓ $patched replacements made"
+
+# If we converted to WebP, rewrite any earlier .png references in HTML
+# that the previous sync put there. Idempotent.
+if [[ "$target_ext" == ".webp" ]]; then
+  echo ""
+  echo "→ Replacing residual .png paths inside /assets/img/generated/ with .webp"
+  find . -name '*.html' -not -path './node_modules/*' -not -path './.git/*' \
+    -exec sed -i 's|\(assets/img/generated/[A-Za-z0-9-]*\)\.png|\1.webp|g' {} \;
+  echo "  ✓ done"
+fi
+
+# Once images are local, the CloudFront preconnect line is dead weight.
+echo ""
+echo "→ Removing now-unused CloudFront preconnect lines"
+find . -name '*.html' -not -path './node_modules/*' -not -path './.git/*' \
+  -exec sed -i '/<link rel="preconnect" href="https:\/\/d8j0ntlcm91z4\.cloudfront\.net"[^>]*>/d' {} \;
+echo "  ✓ done"
 echo ""
 echo "Done. Review changes with: git diff -- '*.html'"
 echo "Then commit: git add assets/img/generated/ '*.html' && git commit -m 'images: host Higgsfield assets locally'"

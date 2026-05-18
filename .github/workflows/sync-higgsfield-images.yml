@@ -29,8 +29,8 @@ jobs:
           # full history so we can push back
           fetch-depth: 0
 
-      - name: Install pngquant
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq pngquant
+      - name: Install pngquant + webp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq pngquant webp
 
       - name: Run sync script
         run: bash scripts/sync-higgsfield-images.sh
