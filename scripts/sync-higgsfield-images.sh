@@ -15,7 +15,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$ROOT/assets/img/generated"
-mkdir -p "$DEST"
+PORTFOLIO_DEST="$ROOT/assets/img/portfolio"
+mkdir -p "$DEST" "$PORTFOLIO_DEST"
 
 # Map of CDN URL → local filename. Edit when you add new generations.
 declare -A IMAGES=(
@@ -34,11 +35,46 @@ declare -A IMAGES=(
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260518_143310_31c544fb-50ef-4356-9eb4-f0592f0d7950.png"]="periodontology.png"
 )
 
-echo "→ Downloading ${#IMAGES[@]} images to $DEST"
+# Portfolio before/after images — downloaded to assets/img/portfolio/
+# These are referenced from portfolio.js (not from HTML), so the patching
+# step below safely ignores them.
+declare -A PORTFOLIO=(
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114447_2aebdc3a-a198-4cbd-8cec-62bba2e19340.png"]="ortho-crowded.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114508_1657467a-4806-49ce-858a-b17907e2006f.png"]="ortho-straight.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114518_9ecd1d0d-eab9-42c9-8484-2df9137f2b0c.png"]="ortho-bite-class2.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114526_7e2b0274-e827-4cb5-9c16-d2082b9580e4.png"]="ortho-bite-corrected.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114535_92e18d0d-53df-43d5-b22d-8896fbe6fde2.png"]="implant-gap.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114546_be371e62-e53b-48f3-9d02-8a6959233f21.png"]="implant-restored.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114555_259b852d-b128-4803-b97c-0cbb9ec78cbd.png"]="implant-noteeth.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114603_29557d9b-8c8e-4554-ae0e-863ef7e0b1da.png"]="implant-arch.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114614_01cde10a-1437-46ed-bcce-7050ed3db320.png"]="veneers-before.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114624_ed547ec5-0da2-459a-9d3e-6df717781d32.png"]="veneers-after.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114634_21465b70-85c2-42b8-8f29-3d5bece84220.png"]="crowns-before.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114643_4c38de80-d7cb-495b-a5bb-75446d5ac04e.png"]="crowns-after.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114651_f3d68a99-adf5-4e90-89a0-a5daa1345602.png"]="restoration-before.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114659_4b58f99e-6f84-450c-a2de-4930e8ca61b3.png"]="restoration-after.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114708_c06cb251-6993-4c03-957e-c49aa76a2946.png"]="caries-cavity.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114717_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png"]="caries-restored.png"
+)
+
+echo "→ Downloading ${#IMAGES[@]} site images to $DEST"
 for url in "${!IMAGES[@]}"; do
   filename="${IMAGES[$url]}"
   out="$DEST/$filename"
-  if [[ -f "$out" && -s "$out" ]]; then
+  if [[ -f "$out" && -s "$out" ]] || [[ -f "${out%.png}.webp" ]]; then
+    echo "  ✓ $filename (already exists)"
+    continue
+  fi
+  echo "  ↓ $filename"
+  curl -sSfL "$url" -o "$out"
+done
+
+echo ""
+echo "→ Downloading ${#PORTFOLIO[@]} portfolio before/after to $PORTFOLIO_DEST"
+for url in "${!PORTFOLIO[@]}"; do
+  filename="${PORTFOLIO[$url]}"
+  out="$PORTFOLIO_DEST/$filename"
+  if [[ -f "$out" && -s "$out" ]] || [[ -f "${out%.png}.webp" ]]; then
     echo "  ✓ $filename (already exists)"
     continue
   fi
@@ -49,7 +85,7 @@ done
 echo ""
 echo "→ Optimizing PNG with pngquant (if installed)"
 if command -v pngquant >/dev/null 2>&1; then
-  for f in "$DEST"/*.png; do
+  for f in "$DEST"/*.png "$PORTFOLIO_DEST"/*.png; do
     [[ -f "$f" ]] || continue
     pngquant --quality 70-90 --strip --skip-if-larger --force --output "$f" "$f" 2>/dev/null || true
   done
@@ -61,7 +97,7 @@ fi
 echo ""
 echo "→ Converting PNG → WebP (lossy q=82) for ~70% size reduction"
 if command -v cwebp >/dev/null 2>&1; then
-  for f in "$DEST"/*.png; do
+  for f in "$DEST"/*.png "$PORTFOLIO_DEST"/*.png; do
     [[ -f "$f" ]] || continue
     webp="${f%.png}.webp"
     cwebp -q 82 -quiet "$f" -o "$webp" || continue
