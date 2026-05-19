@@ -15,11 +15,11 @@
       <image:title>Геворкян Санатрук Иванович — стоматолог-хирург, имплантолог</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustam.png</image:loc>
+      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamli.png</image:loc>
       <image:title>Рустамли Руслан Рустамович — стоматолог-хирург, имплантолог</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamov-emil.png</image:loc>
+      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamov.png</image:loc>
       <image:title>Рустамов Эмиль Дилгамович — стоматолог-ортопед</image:title>
     </image:image>
     <image:image>
@@ -119,7 +119,7 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
     <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustam.png</image:loc>
+      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamli.png</image:loc>
       <image:title>Рустамли Руслан Рустамович — стоматолог-хирург, имплантолог</image:title>
     </image:image>
   </url>
@@ -129,7 +129,7 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
     <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamov-emil.png</image:loc>
+      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamov.png</image:loc>
       <image:title>Рустамов Эмиль Дилгамович — стоматолог-ортопед</image:title>
     </image:image>
   </url>
