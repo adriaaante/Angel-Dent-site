@@ -75,7 +75,8 @@
         if (success) {
           success.textContent = label;
           success.classList.add('is-active');
-          setTimeout(function () { success.classList.remove('is-active'); }, 9000);
+          // Note: notification stays visible until modal close / page reload,
+          // so a distracted user always sees it when they come back.
         }
         if (ok) {
           form.reset();
@@ -97,6 +98,14 @@
 
   // Modal (callback request)
   var modal = document.querySelector('[data-modal]');
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    // Clear any leftover success notification so next open starts fresh.
+    modal.querySelectorAll('[data-form-success].is-active').forEach(function (el) {
+      el.classList.remove('is-active');
+    });
+  }
   document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
@@ -106,11 +115,11 @@
   if (modal) {
     modal.addEventListener('click', function (e) {
       if (e.target === modal || e.target.matches('[data-modal-close]') || e.target.closest('[data-modal-close]')) {
-        modal.classList.remove('is-open');
+        closeModal();
       }
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') modal.classList.remove('is-open');
+      if (e.key === 'Escape') closeModal();
     });
   }
 
