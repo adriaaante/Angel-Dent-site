@@ -30,22 +30,74 @@
   }
   document.querySelectorAll('input[type="tel"]').forEach(maskPhone);
 
-  // Lead submission via Web3Forms (https://web3forms.com)
+  // Lead submission — sent in parallel to e-mail (via Web3Forms) and to
+  // a Telegram chat (via Bot API). Either channel succeeding is enough
+  // to show "Спасибо!" to the visitor; both failing falls back to the
+  // phone number.
   // ---------------------------------------------------------------
-  // Why Web3Forms instead of FormSubmit:
-  //   * No "first submission captcha wall" — works on attempt #1
-  //   * Native CORS — plain fetch() returns proper JSON
-  //   * Simple one-time setup: generate access_key on web3forms.com
-  //     (recipient email gets the key immediately, no signup needed)
-  //   * Pretty HTML email out of the box (table layout, branded subject)
   //
-  // The visitor never sees anything about activation/confirmation —
-  // only "Спасибо…" on success or the fallback phone number on error.
+  // Setup steps (one-time, ~5 minutes total):
   //
-  // ACCESS_KEY belongs to the clinic; emails go to whatever address
-  // was used to generate the key on web3forms.com.
+  // 1) E-MAIL — Web3Forms (https://web3forms.com)
+  //    • Открыть web3forms.com, ввести e-mail клиники (например info@angel-denta.ru)
+  //    • Нажать «Create Access Key» — на почту придёт длинный access_key
+  //    • Подставить его ниже в WEB3FORMS_KEY (заменить __WEB3FORMS_KEY__)
+  //    • Готово. Письма приходят на тот же e-mail, никакого signup-а
+  //
+  // 2) TELEGRAM — собственный бот
+  //    a. Открыть @BotFather в Telegram → /newbot → дать имя
+  //       (например «Ангел-Дент заявки») и username (например
+  //       angeldent_leads_bot). Получите BOT_TOKEN вида 1234567890:AAH…
+  //       Подставить в TELEGRAM_BOT_TOKEN ниже.
+  //    b. Получить CHAT_ID куда отправлять:
+  //       • Личный чат: @userinfobot → /start → пришлёт ваш chat_id.
+  //         Затем напишите своему боту /start (иначе он не сможет вам
+  //         написать первым).
+  //       • Группа: добавить бота в группу, написать там любое сообщение,
+  //         открыть https://api.telegram.org/bot<BOT_TOKEN>/getUpdates
+  //         и найти "chat":{"id":-1001234567890}. Минус — обязательная
+  //         часть chat_id супергруппы.
+  //       Подставить в TELEGRAM_CHAT_ID ниже.
+  //    c. Готово. Заявки летят в Telegram через 1-2 секунды.
+
+  var WEB3FORMS_KEY     = '__WEB3FORMS_KEY__';     // TODO: access_key с web3forms.com
+  var TELEGRAM_BOT_TOKEN = '__TG_BOT_TOKEN__';     // TODO: токен от @BotFather
+  var TELEGRAM_CHAT_ID   = '__TG_CHAT_ID__';       // TODO: chat_id куда слать
+
   var LEAD_ENDPOINT = 'https://api.web3forms.com/submit';
-  var ACCESS_KEY = '__WEB3FORMS_KEY__'; // TODO: replace with real access_key from web3forms.com
+  var TG_ENDPOINT   = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
+
+  function sendEmail(form) {
+    if (!WEB3FORMS_KEY || WEB3FORMS_KEY.indexOf('__') === 0) return Promise.reject('no key');
+    var fd = new FormData(form);
+    fd.append('access_key', WEB3FORMS_KEY);
+    fd.append('subject', 'Заявка с сайта Ангел-Дент · ' + (location.pathname || '/'));
+    fd.append('from_name', 'Сайт angel-denta.ru');
+    fd.append('Страница', location.pathname || '/');
+    if (document.title) fd.append('Раздел', document.title);
+    fd.append('botcheck', ''); // honeypot
+    return fetch(LEAD_ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.json().then(function (d) { return r.ok && d && d.success ? d : Promise.reject(d); }); });
+  }
+
+  function sendTelegram(form) {
+    if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.indexOf('__') === 0) return Promise.reject('no token');
+    var fd = new FormData(form);
+    var lines = ['🦷 *Заявка с сайта Ангел-Дент*', ''];
+    fd.forEach(function (val, key) {
+      if (!val) return;
+      var label = ({ name: 'Имя', phone: 'Телефон', service: 'Услуга', message: 'Комментарий' })[key] || key;
+      lines.push('*' + label + ':* ' + String(val).replace(/[*_`[]/g, '\\$&'));
+    });
+    lines.push('');
+    lines.push('_Страница: ' + (location.pathname || '/') + '_');
+    var text = lines.join('\n');
+    return fetch(TG_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: 'Markdown', disable_web_page_preview: true })
+    }).then(function (r) { return r.json().then(function (d) { return d && d.ok ? d : Promise.reject(d); }); });
+  }
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
@@ -53,57 +105,33 @@
       var success = form.querySelector('[data-form-success]');
       var submitBtn = form.querySelector('button[type="submit"]');
       var origLabel = submitBtn ? submitBtn.textContent : 'Отправить';
-      var fail = function (logMsg, err) {
-        if (logMsg) console.warn('[lead]', logMsg, err || '');
+
+      var done = function (ok, label) {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
         if (success) {
-          success.textContent = 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08';
+          success.textContent = label;
           success.classList.add('is-active');
           setTimeout(function () { success.classList.remove('is-active'); }, 9000);
         }
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
+        if (ok) {
+          form.reset();
+          if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
+        }
       };
-
-      // Build payload — Web3Forms reads access_key + free-form fields
-      var fd = new FormData(form);
-      fd.append('access_key', ACCESS_KEY);
-      fd.append('subject', 'Заявка с сайта Ангел-Дент · ' + (location.pathname || '/'));
-      fd.append('from_name', 'Сайт angel-denta.ru');
-      fd.append('Страница', location.pathname || '/');
-      if (document.title) fd.append('Раздел', document.title);
-      fd.append('botcheck', ''); // honeypot
 
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
 
-      var ctrl = ('AbortController' in window) ? new AbortController() : null;
-      var timeoutId = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
+      // Send to both channels in parallel; succeed if at least one returns OK.
+      var promises = [
+        sendEmail(form).then(function () { return 'email'; }, function (err) { console.warn('[lead] email failed', err); return null; }),
+        sendTelegram(form).then(function () { return 'tg'; }, function (err) { console.warn('[lead] telegram failed', err); return null; })
+      ];
 
-      fetch(LEAD_ENDPOINT, {
-        method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' },
-        signal: ctrl ? ctrl.signal : undefined
-      })
-      .then(function (res) {
-        return res.json().then(function (data) { return { ok: res.ok, data: data }; });
-      })
-      .then(function (r) {
-        clearTimeout(timeoutId);
-        if (r.ok && r.data && r.data.success) {
-          if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
-          if (success) {
-            success.textContent = 'Спасибо! Мы перезвоним за 15 минут.';
-            success.classList.add('is-active');
-            setTimeout(function () { success.classList.remove('is-active'); }, 9000);
-          }
-          form.reset();
-          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
-        } else {
-          fail('Web3Forms rejected', r.data);
-        }
-      })
-      .catch(function (err) {
-        clearTimeout(timeoutId);
-        fail('network/abort', err);
+      Promise.all(promises).then(function (results) {
+        var anyOk = results.some(Boolean);
+        done(anyOk, anyOk
+          ? 'Спасибо! Мы перезвоним за 15 минут.'
+          : 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08');
       });
     });
   });
