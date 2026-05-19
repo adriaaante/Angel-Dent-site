@@ -54,7 +54,7 @@ declare -A PORTFOLIO=(
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114643_4c38de80-d7cb-495b-a5bb-75446d5ac04e.png"]="crowns-after.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114651_f3d68a99-adf5-4e90-89a0-a5daa1345602.png"]="restoration-before.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114659_4b58f99e-6f84-450c-a2de-4930e8ca61b3.png"]="restoration-after.png"
-  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114707_c06cb251-6993-4c03-957e-c49aa76a2946.png"]="caries-cavity.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_125133_95c708dc-93df-4c43-9a7a-53ceae191357.png"]="caries-cavity.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114718_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png"]="caries-restored.png"
 )
 
