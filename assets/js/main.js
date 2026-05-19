@@ -60,9 +60,9 @@
   //       Подставить в TELEGRAM_CHAT_ID ниже.
   //    c. Готово. Заявки летят в Telegram через 1-2 секунды.
 
-  var WEB3FORMS_KEY     = '__WEB3FORMS_KEY__';     // TODO: access_key с web3forms.com
+  var WEB3FORMS_KEY     = '665309e3-ec24-437e-94b5-620e587f8659'; // TODO: access_key с web3forms.com
   var TELEGRAM_BOT_TOKEN = '8682361398:AAEkEqOgAIFubhfX8oId7UIk4R0vt13Qd2g'; // TODO: токен от @BotFather
-  var TELEGRAM_CHAT_ID   = '8327691755';           // TODO: chat_id куда слать
+  var TELEGRAM_CHAT_ID   = '-5176309139';          // TODO: chat_id куда слать
 
   var LEAD_ENDPOINT = 'https://api.web3forms.com/submit';
   var TG_ENDPOINT   = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
