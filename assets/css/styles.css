@@ -117,40 +117,52 @@ p { margin: 0 0 1em; }
   50%      { transform: scale(1.10) translate(-1.5%, -1%); }
 }
 
-/* Overlay: a light wash that protects the leftmost column where text
-   sits, but keeps most of the photo visible. */
+/* Overlay: very light wash, just to soften the photo slightly. */
 .hero__photo-overlay {
   position: absolute; inset: 0;
   background:
-    linear-gradient(100deg,
-      rgba(234, 242, 252, 0.55) 0%,
-      rgba(245, 249, 255, 0.30) 35%,
-      rgba(245, 249, 255, 0.10) 65%,
-      rgba(245, 249, 255, 0.00) 100%);
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.10) 0%,
+      rgba(255, 255, 255, 0.00) 100%);
 }
 
-/* Dark text colours + crisp white text-shadow so the words stay readable
-   against any part of the photo — without hiding it. */
-.hero .hero__title {
-  color: #0a1729;
-  text-shadow:
-    0 1px 2px rgba(255, 255, 255, 0.55),
-    0 0 14px rgba(255, 255, 255, 0.35);
+/* Glassmorphism card behind the hero text — keeps the photo visible AND
+   makes every line of text readable regardless of the photo's brightness. */
+.hero__grid > div:first-child {
+  position: relative;
+  isolation: isolate;
 }
-.hero .hero__lead {
-  color: #1a2638;
-  font-weight: 500;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+.hero__grid > div:first-child::before {
+  content: "";
+  position: absolute;
+  inset: -22px -28px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+          backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 14px 44px rgba(15, 31, 58, 0.10), 0 2px 8px rgba(15, 31, 58, 0.05);
+  z-index: -1;
 }
-.hero .hero__note {
-  color: #1a2638;
-  font-weight: 600;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+/* Fallback for browsers without backdrop-filter (older Firefox/Safari) */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .hero__grid > div:first-child::before { background: rgba(255, 255, 255, 0.92); }
 }
-.hero .eyebrow {
-  color: var(--c-primary-dark);
-  font-weight: 700;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+
+.hero .hero__title { color: #0a1729; }
+.hero .hero__lead { color: #1a2638; font-weight: 500; }
+.hero .hero__note { color: #1a2638; font-weight: 500; }
+.hero .eyebrow { color: var(--c-primary-dark); font-weight: 700; }
+
+/* Mobile — card edge-to-edge, less padding */
+@media (max-width: 720px) {
+  .hero__grid > div:first-child::before {
+    inset: -14px -16px;
+    border-radius: 16px;
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+            backdrop-filter: blur(14px) saturate(130%);
+    background: rgba(255, 255, 255, 0.78);
+  }
 }
 
 /* — Drifting micro-particles ("dust") — kept by user request — */
