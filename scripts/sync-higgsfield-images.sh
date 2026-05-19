@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # Download Higgsfield-generated CDN images into assets/img/generated/
-# and patch all HTML files to use local paths instead of CDN URLs.
+# (or assets/img/portfolio/ for before/after pairs) and patch all HTML
+# files to use local paths instead of CDN URLs.
 #
 # Why: CDN URLs work fine for visitors, but hosting images on the same
 # origin gives faster loads, full control, and survives any change to
