@@ -30,73 +30,37 @@
   }
   document.querySelectorAll('input[type="tel"]').forEach(maskPhone);
 
-  // Lead submission — sent in parallel to e-mail (via Web3Forms) and to
-  // a Telegram chat (via Bot API). Either channel succeeding is enough
-  // to show "Спасибо!" to the visitor; both failing falls back to the
-  // phone number.
-  // ---------------------------------------------------------------
-  //
-  // Setup steps (one-time, ~5 minutes total):
-  //
-  // 1) E-MAIL — Web3Forms (https://web3forms.com)
-  //    • Открыть web3forms.com, ввести e-mail клиники (например info@angel-denta.ru)
-  //    • Нажать «Create Access Key» — на почту придёт длинный access_key
-  //    • Подставить его ниже в WEB3FORMS_KEY (заменить __WEB3FORMS_KEY__)
-  //    • Готово. Письма приходят на тот же e-mail, никакого signup-а
-  //
-  // 2) TELEGRAM — собственный бот
-  //    a. Открыть @BotFather в Telegram → /newbot → дать имя
-  //       (например «Ангел-Дент заявки») и username (например
-  //       angeldent_leads_bot). Получите BOT_TOKEN вида 1234567890:AAH…
-  //       Подставить в TELEGRAM_BOT_TOKEN ниже.
-  //    b. Получить CHAT_ID куда отправлять:
-  //       • Личный чат: @userinfobot → /start → пришлёт ваш chat_id.
-  //         Затем напишите своему боту /start (иначе он не сможет вам
-  //         написать первым).
-  //       • Группа: добавить бота в группу, написать там любое сообщение,
-  //         открыть https://api.telegram.org/bot<BOT_TOKEN>/getUpdates
-  //         и найти "chat":{"id":-1001234567890}. Минус — обязательная
-  //         часть chat_id супергруппы.
-  //       Подставить в TELEGRAM_CHAT_ID ниже.
-  //    c. Готово. Заявки летят в Telegram через 1-2 секунды.
+  // Lead submission — Telegram bot only.
+  // Setup: @BotFather → /newbot → токен → TELEGRAM_BOT_TOKEN.
+  // CHAT_ID: личный (@userinfobot → /start) или группа
+  // (добавить бота, https://api.telegram.org/bot<TOKEN>/getUpdates → chat.id).
+  var TELEGRAM_BOT_TOKEN = '8682361398:AAEkEqOgAIFubhfX8oId7UIk4R0vt13Qd2g';
+  var TELEGRAM_CHAT_ID   = '-5176309139';
+  var TG_ENDPOINT = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
 
-  var WEB3FORMS_KEY     = '665309e3-ec24-437e-94b5-620e587f8659'; // TODO: access_key с web3forms.com
-  var TELEGRAM_BOT_TOKEN = '8682361398:AAEkEqOgAIFubhfX8oId7UIk4R0vt13Qd2g'; // TODO: токен от @BotFather
-  var TELEGRAM_CHAT_ID   = '-5176309139';          // TODO: chat_id куда слать
-
-  var LEAD_ENDPOINT = 'https://api.web3forms.com/submit';
-  var TG_ENDPOINT   = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-
-  function sendEmail(form) {
-    if (!WEB3FORMS_KEY || WEB3FORMS_KEY.indexOf('__') === 0) return Promise.reject('no key');
-    var fd = new FormData(form);
-    fd.append('access_key', WEB3FORMS_KEY);
-    fd.append('subject', 'Заявка с сайта Ангел-Дент · ' + (location.pathname || '/'));
-    fd.append('from_name', 'Сайт angel-denta.ru');
-    fd.append('Страница', location.pathname || '/');
-    if (document.title) fd.append('Раздел', document.title);
-    fd.append('botcheck', ''); // honeypot
-    return fetch(LEAD_ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
-      .then(function (r) { return r.json().then(function (d) { return r.ok && d && d.success ? d : Promise.reject(d); }); });
-  }
+  var FIELD_LABELS = { name: 'Имя', phone: 'Телефон', service: 'Услуга', message: 'Комментарий' };
 
   function sendTelegram(form) {
-    if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.indexOf('__') === 0) return Promise.reject('no token');
     var fd = new FormData(form);
     var lines = ['🦷 *Заявка с сайта Ангел-Дент*', ''];
     fd.forEach(function (val, key) {
       if (!val) return;
-      var label = ({ name: 'Имя', phone: 'Телефон', service: 'Услуга', message: 'Комментарий' })[key] || key;
+      var label = FIELD_LABELS[key] || key;
       lines.push('*' + label + ':* ' + String(val).replace(/[*_`[]/g, '\\$&'));
     });
-    lines.push('');
-    lines.push('_Страница: ' + (location.pathname || '/') + '_');
-    var text = lines.join('\n');
+    lines.push('', '_Страница: ' + (location.pathname || '/') + '_');
     return fetch(TG_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: 'Markdown', disable_web_page_preview: true })
-    }).then(function (r) { return r.json().then(function (d) { return d && d.ok ? d : Promise.reject(d); }); });
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: lines.join('\n'),
+        parse_mode: 'Markdown',
+        disable_web_page_preview: true
+      })
+    }).then(function (r) {
+      return r.json().then(function (d) { return d && d.ok ? d : Promise.reject(d); });
+    });
   }
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
@@ -121,18 +85,13 @@
 
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
 
-      // Send to both channels in parallel; succeed if at least one returns OK.
-      var promises = [
-        sendEmail(form).then(function () { return 'email'; }, function (err) { console.warn('[lead] email failed', err); return null; }),
-        sendTelegram(form).then(function () { return 'tg'; }, function (err) { console.warn('[lead] telegram failed', err); return null; })
-      ];
-
-      Promise.all(promises).then(function (results) {
-        var anyOk = results.some(Boolean);
-        done(anyOk, anyOk
-          ? 'Спасибо! Мы перезвоним за 15 минут.'
-          : 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08');
-      });
+      sendTelegram(form).then(
+        function () { done(true,  'Спасибо! Мы перезвоним за 15 минут.'); },
+        function (err) {
+          console.warn('[lead] telegram failed', err);
+          done(false, 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08');
+        }
+      );
     });
   });
 
