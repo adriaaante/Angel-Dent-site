@@ -485,8 +485,8 @@ window.AD_PORTFOLIO = {
       services: ['Эндодонтия', 'Микроскоп Zeiss', 'ProTaper'],
       duration: '2 визита',
       date: '02.2025',
-      before: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114708_c06cb251-6993-4c03-957e-c49aa76a2946.png',
-      after: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114717_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png',
+      before: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114707_c06cb251-6993-4c03-957e-c49aa76a2946.png',
+      after: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114718_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png',
       details: {
         problem: 'Женщина 36 лет с острой самопроизвольной болью в верхнем шестом зубе, усиливающейся в положении лёжа и ночью. Боль иррадиировала в висок, обезболивающие помогали ненадолго.',
         diagnosis: 'Холодовая проба резко положительная с длительной болевой реакцией, ЭОД 40 мкА. Прицельный снимок и КЛКТ подтвердили глубокую кариозную полость, сообщающуюся с пульпарной камерой. Диагноз — острый диффузный пульпит.',
@@ -510,8 +510,8 @@ window.AD_PORTFOLIO = {
       services: ['Кариес', 'Микроскоп', 'Estelite Asteria'],
       duration: '1 визит',
       date: '11.2024',
-      before: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114708_c06cb251-6993-4c03-957e-c49aa76a2946.png',
-      after: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114717_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png',
+      before: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114707_c06cb251-6993-4c03-957e-c49aa76a2946.png',
+      after: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114718_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png',
       details: {
         problem: 'Девушка 28 лет обратилась с кратковременной болью от сладкого и холодного в нижнем шестом зубе. Самопроизвольных болей не было, но беспокоила чувствительность при попадании пищи в полость.',
         diagnosis: 'На прицельном снимке — глубокая кариозная полость, доходящая до проекции пульпы. Холодовая проба положительная, кратковременная. ЭОД 12 мкА — пульпа жива и здорова. Показано лечение с сохранением витальности пульпы.',
@@ -535,8 +535,8 @@ window.AD_PORTFOLIO = {
       services: ['Эндодонтия', 'Перелечивание', 'Микроскоп Zeiss'],
       duration: '3 визита',
       date: '06.2025',
-      before: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114708_c06cb251-6993-4c03-957e-c49aa76a2946.png',
-      after: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114717_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png',
+      before: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114707_c06cb251-6993-4c03-957e-c49aa76a2946.png',
+      after: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260519_114718_2e55b190-9cc8-4bcd-85e5-da3bc22f481e.png',
       details: {
         problem: 'Мужчина 41 года с периодически появляющимся свищом на десне в проекции верхнего премоляра, ранее леченного 7 лет назад. Зуб не болел, но свищ беспокоил.',
         diagnosis: 'КЛКТ выявила некачественную обтурацию двух каналов: один пройден на 2/3 длины, второй пропущен (вторичный нёбный канал). У верхушки — очаг деструкции костной ткани 4×5 мм. Диагноз — хронический апикальный периодонтит, требуется перелечивание.',
