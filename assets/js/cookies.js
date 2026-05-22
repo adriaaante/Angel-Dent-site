@@ -87,7 +87,6 @@
 
   // ----- Bootstrap -----
   function init() {
-    ensureToggle();
     if (getConsent() === null) {
       showBanner();
     }
