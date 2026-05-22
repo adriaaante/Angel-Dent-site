@@ -221,4 +221,22 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/viniry-ili-koronki.html</loc>
+    <lastmod>2026-05-22</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/krovotochat-desny.html</loc>
+    <lastmod>2026-05-22</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/zub-mudrosti-udalyat-ili-lechit.html</loc>
+    <lastmod>2026-05-22</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

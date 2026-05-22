@@ -343,6 +343,7 @@ p { margin: 0 0 1em; }
 .form__success.is-active { display: block; }
 .form__input::placeholder, .form__textarea::placeholder { color: #9aa9bd; font-weight: 400; }
 .form__select:has(option[value=""]:checked) { color: #9aa9bd; }
+.form__required { color: #e44d56; margin-left: 3px; font-weight: 700; }
 
 .contact-info { background: var(--c-primary); color: #fff; padding: 30px; border-radius: var(--radius); }
 .contact-info h3 { color: #fff; font-size: 22px; }
