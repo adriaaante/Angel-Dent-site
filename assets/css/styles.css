@@ -259,6 +259,7 @@ p { margin: 0 0 1em; }
 .hero__offer-price { display: flex; align-items: baseline; gap: 12px; margin: 14px 0 18px; }
 .hero__offer-price-new { font-size: 36px; font-weight: 800; color: var(--c-primary); }
 .hero__offer-price-old { font-size: 18px; color: var(--c-text-muted); text-decoration: line-through; }
+.hero__offer-price-note { font-size: 18px; color: var(--c-text-muted); }
 .hero__offer-list { list-style: none; padding: 0; margin: 0 0 20px; font-size: 14.5px; }
 .hero__offer-list li { padding: 6px 0 6px 26px; position: relative; }
 .hero__offer-list li::before { content: ""; position: absolute; left: 0; top: 12px; width: 16px; height: 16px; background: var(--c-success); border-radius: 50%; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'><path d='M6.5 11.5L3 8l1.2-1.2L6.5 9.1l5.3-5.3L13 5z'/></svg>"); background-size: 14px; background-position: center; background-repeat: no-repeat; }
