@@ -38,7 +38,7 @@
   var TELEGRAM_CHAT_ID   = '-5176309139';
   var TG_ENDPOINT = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
 
-  var FIELD_LABELS = { name: 'Имя', phone: 'Телефон' };
+  var FIELD_LABELS = { name: 'Имя', phone: 'Телефон', service: 'Услуга', message: 'Комментарий' };
 
   function sendTelegram(form) {
     var fd = new FormData(form);
