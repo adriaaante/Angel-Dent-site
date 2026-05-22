@@ -5,7 +5,7 @@
   'use strict';
 
   var STORAGE_KEY = 'ad_cookies_consent';
-  var YM_ID = 100658497;
+  var YM_ID = 109369174;
 
   // ----- Yandex.Metrika loader (mirrors the official snippet, with one guard) -----
   function loadYandexMetrika() {
@@ -20,9 +20,18 @@
       k.async = 1;
       k.src = r;
       a.parentNode.insertBefore(k, a);
-    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=' + YM_ID, 'ym');
     try {
-      window.ym(YM_ID, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
+      window.ym(YM_ID, 'init', {
+        ssr: true,
+        webvisor: true,
+        clickmap: true,
+        ecommerce: 'dataLayer',
+        referrer: document.referrer,
+        url: location.href,
+        accurateTrackBounce: true,
+        trackLinks: true
+      });
     } catch (e) { /* noop */ }
   }
 

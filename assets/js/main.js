@@ -89,7 +89,7 @@
       .then(function (r) {
         clearTimeout(timeoutId);
         if (r.ok && r.data && r.data.success) {
-          if (typeof ym === 'function') { try { ym(100658497, 'reachGoal', 'lead_submit'); } catch (e) {} }
+          if (typeof ym === 'function') { try { ym(109369174, 'reachGoal', 'lead_submit'); } catch (e) {} }
           if (success) {
             success.textContent = 'Спасибо! Мы перезвоним за 15 минут.';
             success.classList.add('is-active');
