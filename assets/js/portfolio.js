@@ -69,8 +69,8 @@ window.AD_PORTFOLIO = {
       services: ['Элайнеры', 'Star Smile'],
       duration: '8 месяцев',
       date: '02.2025',
-      before: '../assets/img/portfolio/ortho-crowded.webp',
-      after: '../assets/img/portfolio/ortho-straight.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Мужчина 34 лет, IT-специалист, обратился с лёгкой скученностью нижнего фронтального отдела и ротацией клыка. Брекеты в публичной профессии носить не хотел, искал максимально незаметное решение.',
         diagnosis: 'Внутриротовое сканирование 3Shape Trios, ТРГ и КТ показали отсутствие скелетных аномалий, дефицит места 2,5 мм на нижней челюсти. Состояние тканей пародонта стабильное, можно стартовать лечение элайнерами.',
@@ -119,8 +119,8 @@ window.AD_PORTFOLIO = {
       services: ['Брекеты', 'Damon Q', 'Мезиальный прикус'],
       duration: '24 месяца',
       date: '09.2024',
-      before: '../assets/img/portfolio/ortho-bite-class2.webp',
-      after: '../assets/img/portfolio/ortho-bite-corrected.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Пациент 29 лет с обратным резцовым перекрытием и жалобами на затруднённое откусывание пищи. Ранее ему предлагали ортогнатическую операцию, но он искал нехирургическое решение.',
         diagnosis: 'ТРГ показала пограничный скелетный класс III (ANB -1,2°) с зубоальвеолярной компенсацией. КТ подтвердила достаточный объём кости для установки ортодонтических микроимплантов в небе и ретромолярной области.',
@@ -198,8 +198,8 @@ window.AD_PORTFOLIO = {
       services: ['Хирургия', 'Восьмёрки', 'Костная пластика'],
       duration: '1 визит',
       date: '01.2025',
-      before: '../assets/img/portfolio/implant-gap.webp',
-      after: '../assets/img/portfolio/implant-restored.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Мужчина 31 года направлен ортодонтом перед началом лечения брекетами. Нижняя восьмёрка располагалась горизонтально и упиралась корнями в дистальный корень соседней семёрки, периодически провоцируя воспаление капюшона.',
         diagnosis: 'КЛКТ выявила тесный контакт корней восьмёрки с нижнечелюстным каналом (расстояние около 1 мм) и резорбцию дистального корня соседнего зуба. Высокий риск осложнений при стандартном удалении — нужен щадящий протокол с разделением зуба на фрагменты.',
@@ -223,8 +223,8 @@ window.AD_PORTFOLIO = {
       services: ['Имплантация', 'Straumann', 'Эстетика'],
       duration: '4 месяца',
       date: '06.2025',
-      before: '../assets/img/portfolio/implant-gap.webp',
-      after: '../assets/img/portfolio/implant-restored.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Девушка 27 лет получила травму центрального резца после падения. Зуб раскололся под десной и подлежал удалению. Главное опасение — оставаться даже один день без переднего зуба.',
         diagnosis: 'КТ показала перелом корня в средней трети без повреждения вестибулярной костной пластинки. Десневой контур и сосочки сохранены — идеальные условия для одномоментной имплантации с немедленной временной коронкой.',
@@ -277,8 +277,8 @@ window.AD_PORTFOLIO = {
       services: ['Одномоментная имплантация', 'Osstem'],
       duration: '3 месяца',
       date: '02.2025',
-      before: '../assets/img/portfolio/implant-gap.webp',
-      after: '../assets/img/portfolio/implant-restored.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Женщина 38 лет с разрушенным до уровня десны жевательным зубом после неудачного эндодонтического лечения. Зуб не подлежал восстановлению, пациентка хотела решить проблему максимально быстро.',
         diagnosis: 'КЛКТ подтвердила, что корень зуба интактен снизу, без кист и гранулём, межкорневая перегородка достаточной толщины для первичной стабилизации импланта. Идеальный случай для одномоментной имплантации.',
@@ -302,8 +302,8 @@ window.AD_PORTFOLIO = {
       services: ['Костная пластика', 'Bio-Oss'],
       duration: '4 месяца',
       date: '10.2024',
-      before: '../assets/img/portfolio/implant-gap.webp',
-      after: '../assets/img/portfolio/implant-restored.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Мужчина 45 лет 5 лет назад потерял зуб в зоне улыбки, лунка зажила, но возникла выраженная атрофия вестибулярной стенки — десна впала «корытом». Без наращивания кости имплантация была невозможна.',
         diagnosis: 'КЛКТ показала ширину альвеолярного гребня всего 3,5 мм при необходимых для импланта 7 мм. Высота кости в норме. Подходящий случай для горизонтальной аугментации по технике GBR (направленной костной регенерации).',
@@ -327,8 +327,8 @@ window.AD_PORTFOLIO = {
       services: ['Хирургия', 'Зубы мудрости'],
       duration: '1 визит',
       date: '07.2025',
-      before: '../assets/img/portfolio/implant-gap.webp',
-      after: '../assets/img/portfolio/implant-restored.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Девушка 24 лет с периодическим перикоронитом нижней восьмёрки — отёк, боль при глотании, ограниченное открывание рта возникали несколько раз в год. На КТ выяснилось, что зуб лежит горизонтально и упирается в семёрку.',
         diagnosis: 'КЛКТ показала горизонтальное положение зуба мудрости с углом наклона 95°, тесный контакт с нижнечелюстным каналом, кистозное расширение фолликула 5 мм. Удаление необходимо плановое, до развития осложнений.',
@@ -406,8 +406,8 @@ window.AD_PORTFOLIO = {
       services: ['Мост Zr', 'Протезирование'],
       duration: '4 недели',
       date: '12.2024',
-      before: '../assets/img/portfolio/crowns-before.webp',
-      after: '../assets/img/portfolio/crowns-after.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Женщина 56 лет потеряла жевательный зуб 8 лет назад, имплантацию делать не хотела из-за страха операции. Соседние зубы уже имели большие пломбы и нуждались в покрытии коронками — оптимальное решение — мостовидный протез.',
         diagnosis: 'Оценка опорных зубов под микроскопом подтвердила, что они выдержат нагрузку моста (отношение длины коронки к корню в норме, пародонт стабильный). Прикус ортогнатический, нагрузка распределится правильно.',
@@ -431,8 +431,8 @@ window.AD_PORTFOLIO = {
       services: ['Коронки на имплантах', 'Zr', '3Shape Trios'],
       duration: '5 недель',
       date: '08.2024',
-      before: '../assets/img/portfolio/crowns-before.webp',
-      after: '../assets/img/portfolio/crowns-after.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Пациент 51 года пришёл на ортопедический этап после успешной имплантации (хирургический этап выполнен 4 месяца назад). Запрос — надёжные эстетичные коронки с минимальным риском сколов и идеальным прилеганием десны.',
         diagnosis: 'Проверена остеоинтеграция имплантов методом периотестирования — значения в норме, импланты стабильны. Десна вокруг формирователей сформирована правильно, готова к снятию слепка.',
@@ -510,8 +510,8 @@ window.AD_PORTFOLIO = {
       services: ['Кариес', 'Микроскоп', 'Estelite Asteria'],
       duration: '1 визит',
       date: '11.2024',
-      before: '../assets/img/portfolio/caries-cavity.webp',
-      after: '../assets/img/portfolio/caries-restored.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Девушка 28 лет обратилась с кратковременной болью от сладкого и холодного в нижнем шестом зубе. Самопроизвольных болей не было, но беспокоила чувствительность при попадании пищи в полость.',
         diagnosis: 'На прицельном снимке — глубокая кариозная полость, доходящая до проекции пульпы. Холодовая проба положительная, кратковременная. ЭОД 12 мкА — пульпа жива и здорова. Показано лечение с сохранением витальности пульпы.',
@@ -535,8 +535,8 @@ window.AD_PORTFOLIO = {
       services: ['Эндодонтия', 'Перелечивание', 'Микроскоп Zeiss'],
       duration: '3 визита',
       date: '06.2025',
-      before: '../assets/img/portfolio/caries-cavity.webp',
-      after: '../assets/img/portfolio/caries-restored.webp',
+      before: 'placeholder',
+      after: 'placeholder',
       details: {
         problem: 'Мужчина 41 года с периодически появляющимся свищом на десне в проекции верхнего премоляра, ранее леченного 7 лет назад. Зуб не болел, но свищ беспокоил.',
         diagnosis: 'КЛКТ выявила некачественную обтурацию двух каналов: один пройден на 2/3 длины, второй пропущен (вторичный нёбный канал). У верхушки — очаг деструкции костной ткани 4×5 мм. Диагноз — хронический апикальный периодонтит, требуется перелечивание.',
@@ -570,6 +570,41 @@ window.AD_PORTFOLIO = {
     });
   }
 
+  function isPlaceholder(src) {
+    return !src || src === 'placeholder';
+  }
+
+  function renderPlaceholderInner() {
+    return (
+      '<div class="pf-img__ph">' +
+        '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<rect x="3" y="6" width="18" height="14" rx="2"/>' +
+          '<circle cx="12" cy="13" r="3.5"/>' +
+          '<path d="M8 6l1.5-2h5L16 6"/>' +
+        '</svg>' +
+        '<span>Фото на консультации</span>' +
+      '</div>'
+    );
+  }
+
+  function renderFigure(src, caption, alt, isAfter) {
+    var mod = isAfter ? ' pf-img--after' : '';
+    if (isPlaceholder(src)) {
+      return (
+        '<figure class="pf-img pf-img--placeholder' + mod + '">' +
+          renderPlaceholderInner() +
+          '<figcaption>' + caption + '</figcaption>' +
+        '</figure>'
+      );
+    }
+    return (
+      '<figure class="pf-img' + mod + '">' +
+        '<img loading="lazy" src="' + escapeHTML(src) + '" alt="' + escapeHTML(alt) + '">' +
+        '<figcaption>' + caption + '</figcaption>' +
+      '</figure>'
+    );
+  }
+
   function renderCard(item, idx) {
     var tags = (item.services || []).map(function (s) {
       return '<span class="pf-tag">' + escapeHTML(s) + '</span>';
@@ -581,8 +616,8 @@ window.AD_PORTFOLIO = {
     return (
       '<article class="pf-card" data-pf-index="' + idx + '">' +
         '<div class="pf-card__images">' +
-          '<figure class="pf-img"><img loading="lazy" src="' + escapeHTML(item.before) + '" alt="До лечения — ' + escapeHTML(item.title) + '"><figcaption>До</figcaption></figure>' +
-          '<figure class="pf-img pf-img--after"><img loading="lazy" src="' + escapeHTML(item.after) + '" alt="После лечения — ' + escapeHTML(item.title) + '"><figcaption>После</figcaption></figure>' +
+          renderFigure(item.before, 'До', 'До лечения — ' + item.title, false) +
+          renderFigure(item.after, 'После', 'После лечения — ' + item.title, true) +
         '</div>' +
         '<div class="pf-card__body">' +
           '<h3 class="pf-card__title">' + escapeHTML(item.title) + '</h3>' +
@@ -621,9 +656,25 @@ window.AD_PORTFOLIO = {
     var lb = document.querySelector('[data-pf-lightbox]');
     if (!lb) return;
 
-    // Картинки
-    lb.querySelector('[data-pf-lb-before]').src = item.before;
-    lb.querySelector('[data-pf-lb-after]').src = item.after;
+    // Картинки (с поддержкой плейсхолдера)
+    var figBefore = lb.querySelector('[data-pf-lb-fig-before]');
+    var figAfter = lb.querySelector('[data-pf-lb-fig-after]');
+    var imgBefore = lb.querySelector('[data-pf-lb-before]');
+    var imgAfter = lb.querySelector('[data-pf-lb-after]');
+    if (isPlaceholder(item.before)) {
+      figBefore.classList.add('is-placeholder');
+      imgBefore.removeAttribute('src');
+    } else {
+      figBefore.classList.remove('is-placeholder');
+      imgBefore.src = item.before;
+    }
+    if (isPlaceholder(item.after)) {
+      figAfter.classList.add('is-placeholder');
+      imgAfter.removeAttribute('src');
+    } else {
+      figAfter.classList.remove('is-placeholder');
+      imgAfter.src = item.after;
+    }
 
     // Заголовок и краткое описание
     lb.querySelector('[data-pf-lb-title]').textContent = item.title || '';
@@ -722,8 +773,16 @@ window.AD_PORTFOLIO = {
         '<button class="pf-lightbox__close" data-pf-lb-close aria-label="Закрыть">×</button>' +
         '<div class="pf-lightbox__inner">' +
           '<div class="pf-lightbox__images">' +
-            '<figure><img data-pf-lb-before alt=""><figcaption>До</figcaption></figure>' +
-            '<figure><img data-pf-lb-after alt=""><figcaption>После</figcaption></figure>' +
+            '<figure data-pf-lb-fig-before>' +
+              '<img data-pf-lb-before alt="">' +
+              renderPlaceholderInner() +
+              '<figcaption>До</figcaption>' +
+            '</figure>' +
+            '<figure data-pf-lb-fig-after>' +
+              '<img data-pf-lb-after alt="">' +
+              renderPlaceholderInner() +
+              '<figcaption>После</figcaption>' +
+            '</figure>' +
           '</div>' +
           '<header class="pf-lightbox__header">' +
             '<h3 data-pf-lb-title></h3>' +

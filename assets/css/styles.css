@@ -491,6 +491,14 @@ p { margin: 0 0 1em; }
 .pf-card:hover .pf-img img { transform: scale(1.03); }
 .pf-img figcaption { position: absolute; left: 10px; top: 10px; background: rgba(15,31,58,.78); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; }
 .pf-img--after figcaption { background: var(--c-primary); }
+.pf-img__ph { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; text-align: center; color: var(--c-primary); background: linear-gradient(135deg, var(--c-primary-50) 0%, #fff 100%); font-size: 12.5px; font-weight: 600; line-height: 1.35; box-sizing: border-box; }
+.pf-img__ph svg { color: var(--c-primary-light); opacity: .85; }
+.pf-img--placeholder { aspect-ratio: 4 / 3; }
+.pf-lightbox__images figure { min-height: 220px; }
+.pf-lightbox__images figure.is-placeholder img { display: none; }
+.pf-lightbox__images figure:not(.is-placeholder) .pf-img__ph { display: none; }
+.pf-lightbox__images figure.is-placeholder { background: linear-gradient(135deg, var(--c-primary-50) 0%, #fff 100%); border-radius: var(--radius-sm); aspect-ratio: 4 / 3; }
+.pf-lightbox__images figure.is-placeholder .pf-img__ph { width: 100%; height: 100%; }
 .pf-card__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 10px; }
 .pf-card__title { font-size: 17px; font-weight: 700; margin: 0; line-height: 1.3; }
 .pf-card__desc { color: var(--c-text-muted); font-size: 14px; margin: 0; }
