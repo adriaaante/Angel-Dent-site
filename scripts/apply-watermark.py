@@ -17,7 +17,7 @@ Usage:
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC_DIR = ROOT / "assets" / "img" / "portfolio" / "_originals"
@@ -26,7 +26,12 @@ WM_PATH = ROOT / "assets" / "img" / "watermark.png"
 
 WM_WIDTH_RATIO = 0.32  # watermark width as fraction of image width
 WM_MARGIN_RATIO = 0.03
-WM_OPACITY = 0.75
+WM_OPACITY = 0.78
+# Сам знак светло-голубой и на белых зубных снимках почти теряется.
+# Подкладываем под него мягкий тёмный halo, чтобы оставался читаемым
+# и на белом, и на тёмном фоне.
+SHADOW_OPACITY = 0.55
+SHADOW_BLUR_RATIO = 0.014  # радиус блюра как доля от ширины знака
 
 
 def watermark_image(src: Path, out: Path, wm: Image.Image) -> None:
@@ -43,7 +48,15 @@ def watermark_image(src: Path, out: Path, wm: Image.Image) -> None:
     margin = int(img.width * WM_MARGIN_RATIO)
     pos = (img.width - target_w - margin, img.height - target_h - margin)
 
+    blur_radius = max(2, int(target_w * SHADOW_BLUR_RATIO))
+    pad = blur_radius * 4
+    shadow_alpha = wm_scaled.split()[3].point(lambda p: int(p * SHADOW_OPACITY))
+    shadow = Image.new("RGBA", (target_w + pad * 2, target_h + pad * 2), (0, 0, 0, 0))
+    shadow.paste(Image.new("RGBA", wm_scaled.size, (0, 0, 0, 255)), (pad, pad), shadow_alpha)
+    shadow = shadow.filter(ImageFilter.GaussianBlur(blur_radius))
+
     layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    layer.paste(shadow, (pos[0] - pad, pos[1] - pad), shadow)
     layer.paste(wm_scaled, pos, wm_scaled)
     composed = Image.alpha_composite(img, layer).convert("RGB")
 
