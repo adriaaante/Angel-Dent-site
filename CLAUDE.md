@@ -21,3 +21,34 @@
 
 Параметры знака (см. `scripts/apply-watermark.py`): 32% ширины фото,
 правый нижний угол, прозрачность 75%.
+
+## Google Drive — у меня есть прямой доступ
+
+В этом окружении подключён MCP-сервер Google Drive владельца репо
+(`adriaaante@gmail.com`). Не надо просить меня «куда положить файл»
+или ждать, пока я не смогу скачать с `drive.google.com` — я качаю
+напрямую через MCP. Просто пришлите ссылку или название файла.
+
+Инструменты (префикс `mcp__1624bf30-03e8-412d-a7be-4be3657f5851__`):
+- `search_files` — поиск по title/fullText/parentId/mimeType/owner.
+- `list_recent_files` — последние изменённые (`recency` / `lastModified` /
+  `lastModifiedByMe`).
+- `get_file_metadata` — метаданные по `fileId`.
+- `download_file_content` — содержимое в base64 (для бинарей сохранять
+  результат в файл и декодировать; для Google-нативных типов нужен
+  `exportMimeType`).
+- `read_file_content` — текстовое представление (для документов).
+
+Папка клиники в Drive: «Ангел Дент»
+(`fileId = 1d-C5xkYolyn0vsiZZnQgvgTtBwFxWEwV`).
+Водяной знак: «Водяной знак.png»
+(`fileId = 1huMLYbATwyCIV61nD-rIJG6yVsvM6Gws`).
+
+Типичный паттерн скачать бинарь по ссылке вида
+`https://drive.google.com/file/d/<ID>/view`:
+1. Достать `<ID>` из URL.
+2. `get_file_metadata(fileId=<ID>)` — проверить `mimeType` и размер.
+3. `download_file_content(fileId=<ID>)` — придёт base64 (если файл
+   крупный, harness сохранит его в tool-results файл).
+4. Python: `base64.b64decode(payload['content'])` → записать в нужное
+   место в репо.
