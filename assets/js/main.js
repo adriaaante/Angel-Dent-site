@@ -1,6 +1,17 @@
 (function () {
   'use strict';
 
+  // Скрипт подключают в разных местах: на одних страницах FAB-разметка
+  // стоит выше <script src="main.js">, на других — ниже. Чтобы не зависеть
+  // от порядка тегов, ждём готовности DOM перед инициализацией.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  function init() {
+
   // Mobile nav toggle
   var burger = document.querySelector('[data-burger]');
   var nav = document.querySelector('[data-nav]');
@@ -279,4 +290,6 @@
     // Show after small delay (less intrusive on first impression)
     setTimeout(function () { fab.classList.add('is-ready'); }, 800);
   }
+
+  } // init
 })();
