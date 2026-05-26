@@ -11,11 +11,25 @@
 
 declare(strict_types=1);
 
+// Защита от случайного вывода в config.php (BOM, пробелы перед <?php
+// и т.п.): буферизуем всё, что PHP может выдать до reply(), чтобы потом
+// гарантированно отдать чистый JSON. Без этого один невидимый байт в
+// config.php ломает header()/http_response_code() и JSON приходит
+// «загрязнённым» — клиент его не парсит, видит «Не удалось отправить».
+ob_start();
+
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
 function reply(int $code, array $body): void {
+    // Сбрасываем любой случайный вывод (BOM, warnings, html_errors и т.п.),
+    // чтобы клиенту ушёл чистый JSON, ничего больше.
+    while (ob_get_level() > 0) {
+        ob_end_clean();
+    }
     http_response_code($code);
+    header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-store');
     echo json_encode($body, JSON_UNESCAPED_UNICODE);
     exit;
 }
