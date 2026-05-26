@@ -1,164 +1,85 @@
 #!/usr/bin/env bash
-# Angel-Dent — заливка сайта на хостинг reg.ru.
+# Angel-Dent — деплой на reg.ru.
+#
+# Скрипт запускается ПРЯМО НА СЕРВЕРЕ reg.ru (Shell-клиент в ISPmanager).
+# Подтягивает свежий код с GitHub в ~/Angel-Dent-site/ и синхронизирует
+# его в публичную папку ~/www/angel-denta.ru/ (то, что отдаёт Apache).
 #
 # Использование:
-#   ./scripts/deploy.sh                  выкатить
-#   ./scripts/deploy.sh --dry            показать, что выкатится, ничего не отправлять
-#   ./scripts/deploy.sh --with-delete    выкатить и удалить на хостинге
-#                                        файлы, которых нет в репо
+#   ./scripts/deploy.sh         — выкатить
+#   ./scripts/deploy.sh --dry   — показать план, ничего не менять
 #
-# Перед первым запуском:
-#   cp scripts/.deploy.env.example scripts/.deploy.env
-#   $EDITOR scripts/.deploy.env   # заполнить хост, логин, пароль, путь
-#                                 # и TELEGRAM_BOT_TOKEN (берётся текущий)
+# Удобный шорткат на сервере (симлинк), делается один раз:
+#   ln -s ~/Angel-Dent-site/scripts/deploy.sh ~/deploy.sh
+# Тогда команда становится просто ~/deploy.sh.
 #
-# Что делает:
-#   1. Генерирует api/config.php из переменных .deploy.env (токен и chat_id).
-#      Сам api/config.php в .gitignore — в репо не попадает.
-#   2. Заливает всё на хостинг (rsync через SSH, либо lftp mirror через
-#      FTP/SFTP) — выбор по DEPLOY_PROTO.
-#   3. Из заливки исключены служебные вещи: .git, .github, .claude,
-#      scripts/, CLAUDE.md, README.md, мастер-фото портфолио из _originals/.
+# api/config.php (токен Telegram-бота) живёт только на сервере, он в
+# .gitignore — git pull его не трогает. Создаётся один раз вручную
+# из api/config.php.example.
 
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+# Резолвим симлинк, чтобы найти настоящий путь до scripts/deploy.sh
+# даже когда запускают через ~/deploy.sh.
+SCRIPT="$(readlink -f "$0")"
+REPO="$(cd "$(dirname "$SCRIPT")/.."; pwd)"
+DOCROOT="$HOME/www/angel-denta.ru"
 
-ENV_FILE="scripts/.deploy.env"
-if [ ! -f "$ENV_FILE" ]; then
-    cat >&2 <<EOF
-✗ Не найден $ENV_FILE.
-  Скопируйте scripts/.deploy.env.example в scripts/.deploy.env
-  и заполните параметры хостинга и Telegram-бота.
-EOF
+DRY=0
+case "${1:-}" in
+    --dry|--dry-run) DRY=1 ;;
+    "" ) ;;
+    -h|--help)
+        sed -n '2,17p' "$SCRIPT" | sed 's/^# \{0,1\}//'
+        exit 0
+        ;;
+    *) echo "Неизвестный флаг: $1 (см. --help)" >&2; exit 2 ;;
+esac
+
+if [ ! -d "$REPO/.git" ]; then
+    echo "✗ $REPO — не git-репо." >&2
     exit 1
 fi
 
-set -a
-# shellcheck disable=SC1090
-source "$ENV_FILE"
-set +a
+if [ ! -d "$DOCROOT" ]; then
+    echo "✗ Не найдена публичная папка $DOCROOT." >&2
+    exit 1
+fi
 
-require_var() {
-    local name=$1
-    if [ -z "${!name:-}" ]; then
-        echo "✗ В $ENV_FILE не задано $name" >&2
-        exit 1
-    fi
-}
+if [ ! -f "$REPO/api/config.php" ]; then
+    echo "✗ $REPO/api/config.php нет." >&2
+    echo "  Создайте его по шаблону $REPO/api/config.php.example —" >&2
+    echo "  пропишите TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID." >&2
+    exit 1
+fi
 
-require_var DEPLOY_PROTO
-require_var REG_HOST
-require_var REG_USER
-require_var REG_PATH
-require_var TELEGRAM_BOT_TOKEN
-require_var TELEGRAM_CHAT_ID
+echo "→ git pull в $REPO"
+cd "$REPO"
+git pull --ff-only
 
-DRY=0
-WITH_DELETE=0
-for arg in "$@"; do
-    case "$arg" in
-        --dry|--dry-run) DRY=1 ;;
-        --with-delete)   WITH_DELETE=1 ;;
-        -h|--help)
-            sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'
-            exit 0
-            ;;
-        *)
-            echo "Неизвестный флаг: $arg (см. --help)" >&2
-            exit 2
-            ;;
-    esac
-done
+OPTS=(-av --delete)
+[ "$DRY" -eq 1 ] && OPTS+=(--dry-run --itemize-changes)
 
-# --- Готовим api/config.php (его в .gitignore, поэтому регенерируем каждый раз) ---
-php_escape() {
-    # Экранируем одинарные кавычки для PHP-литералов '...'.
-    printf '%s' "$1" | sed "s/\\\\/\\\\\\\\/g; s/'/\\\\'/g"
-}
-
-TG_TOKEN_ESC=$(php_escape "$TELEGRAM_BOT_TOKEN")
-TG_CHAT_ESC=$(php_escape "$TELEGRAM_CHAT_ID")
-
-cat > api/config.php <<PHP
-<?php
-// Сгенерировано scripts/deploy.sh из scripts/.deploy.env.
-// Не коммитить, не редактировать руками — перезатрётся при следующем деплое.
-
-define('TELEGRAM_BOT_TOKEN', '${TG_TOKEN_ESC}');
-define('TELEGRAM_CHAT_ID',  '${TG_CHAT_ESC}');
-PHP
-
-echo "→ api/config.php сгенерирован."
-
-# --- Список исключений (одинаковый для rsync и lftp) ---
 EXCLUDES=(
-    '.git'
-    '.github'
-    '.claude'
-    'scripts'
-    'CLAUDE.md'
-    'README.md'
-    '.gitignore'
-    '.deploy.env'
-    'api/config.php.example'
-    'assets/img/portfolio/_originals'
-    'preview.html'
-    '.DS_Store'
-    'Thumbs.db'
+    --exclude='.git/'
+    --exclude='.github/'
+    --exclude='.claude/'
+    --exclude='scripts/'
+    --exclude='CLAUDE.md'
+    --exclude='README.md'
+    --exclude='.gitignore'
+    --exclude='api/config.php.example'
+    --exclude='assets/img/portfolio/_originals/'
+    --exclude='preview.html'
+    --exclude='.DS_Store'
+    --exclude='Thumbs.db'
 )
 
-case "$DEPLOY_PROTO" in
-    ssh)
-        PORT="${REG_PORT:-22}"
-        RSYNC=(rsync -avz --human-readable)
-        [ "$DRY" -eq 1 ]         && RSYNC+=(--dry-run --itemize-changes)
-        [ "$WITH_DELETE" -eq 1 ] && RSYNC+=(--delete)
-        for ex in "${EXCLUDES[@]}"; do RSYNC+=("--exclude=$ex"); done
-        RSYNC+=(-e "ssh -p $PORT")
-        RSYNC+=(./ "${REG_USER}@${REG_HOST}:${REG_PATH}/")
-        echo "→ rsync на ${REG_USER}@${REG_HOST}:${REG_PATH}/ (порт $PORT)"
-        "${RSYNC[@]}"
-        ;;
-    sftp|ftp)
-        require_var REG_PASS
-        if [ "$DEPLOY_PROTO" = sftp ]; then
-            PORT="${REG_PORT:-22}"
-            SCHEME=sftp
-        else
-            PORT="${REG_PORT:-21}"
-            SCHEME=ftp
-        fi
-        if ! command -v lftp >/dev/null 2>&1; then
-            echo "✗ Не найден lftp. Установите: brew install lftp / apt install lftp." >&2
-            exit 1
-        fi
-
-        MIRROR_OPTS=(--reverse --parallel=4 --verbose)
-        [ "$DRY" -eq 1 ]         && MIRROR_OPTS+=(--dry-run)
-        [ "$WITH_DELETE" -eq 1 ] && MIRROR_OPTS+=(--delete)
-        for ex in "${EXCLUDES[@]}"; do
-            MIRROR_OPTS+=(--exclude-glob "$ex" --exclude-glob "$ex/*")
-        done
-
-        echo "→ lftp ($SCHEME) на ${REG_USER}@${REG_HOST}:${REG_PATH}/ (порт $PORT)"
-        LFTP_PASSWORD="$REG_PASS" lftp -u "${REG_USER},$REG_PASS" \
-            -p "$PORT" "${SCHEME}://${REG_HOST}" <<LFTP
-set ssl:verify-certificate no
-set ftp:passive-mode true
-set sftp:auto-confirm yes
-mirror ${MIRROR_OPTS[*]} . ${REG_PATH}
-bye
-LFTP
-        ;;
-    *)
-        echo "✗ DEPLOY_PROTO='${DEPLOY_PROTO}' не поддерживается (ssh / sftp / ftp)" >&2
-        exit 1
-        ;;
-esac
+echo "→ rsync $REPO/ → $DOCROOT/"
+rsync "${OPTS[@]}" "${EXCLUDES[@]}" "$REPO/" "$DOCROOT/"
 
 if [ "$DRY" -eq 1 ]; then
-    echo "✓ Dry-run завершён, ничего не отправлено."
+    echo "✓ DRY-RUN завершён, на диске ничего не изменилось."
 else
-    echo "✓ Готово. Сайт обновлён на ${REG_HOST}."
+    echo "✓ Готово. Сайт обновлён в $DOCROOT/"
 fi

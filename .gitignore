@@ -8,7 +8,7 @@ Thumbs.db
 .idea/
 .vscode/
 
-# Deploy / Telegram bot — секреты лежат локально, на сервер их кладёт
-# scripts/deploy.sh из scripts/.deploy.env.
-scripts/.deploy.env
+# Telegram-конфиг — токен бота живёт только на сервере, не в репо.
+# Создаётся один раз вручную из api/config.php.example
+# (см. CLAUDE.md, раздел «Форма заявки»).
 api/config.php

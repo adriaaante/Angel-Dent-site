@@ -167,30 +167,45 @@ PR не создаём, если не попросили явно.
 
 ## Деплой на reg.ru
 
-Скрипт: `scripts/deploy.sh`, конфиг: `scripts/.deploy.env` (gitignored,
-шаблон в `scripts/.deploy.env.example`). Поддерживает три протокола
-(переключение через `DEPLOY_PROTO=ssh|sftp|ftp`):
-- `ssh` — `rsync` через SSH, лучший вариант. Шлёт только дельту.
-- `sftp`/`ftp` — `lftp mirror`. Используется если SSH на тарифе нет.
+Деплой идёт **с самого сервера**, не с локальной машины. Репозиторий
+склонирован на reg.ru в `~/Angel-Dent-site/`, скрипт делает `git pull`
+и `rsync` из репо в `~/www/angel-denta.ru/` (это публичная папка
+Apache, то, что отдаётся посетителям).
 
-Команды:
+Скрипт: `scripts/deploy.sh` в репо. На сервере существует симлинк
+`~/deploy.sh → ~/Angel-Dent-site/scripts/deploy.sh`, поэтому любая
+правка скрипта в git автоматом «обновляется» на сервере после
+`git pull` — отдельно поддерживать ничего не надо.
+
+Запуск из Shell-клиента ISPmanager
+(<https://server292.hosting.reg.ru:1500/> → раздел «Shell-клиент»):
+
 ```
-./scripts/deploy.sh               # выкатить
-./scripts/deploy.sh --dry         # показать что выкатится, ничего не отправлять
-./scripts/deploy.sh --with-delete # выкатить + почистить на хостинге то, чего нет в репо
+~/deploy.sh           # выкатить
+~/deploy.sh --dry     # показать план, ничего не менять
 ```
 
 Что попадает на хостинг: всё, кроме `.git/`, `.github/`, `.claude/`,
 `scripts/`, `CLAUDE.md`, `README.md`, `.gitignore`, оригиналов фото
 портфолио (`assets/img/portfolio/_originals/`) и `api/config.php.example`.
 
-Что **не попадает в git, но попадает на хостинг** — `api/config.php`
-с токеном и chat_id Telegram. Скрипт деплоя генерирует его локально
-из `scripts/.deploy.env` перед каждой заливкой, поэтому если правите
-токен — правите его в `.deploy.env`, не в коде.
+`api/config.php` (токен Telegram-бота и chat_id) лежит **только на
+сервере**, в `.gitignore`. Создаётся один раз вручную при первом
+сетапе из `api/config.php.example`, `git pull` его не трогает.
+Если перевыпускаете токен — правите `api/config.php` прямо на сервере
+через Shell-клиент или файловый менеджер ISPmanager.
 
 **Из этого контейнера деплоить не получится** — нет сетевого доступа
-к reg.ru, выкладывает владелец со своей машины.
+к reg.ru, выкладывает владелец через Shell-клиент.
+
+**Первичный сетап сервера** (если когда-нибудь придётся повторить):
+1. SSH/Shell-клиент → `cd ~`
+2. `git clone https://github.com/adriaaante/angel-dent-site.git Angel-Dent-site`
+3. Скопировать шаблон конфига и заполнить токен:
+   `cp Angel-Dent-site/api/config.php.example Angel-Dent-site/api/config.php`
+   и отредактировать `Angel-Dent-site/api/config.php`.
+4. Симлинк короткой команды: `ln -s ~/Angel-Dent-site/scripts/deploy.sh ~/deploy.sh`
+5. `~/deploy.sh --dry` (посмотреть план) → `~/deploy.sh` (выкатить).
 
 ## Что НЕ нужно делать без явной просьбы
 
