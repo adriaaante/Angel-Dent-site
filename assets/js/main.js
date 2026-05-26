@@ -41,37 +41,18 @@
   }
   document.querySelectorAll('input[type="tel"]').forEach(maskPhone);
 
-  // Lead submission — Telegram bot only.
-  // Setup: @BotFather → /newbot → токен → TELEGRAM_BOT_TOKEN.
-  // CHAT_ID: личный (@userinfobot → /start) или группа
-  // (добавить бота, https://api.telegram.org/bot<TOKEN>/getUpdates → chat.id).
-  var TELEGRAM_BOT_TOKEN = '8682361398:AAEkEqOgAIFubhfX8oId7UIk4R0vt13Qd2g';
-  var TELEGRAM_CHAT_ID   = '-5176309139';
-  var TG_ENDPOINT = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-
-  var FIELD_LABELS = { name: 'Имя', phone: 'Телефон', service: 'Услуга', message: 'Комментарий' };
-
-  function sendTelegram(form) {
+  // Lead submission — POST в собственный PHP-эндпоинт на хостинге,
+  // оттуда уже идёт серверный fetch в Telegram Bot API.
+  // Токен бота лежит только на сервере (api/config.php, в .gitignore).
+  function sendLead(form) {
     var fd = new FormData(form);
-    var lines = ['🦷 *Заявка с сайта Ангел-Дент*', ''];
-    fd.forEach(function (val, key) {
-      if (!val) return;
-      var label = FIELD_LABELS[key] || key;
-      lines.push('*' + label + ':* ' + String(val).replace(/[*_`[]/g, '\\$&'));
-    });
-    lines.push('', '_Страница: ' + (location.pathname || '/') + '_');
-    return fetch(TG_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: lines.join('\n'),
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true
-      })
-    }).then(function (r) {
-      return r.json().then(function (d) { return d && d.ok ? d : Promise.reject(d); });
-    });
+    fd.append('_page', location.pathname || '/');
+    return fetch('/api/lead.php', { method: 'POST', body: fd })
+      .then(function (r) {
+        return r.json().then(function (d) {
+          return d && d.ok ? d : Promise.reject(d);
+        });
+      });
   }
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
@@ -97,10 +78,10 @@
 
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…'; }
 
-      sendTelegram(form).then(
+      sendLead(form).then(
         function () { done(true,  'Спасибо! Мы перезвоним за 15 минут.'); },
         function (err) {
-          console.warn('[lead] telegram failed', err);
+          console.warn('[lead] failed', err);
           done(false, 'Не удалось отправить. Позвоните, пожалуйста: +7 (910) 458-88-08');
         }
       );

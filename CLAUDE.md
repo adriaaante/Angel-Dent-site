@@ -71,25 +71,40 @@
 футер всех страниц, FAB-виджет в конце `<body>`, JSON-LD
 `LocalBusiness` в `<head>` главной, топбар на главной.
 
-## Форма заявки → Telegram Bot (не Web3Forms)
+## Форма заявки → PHP-прокси → Telegram Bot
 
-Заявки уходят **прямым `fetch` на Telegram Bot API** из `assets/js/main.js`
-(функция `sendTelegram`, строки ~44–108). Никакого бэкенда и сторонних
-форм-сервисов нет. Метрика-цель `lead_submit` дёргается при успехе
-(`ym(109369174, 'reachGoal', 'lead_submit')`).
+Поток заявки в две стадии, токена бота в браузерном JS **нет**:
 
-Зашиты в JS:
-- `TELEGRAM_BOT_TOKEN` — токен бота от @BotFather
-- `TELEGRAM_CHAT_ID = '-5176309139'` — ID группы (отрицательный = группа)
-- Шаблон сообщения берёт поля формы по словарю `FIELD_LABELS`
-  (`name → Имя`, `phone → Телефон`, `service → Услуга`,
-  `message → Комментарий`), добавляет URL страницы.
+```
+[браузер]  POST /api/lead.php  →  [reg.ru]  curl → api.telegram.org
+ main.js (sendLead)               api/lead.php             ↑
+                                       │           токен лежит здесь
+                                       │              (config.php)
+```
 
-**Известный риск**: токен лежит в публичном JS, его может выдрать любой
-посетитель. Если начнётся спам в группу — единственное лечение через
-@BotFather: `/revoke` старого токена и перевыпуск + замена в `main.js`.
-Долгосрочно правильно — проксировать отправку через бэкенд (своя
-function на хостинге или Cloudflare Worker), но это отдельная задача.
+- `assets/js/main.js` функция `sendLead` шлёт `FormData` POST'ом на
+  `/api/lead.php` (свой же домен). Метрика-цель `lead_submit`
+  (`ym(109369174, 'reachGoal', 'lead_submit')`) дёргается при успехе.
+- `api/lead.php` парсит поля по словарю `name/phone/service/message`,
+  собирает Markdown-сообщение и серверной curl-сессией шлёт в Telegram
+  API. Honeypot-поле `company` (если придёт непустым — молча игнорим).
+- Токен и chat_id — в `api/config.php`, **в репо его нет** (`.gitignore`).
+  Генерируется автоматически из `scripts/.deploy.env` при каждом запуске
+  `scripts/deploy.sh` (см. раздел «Деплой»).
+- `api/.htaccess` дополнительно блокирует прямое скачивание `config.php`
+  через браузер на случай, если упадёт PHP-обработчик.
+
+Текущий `TELEGRAM_CHAT_ID = -5176309139` (отрицательный = группа).
+
+Маска телефона (`+7 (XXX) XXX-XX-XX`) — `maskPhone` в `main.js`, вешается
+на все `input[type="tel"]`. Валидация — только нативная HTML5 (`required`).
+Уведомление «Спасибо» — блок `[data-form-success]` в каждой форме,
+добавляется класс `is-active`; в модалке очищается при закрытии
+(`closeModal` → снимает `is-active`).
+
+**Если бот перестал отвечать или начался спам**: @BotFather → `/mybots`
+→ выбрать → `Revoke current token` → новый токен в `scripts/.deploy.env`
+→ `./scripts/deploy.sh`. В JS / репо ничего менять не надо.
 
 Маска телефона (`+7 (XXX) XXX-XX-XX`) — `maskPhone` в `main.js`, вешается
 на все `input[type="tel"]`. Валидация — только нативная HTML5 (`required`).
@@ -152,10 +167,30 @@ PR не создаём, если не попросили явно.
 
 ## Деплой на reg.ru
 
-Когда настроим — здесь будет команда. Сейчас деплой ручной (`scp`/FTP
-с машины владельца). Запланировано: `scripts/deploy.sh` с конфигом в
-`scripts/.deploy.env` (gitignored). Из этого контейнера деплоить не
-получится — нет сетевого доступа к reg.ru, выкладывает владелец.
+Скрипт: `scripts/deploy.sh`, конфиг: `scripts/.deploy.env` (gitignored,
+шаблон в `scripts/.deploy.env.example`). Поддерживает три протокола
+(переключение через `DEPLOY_PROTO=ssh|sftp|ftp`):
+- `ssh` — `rsync` через SSH, лучший вариант. Шлёт только дельту.
+- `sftp`/`ftp` — `lftp mirror`. Используется если SSH на тарифе нет.
+
+Команды:
+```
+./scripts/deploy.sh               # выкатить
+./scripts/deploy.sh --dry         # показать что выкатится, ничего не отправлять
+./scripts/deploy.sh --with-delete # выкатить + почистить на хостинге то, чего нет в репо
+```
+
+Что попадает на хостинг: всё, кроме `.git/`, `.github/`, `.claude/`,
+`scripts/`, `CLAUDE.md`, `README.md`, `.gitignore`, оригиналов фото
+портфолио (`assets/img/portfolio/_originals/`) и `api/config.php.example`.
+
+Что **не попадает в git, но попадает на хостинг** — `api/config.php`
+с токеном и chat_id Telegram. Скрипт деплоя генерирует его локально
+из `scripts/.deploy.env` перед каждой заливкой, поэтому если правите
+токен — правите его в `.deploy.env`, не в коде.
+
+**Из этого контейнера деплоить не получится** — нет сетевого доступа
+к reg.ru, выкладывает владелец со своей машины.
 
 ## Что НЕ нужно делать без явной просьбы
 
