@@ -760,9 +760,13 @@ p { margin: 0 0 1em; }
   .cookie-banner__inner {
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start; /* сбрасываем space-between с десктопа */
     gap: 10px;
   }
-  .cookie-banner__text { font-size: 13.5px; line-height: 1.45; }
+  /* На десктопе у текста flex: 1 1 360px — это минимальная ширина в row-режиме.
+     В column-режиме flex-basis превращается в МИНИМАЛЬНУЮ ВЫСОТУ и раздувает
+     блок до 360px пустого пространства. Сбрасываем на auto. */
+  .cookie-banner__text { flex: 0 1 auto; font-size: 13.5px; line-height: 1.45; }
   .cookie-banner__actions {
     flex-direction: column;
     gap: 8px;
