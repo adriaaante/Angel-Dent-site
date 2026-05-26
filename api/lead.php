@@ -65,6 +65,39 @@ if ($page !== '') {
     $lines[] = '_Страница: ' . preg_replace('/[*_`\[]/u', '', $page) . '_';
 }
 
+// Источник трафика: UTM-метки и yclid/gclid складываем отдельным блоком,
+// чтобы менеджер сразу видел рекламный канал. yclid — клик-ID Яндекс.Директа,
+// его же используют для офлайн-конверсий в Метрике (если решат загружать).
+$trackingKeys = [
+    '_utm_source'   => 'utm_source',
+    '_utm_medium'   => 'utm_medium',
+    '_utm_campaign' => 'utm_campaign',
+    '_utm_term'     => 'utm_term',
+    '_utm_content'  => 'utm_content',
+    '_yclid'        => 'yclid',
+    '_gclid'        => 'gclid',
+];
+$trackingLines = [];
+foreach ($trackingKeys as $postKey => $label) {
+    $value = trim((string)($_POST[$postKey] ?? ''));
+    if ($value === '') continue;
+    // Оборачиваем значение в inline-code (`), внутри которого Markdown
+    // не парсится, поэтому экранируем только сам backtick — иначе
+    // UTM с подчёркиваниями (implant_msk) ломались бы.
+    $clean = str_replace('`', "'", $value);
+    $trackingLines[] = '`' . $label . '`: ' . $clean;
+}
+if (!empty($trackingLines)) {
+    $lines[] = '';
+    $lines[] = '📊 *Источник:*';
+    foreach ($trackingLines as $tl) $lines[] = $tl;
+}
+
+$referrer = trim((string)($_POST['_referrer'] ?? ''));
+if ($referrer !== '') {
+    $lines[] = '_Реферер: ' . preg_replace('/[*_`\[]/u', '', $referrer) . '_';
+}
+
 $payload = json_encode([
     'chat_id'                  => TELEGRAM_CHAT_ID,
     'text'                     => implode("\n", $lines),

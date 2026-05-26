@@ -1,6 +1,77 @@
 (function () {
   'use strict';
 
+  // ---------------------------------------------------------------------------
+  // Яндекс.Метрика — цели для интеграции с Яндекс.Директом.
+  //
+  // Счётчик 109369174 инициализируется в <head> каждой HTML-страницы
+  // (см. блок «Yandex.Metrika counter»). Здесь — только программная
+  // отправка целей через ym(...,'reachGoal',...).
+  //
+  // Список целей (ИДЕНТИФИКАТОРЫ в кабинете Метрики → Цели → JavaScript-событие):
+  //
+  //   lead_submit     — МАКРО. Успешная отправка любой формы заявки
+  //                     (главная цель, по ней оптимизируем кампании Директа).
+  //   call_click      — МАКРО. Клик по любому номеру телефона (a[href^="tel:"]).
+  //                     Считаем звонком — на мобильных это и есть звонок,
+  //                     на десктопе показатель намерения позвонить.
+  //   whatsapp_click  — МАКРО. Клик по ссылке WhatsApp (wa.me/...).
+  //   telegram_click  — МАКРО. Клик по ссылке Telegram (t.me/stomangeldent).
+  //   modal_open      — МИКРО. Открытие модалки «Записаться» ([data-modal-open]).
+  //                     Считаем «дошёл до формы»; для разогрева look-alike.
+  //   form_start      — МИКРО. Пользователь начал заполнять форму
+  //                     (первый фокус в любом поле формы [data-form]).
+  //                     Срабатывает один раз на форму на загрузку страницы.
+  //
+  // ВАЖНО: те же имена нужно завести в кабинете Метрики как JavaScript-цели
+  // (Настройка счётчика → Цели → Добавить цель → JavaScript-событие →
+  // в поле «Идентификатор цели» — точно такая же строка, например call_click).
+  // Без этого они не будут учитываться Директом для оптимизации.
+  // ---------------------------------------------------------------------------
+  var YM_COUNTER_ID = 109369174;
+  function trackGoal(name, params) {
+    if (typeof window.ym !== 'function') return;
+    try {
+      if (params) {
+        window.ym(YM_COUNTER_ID, 'reachGoal', name, params);
+      } else {
+        window.ym(YM_COUNTER_ID, 'reachGoal', name);
+      }
+    } catch (e) { /* счётчик ещё не загрузился / заблокирован — игнорим */ }
+  }
+
+  // UTM-метки и идентификаторы кликов: запоминаем при первом заходе на сайт
+  // (sessionStorage), потом подкидываем в каждую заявку, чтобы менеджер видел,
+  // из какой рекламной кампании пришёл лид. yclid — клик-ID Яндекс.Директа
+  // (нужен для офлайн-конверсий в Метрике), gclid — Google Ads.
+  var TRACKED_PARAMS = [
+    'utm_source', 'utm_medium', 'utm_campaign',
+    'utm_term', 'utm_content',
+    'yclid', 'gclid', 'ym_uid'
+  ];
+  function captureTrackingParams() {
+    if (!window.sessionStorage) return;
+    var url;
+    try { url = new URL(window.location.href); } catch (e) { return; }
+    TRACKED_PARAMS.forEach(function (key) {
+      var value = url.searchParams.get(key);
+      if (value && !sessionStorage.getItem('ad_' + key)) {
+        try { sessionStorage.setItem('ad_' + key, value); } catch (e) {}
+      }
+    });
+  }
+  function getTrackingParams() {
+    var out = {};
+    if (!window.sessionStorage) return out;
+    TRACKED_PARAMS.forEach(function (key) {
+      var value;
+      try { value = sessionStorage.getItem('ad_' + key); } catch (e) { value = null; }
+      if (value) out[key] = value;
+    });
+    return out;
+  }
+  captureTrackingParams();
+
   // Скрипт подключают в разных местах: на одних страницах FAB-разметка
   // стоит выше <script src="main.js">, на других — ниже. Чтобы не зависеть
   // от порядка тегов, ждём готовности DOM перед инициализацией.
@@ -47,6 +118,13 @@
   function sendLead(form) {
     var fd = new FormData(form);
     fd.append('_page', location.pathname || '/');
+    fd.append('_referrer', document.referrer || '');
+    // Прикладываем UTM/yclid из sessionStorage — менеджер увидит источник
+    // лида, а в Метрике можно загрузить офлайн-конверсии по yclid.
+    var tracking = getTrackingParams();
+    Object.keys(tracking).forEach(function (key) {
+      fd.append('_' + key, tracking[key]);
+    });
     return fetch('/api/lead.php', { method: 'POST', body: fd })
       .then(function (r) {
         return r.json().then(function (d) {
@@ -56,6 +134,17 @@
   }
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
+    // Микроцель form_start — фиксируем один раз на форму, когда пользователь
+    // впервые ставит фокус в любое поле. По этой метрике видно, сколько
+    // людей дошли до формы, но не отправили (потенциал для ретаргета).
+    var formStarted = false;
+    form.addEventListener('focusin', function (e) {
+      if (formStarted) return;
+      if (!e.target.matches('input, textarea, select')) return;
+      formStarted = true;
+      trackGoal('form_start', { form: form.getAttribute('data-form') || 'default' });
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var success = form.querySelector('[data-form-success]');
@@ -72,7 +161,7 @@
         }
         if (ok) {
           form.reset();
-          if (typeof ym === 'function') { try { ym(109369174, 'reachGoal', 'lead_submit'); } catch (e) {} }
+          trackGoal('lead_submit', { form: form.getAttribute('data-form') || 'default' });
         }
       };
 
@@ -88,6 +177,32 @@
     });
   });
 
+  // Цели на клики по контактам. Делегирование на document — ссылки
+  // разбросаны по шапке, футеру, FAB-виджету, секциям контактов, и
+  // навешивать на каждую вручную нерационально. Достаточно одного слушателя.
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    if (href.indexOf('tel:') === 0) {
+      trackGoal('call_click', { source: linkSource(link) });
+    } else if (/^https?:\/\/(?:api\.)?wa\.me\//i.test(href) || /wa\.me\/79104588808/i.test(href)) {
+      trackGoal('whatsapp_click', { source: linkSource(link) });
+    } else if (/^https?:\/\/t\.me\//i.test(href)) {
+      trackGoal('telegram_click', { source: linkSource(link) });
+    }
+  });
+
+  // Откуда был клик — для отчёта по «Параметрам визита» в Метрике.
+  // Помогает понять, какой блок страницы работает лучше: FAB, шапка, футер.
+  function linkSource(link) {
+    if (link.closest('[data-fab]')) return 'fab';
+    if (link.closest('header, .site-header, .topbar')) return 'header';
+    if (link.closest('footer, .site-footer')) return 'footer';
+    if (link.closest('[data-modal]')) return 'modal';
+    return 'content';
+  }
+
   // Modal (callback request)
   var modal = document.querySelector('[data-modal]');
   function closeModal() {
@@ -102,6 +217,9 @@
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       if (modal) modal.classList.add('is-open');
+      // Микроцель: показывает воронку «дошёл до формы записи».
+      // Считаем намерение записаться — даже если форму не отправят.
+      trackGoal('modal_open', { source: linkSource(btn) });
     });
   });
   if (modal) {
