@@ -31,14 +31,35 @@ SIZES = {
 
 
 def load_logo_mask() -> Image.Image:
-    """Возвращает alpha-маску логотипа, тесно обрезанную по bbox.
-    Это даёт максимальный размер лого в иконке. Центрирование происходит
-    в render() — компенсируем асимметрию (центроид ≠ центр bbox)
-    сдвигом при вставке."""
+    """Возвращает квадратную alpha-маску, в которой центроид лого
+    (центр массы непрозрачных пикселей) совпадает с центром квадрата.
+    Лого асимметричное (зуб + крыло справа), bbox-center даёт перекос —
+    поэтому добавляем прозрачные поля с того края, где лого «лёгкое»,
+    чтобы при отрисовке зуб встал ровно посередине иконки."""
     logo = Image.open(SRC).convert("RGBA")
     alpha = logo.split()[-1]
     bbox = alpha.getbbox()
-    return alpha.crop(bbox) if bbox else alpha
+    if not bbox:
+        return alpha
+    x0, y0, x1, y1 = bbox
+    px = alpha.load()
+    total = sx = sy = 0
+    for y in range(y0, y1):
+        for x in range(x0, x1):
+            v = px[x, y]
+            if v > 30:
+                sx += x * v
+                sy += y * v
+                total += v
+    cx, cy = sx / total, sy / total
+    r = int(max(cx - x0, x1 - cx, cy - y0, y1 - cy)) + 1
+    canvas = Image.new("L", (2 * r, 2 * r), 0)
+    src = (int(cx - r), int(cy - r), int(cx + r), int(cy + r))
+    sx0, sy0 = max(src[0], 0), max(src[1], 0)
+    sx1, sy1 = min(src[2], alpha.width), min(src[3], alpha.height)
+    crop = alpha.crop((sx0, sy0, sx1, sy1))
+    canvas.paste(crop, (sx0 - src[0], sy0 - src[1]))
+    return canvas
 
 
 def render(size: int, mask_src: Image.Image) -> Image.Image:
