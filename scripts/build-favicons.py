@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """Generates favicons / apple-touch-icon from assets/img/logo.png.
 
-Логотип `logo.png` рисуется белым на фирменном синем фоне (#1e5fb3 =
-`--c-primary` и `<meta name="theme-color">`), центрируется и занимает
-~78% площади канваса — без прозрачности, чтобы iOS не подкладывал
-белые поля под apple-touch-icon.
+Apple-touch-icon (180×180) — белый лого на фирменном синем #1e5fb3
+(= `--c-primary` и `<meta name="theme-color">`): на айфоне в Home Screen
+это выглядит как полноценная иконка приложения, а не PNG с прозрачным
+фоном (иначе iOS подкладывает белый и обрезает).
+
+Остальные favicon (16/32/48/192/512 + .ico) — синий лого на светлом
+фирменном фоне #eaf2fc (= `--c-primary-50`): хорошо читается во вкладке
+браузера, на закладках и в результатах поиска.
+
+Лого асимметричное (зуб слева + крыло справа), bbox-центрирование
+даёт перекос — поэтому маска квадратно обрезается вокруг центроида
+(центра массы непрозрачных пикселей), чтобы зуб ровно стоял в центре.
 
 Запуск из корня репо: `python3 scripts/build-favicons.py`.
 """
@@ -16,27 +24,25 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "assets" / "img" / "logo.png"
 OUT_DIR = ROOT / "assets" / "img"
 
-BG = (234, 242, 252, 255)        # #eaf2fc = --c-primary-50
-LOGO_FILL = (30, 95, 179, 255)   # #1e5fb3 = --c-primary
-LOGO_RATIO = 1.0                 # доля канваса, занимаемая логотипом
+PRIMARY = (30, 95, 179, 255)     # #1e5fb3 — --c-primary, theme-color
+PRIMARY_50 = (234, 242, 252, 255)  # #eaf2fc — --c-primary-50
+WHITE = (255, 255, 255, 255)
 
-SIZES = {
-    "favicon-16.png": 16,
-    "favicon-32.png": 32,
-    "favicon-48.png": 48,
-    "favicon-180.png": 180,  # apple-touch-icon
-    "favicon-192.png": 192,  # android / PWA
-    "favicon-512.png": 512,  # PWA splash
-}
+LOGO_RATIO = 1.0  # доля канваса, занимаемая центроид-маской
+
+# (filename, size, background, fill) — генерируем только то, на что
+# реально ссылаются HTML-страницы. 48px остаётся внутри favicon.ico.
+TARGETS = [
+    ("favicon-16.png",  16,  PRIMARY_50, PRIMARY),
+    ("favicon-32.png",  32,  PRIMARY_50, PRIMARY),
+    ("favicon-180.png", 180, PRIMARY,    WHITE),    # apple-touch-icon
+]
 
 
 def load_logo_mask() -> Image.Image:
-    """Возвращает квадратную alpha-маску, в которой центроид
-    (центр массы непрозрачных пикселей) совпадает с центром квадрата.
-    Лого асимметричное (крыло справа, кончик зуба снизу), поэтому
-    добавляем прозрачные поля с «лёгкого» края — иначе либо перекос
-    (bbox-центрирование), либо обрезка (растяжка на весь канвас).
-    Это максимальный размер, при котором лого СТРОГО по центру."""
+    """Квадратная alpha-маска с центроидом лого в центре квадрата.
+    Прозрачные поля добавляются с «лёгкого» края, чтобы при заливке на
+    весь канвас визуальный центр массы попал в центр иконки."""
     logo = Image.open(SRC).convert("RGBA")
     alpha = logo.split()[-1]
     bbox = alpha.getbbox()
@@ -63,11 +69,11 @@ def load_logo_mask() -> Image.Image:
     return canvas
 
 
-def render(size: int, mask_src: Image.Image) -> Image.Image:
-    canvas = Image.new("RGBA", (size, size), BG)
+def render(size: int, mask_src: Image.Image, bg, fill) -> Image.Image:
+    canvas = Image.new("RGBA", (size, size), bg)
     target = int(size * LOGO_RATIO)
     mask = ImageOps.contain(mask_src, (target, target), Image.LANCZOS)
-    fg = Image.new("RGBA", mask.size, LOGO_FILL)
+    fg = Image.new("RGBA", mask.size, fill)
     fg.putalpha(mask)
     pos = ((size - mask.width) // 2, (size - mask.height) // 2)
     canvas.alpha_composite(fg, pos)
@@ -76,14 +82,14 @@ def render(size: int, mask_src: Image.Image) -> Image.Image:
 
 def main() -> None:
     mask = load_logo_mask()
-    for name, size in SIZES.items():
-        img = render(size, mask)
-        out = OUT_DIR / name
-        img.save(out, "PNG", optimize=True)
+    for name, size, bg, fill in TARGETS:
+        img = render(size, mask, bg, fill)
+        img.save(OUT_DIR / name, "PNG", optimize=True)
         print(f"  {name}  {size}x{size}")
 
     ico_sizes = [16, 32, 48]
-    ico_imgs = [render(s, mask).convert("RGBA") for s in ico_sizes]
+    ico_imgs = [render(s, mask, PRIMARY_50, PRIMARY).convert("RGBA")
+                for s in ico_sizes]
     ico_imgs[0].save(
         OUT_DIR / "favicon.ico",
         format="ICO",
