@@ -30,17 +30,18 @@ SIZES = {
 }
 
 
-def load_logo_mask() -> Image.Image:
-    """Возвращает квадратную alpha-маску, в которой центроид лого
-    (центр массы непрозрачных пикселей) совпадает с центром квадрата.
-    Лого асимметричное (зуб + крыло справа), bbox-center даёт перекос —
-    поэтому добавляем прозрачные поля с того края, где лого «лёгкое»,
-    чтобы при отрисовке зуб встал ровно посередине иконки."""
+def load_logo_mask() -> tuple[Image.Image, float, float]:
+    """Тесно кропаем лого по bbox + считаем относительное положение
+    центроида (центра массы непрозрачных пикселей) внутри маски.
+    Этот центроид мы потом ставим в центр иконки — поэтому при заливке
+    bbox-а на всю площадь канваса лого визуально стоит посередине.
+    Лого асимметричное (крыло справа, тонкий кончик зуба снизу),
+    поэтому при максимальном размере низ кончика может слегка обрезаться."""
     logo = Image.open(SRC).convert("RGBA")
     alpha = logo.split()[-1]
     bbox = alpha.getbbox()
     if not bbox:
-        return alpha
+        return alpha, 0.5, 0.5
     x0, y0, x1, y1 = bbox
     px = alpha.load()
     total = sx = sy = 0
@@ -51,38 +52,35 @@ def load_logo_mask() -> Image.Image:
                 sx += x * v
                 sy += y * v
                 total += v
-    cx, cy = sx / total, sy / total
-    r = int(max(cx - x0, x1 - cx, cy - y0, y1 - cy)) + 1
-    canvas = Image.new("L", (2 * r, 2 * r), 0)
-    src = (int(cx - r), int(cy - r), int(cx + r), int(cy + r))
-    sx0, sy0 = max(src[0], 0), max(src[1], 0)
-    sx1, sy1 = min(src[2], alpha.width), min(src[3], alpha.height)
-    crop = alpha.crop((sx0, sy0, sx1, sy1))
-    canvas.paste(crop, (sx0 - src[0], sy0 - src[1]))
-    return canvas
+    cx_rel = (sx / total - x0) / (x1 - x0)
+    cy_rel = (sy / total - y0) / (y1 - y0)
+    return alpha.crop(bbox), cx_rel, cy_rel
 
 
-def render(size: int, mask_src: Image.Image) -> Image.Image:
+def render(size: int, mask_src: Image.Image, cx_rel: float, cy_rel: float) -> Image.Image:
     canvas = Image.new("RGBA", (size, size), BG)
     target = int(size * LOGO_RATIO)
     mask = ImageOps.contain(mask_src, (target, target), Image.LANCZOS)
     fg = Image.new("RGBA", mask.size, LOGO_FILL)
     fg.putalpha(mask)
-    pos = ((size - mask.width) // 2, (size - mask.height) // 2)
+    pos = (
+        round(size / 2 - cx_rel * mask.width),
+        round(size / 2 - cy_rel * mask.height),
+    )
     canvas.alpha_composite(fg, pos)
     return canvas
 
 
 def main() -> None:
-    mask = load_logo_mask()
+    mask, cx_rel, cy_rel = load_logo_mask()
     for name, size in SIZES.items():
-        img = render(size, mask)
+        img = render(size, mask, cx_rel, cy_rel)
         out = OUT_DIR / name
         img.save(out, "PNG", optimize=True)
         print(f"  {name}  {size}x{size}")
 
     ico_sizes = [16, 32, 48]
-    ico_imgs = [render(s, mask).convert("RGBA") for s in ico_sizes]
+    ico_imgs = [render(s, mask, cx_rel, cy_rel).convert("RGBA") for s in ico_sizes]
     ico_imgs[0].save(
         OUT_DIR / "favicon.ico",
         format="ICO",
