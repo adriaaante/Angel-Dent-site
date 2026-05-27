@@ -16,9 +16,9 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "assets" / "img" / "logo.png"
 OUT_DIR = ROOT / "assets" / "img"
 
-BG = (30, 95, 179, 255)          # #1e5fb3
-LOGO_FILL = (255, 255, 255, 255) # белый
-LOGO_RATIO = 0.96                # доля канваса, занимаемая логотипом
+BG = (234, 242, 252, 255)        # #eaf2fc = --c-primary-50
+LOGO_FILL = (30, 95, 179, 255)   # #1e5fb3 = --c-primary
+LOGO_RATIO = 1.0                 # доля канваса, занимаемая логотипом
 
 SIZES = {
     "favicon-16.png": 16,
