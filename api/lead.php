@@ -75,8 +75,18 @@ foreach ($_POST as $key => $value) {
 
 $page = trim((string)($_POST['_page'] ?? ''));
 if ($page !== '') {
+    // Нормализуем в полный URL (вдруг придёт только путь), чтобы ссылка
+    // была кликабельной в Telegram — менеджер тапает и открывает страницу,
+    // с которой оставили заявку.
+    if (!preg_match('~^https?://~i', $page)) {
+        $page = 'https://angel-denta.ru/' . ltrim($page, '/');
+    }
+    // URL внутри скобок Markdown-ссылки чистим от пробелов и скобок,
+    // текст ссылки экранируем от markdown-метасимволов.
+    $pageUrl   = str_replace([' ', '(', ')'], ['%20', '%28', '%29'], $page);
+    $pageLabel = preg_replace('/([*_`\[\]])/u', '\\\\$1', $page);
     $lines[] = '';
-    $lines[] = '_Страница: ' . preg_replace('/[*_`\[]/u', '', $page) . '_';
+    $lines[] = '🔗 *Страница заявки:* [' . $pageLabel . '](' . $pageUrl . ')';
 }
 
 // Источник трафика: UTM-метки и yclid/gclid складываем отдельным блоком,

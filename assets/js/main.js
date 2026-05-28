@@ -117,7 +117,7 @@
   // Токен бота лежит только на сервере (api/config.php, в .gitignore).
   function sendLead(form) {
     var fd = new FormData(form);
-    fd.append('_page', location.pathname || '/');
+    fd.append('_page', location.origin + (location.pathname || '/'));
     fd.append('_referrer', document.referrer || '');
     // Прикладываем UTM/yclid из sessionStorage — менеджер увидит источник
     // лида, а в Метрике можно загрузить офлайн-конверсии по yclid.
