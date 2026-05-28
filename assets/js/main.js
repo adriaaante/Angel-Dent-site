@@ -213,14 +213,20 @@
       el.classList.remove('is-active');
     });
   }
-  document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (modal) modal.classList.add('is-open');
-      // Микроцель: показывает воронку «дошёл до формы записи».
-      // Считаем намерение записаться — даже если форму не отправят.
-      trackGoal('modal_open', { source: linkSource(btn) });
-    });
+  // Делегирование на document, а не привязка к каждой кнопке при загрузке:
+  // ловит и статические [data-modal-open], и те, что добавляются в DOM
+  // позже из JS (например, CTA «Записаться на консультацию» в лайтбоксе
+  // портфолио — portfolio.js). Иначе у динамической кнопки не было бы
+  // обработчика, и ссылка href="#" просто прокручивала бы страницу вверх
+  // вместо открытия формы.
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-modal-open]');
+    if (!btn) return;
+    e.preventDefault();
+    if (modal) modal.classList.add('is-open');
+    // Микроцель: показывает воронку «дошёл до формы записи».
+    // Считаем намерение записаться — даже если форму не отправят.
+    trackGoal('modal_open', { source: linkSource(btn) });
   });
   if (modal) {
     modal.addEventListener('click', function (e) {
