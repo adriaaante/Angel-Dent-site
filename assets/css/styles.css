@@ -784,3 +784,14 @@ p { margin: 0 0 1em; }
   /* Avoid overlap with sticky-cta mobile bar */
   .cookie-banner.is-visible ~ .sticky-cta { bottom: 0; }
 }
+
+/* ── Пометка «Акция» рядом с ценой в прайс-таблицах ── */
+.badge-promo { display: inline-block; background: var(--c-accent); color: #1a2638; font-weight: 700; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; padding: 2px 9px; border-radius: 100px; margin-left: 8px; vertical-align: middle; white-space: nowrap; }
+.prices-table .price-was { display: block; font-size: 12px; font-weight: 500; color: var(--c-text-muted); text-decoration: line-through; }
+.prices-table .price-now { color: var(--c-primary); }
+
+/* ── Плашка с действующей акцией под прайсом услуги ── */
+.promo-note { display: flex; gap: 12px; align-items: flex-start; max-width: 760px; margin: 18px auto 0; padding: 14px 18px; background: var(--c-primary-50); border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 14.5px; line-height: 1.5; }
+.promo-note__icon { flex: 0 0 auto; font-size: 20px; line-height: 1.3; }
+.promo-note strong { color: var(--c-primary); }
+.promo-note a { color: var(--c-primary); font-weight: 600; }
