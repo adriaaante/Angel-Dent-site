@@ -4,9 +4,11 @@
 > Стиль и правила для новых объявлений — в [`STYLE.md`](./STYLE.md).
 
 ## Где лежит медиа
-Сами картинки и видео хранятся на **Google Drive** (это «облако правды»), а в
-репозитории — только этот индекс, тексты офферов и плейбук. Так git не пухнет от
-бинарей. Ссылки ниже ведут прямо на файл в Drive (владелец — futureflowcompany@gmail.com).
+Все картинки и видео сложены в одну папку Google Drive с правильными именами:
+**[📁 Рекламные объявления](https://drive.google.com/drive/folders/1WHHBTsFMGIgBjhKqXmH6okYvOIiA3PPi)**
+(`1WHHBTsFMGIgBjhKqXmH6okYvOIiA3PPi`). В репозитории — только этот индекс, тексты
+офферов и плейбук, чтобы git не пухнул от бинарей. Имена файлов в Drive совпадают
+с именами в таблице ниже.
 
 ## Про формат
 Картинки — это **только фото-визуал (портрет, 1024×1024 PNG)**, без текста.
@@ -17,21 +19,22 @@
 
 | № | Тема | Фото (Drive) | Видео (Drive) | Кто на фото | Заголовок | Текст |
 |---|---|---|---|---|---|---|
-| 01 | Пенсионерам −10% | [фото](https://drive.google.com/file/d/1y3soD2uBsYdV9calJ428sMH-KLqrhmzS/view) | [видео](https://drive.google.com/file/d/1GxLCtyiVvpxWm8YREDtnk6rOkE9cinRW/view) | пожилая женщина | Пенсионерам — скидка 10% на лечение зубов в Реутове | Имплантация, протезирование, гигиена. 10 мин от м. Новокосино. Запись на сегодня. |
-| 02 | Чистка 5000 | [фото](https://drive.google.com/file/d/1cfIrOMPEXLDih83r8lhY9iAXdXW91mnS/view) | [видео](https://drive.google.com/file/d/1sszbMh5LTvoWJA_QEM9nEz7-c-gBG-xH/view) | блондинка | Чистка зубов в Реутове — безболезненно · 5 000 ₽ | Ультразвук, Air Flow, фторирование. Стаж 15+ лет. Запишитесь в удобное время. |
-| 03 | Виниры E.max | [фото](https://drive.google.com/file/d/15CrBsZP2r4tBNU-5ak-fjXuzIpbwutCP/view) | [видео](https://drive.google.com/file/d/1IPtEUgWRjPeIDxPCNFsi_UjKcCOfejrL/view) | блондинка, белый халат | Виниры E.max в Реутове от 22 000 ₽ | Голливудская улыбка за 2 визита. КТ и план лечения бесплатно. Стаж 15+ лет. |
-| 04 | Протезирование | [фото](https://drive.google.com/file/d/1PgHKqD28IBt3zSmjXYbyqWAbYip01upo/view) | [видео](https://drive.google.com/file/d/1rswJrjG5P9gLPhs_hCfgpX2CTLQ2eLpY/view) | пожилой мужчина | Протезирование зубов под ключ в Реутове — от 12 000 ₽ | Коронки, мосты, съёмные протезы. Бесплатный план лечения. Стаж врачей 15+. |
-| 05 | Имплантация (3-й в подарок) | [фото](https://drive.google.com/file/d/1lpitl35yNwRPUqEEevP0iBDRzGvw5X8P/view) | [видео](https://drive.google.com/file/d/1gVhJINrn7shLm2W88soA38IJbeiyaKTp/view) | мужчина | Имплантация в Реутове — каждый 3-й имплант в подарок | Хирург-имплантолог 15 лет стажа. Гарантия 10 лет. КТ и план лечения бесплатно. |
-| 06 | Чистка в подарок | [фото](https://drive.google.com/file/d/1ZJh5UYAp9sDAAD9_XBNl0WAOe_poQysx/view) | [видео](https://drive.google.com/file/d/1E6wLT9SP7dVZSu1nf_9Xxc7-lVpA4XHA/view) | тёмное каре | Чистка зубов в подарок при имплантации или брекетах | Air Flow, ультразвук и полировка. Дарим при имплантации или лечении брекетами. |
-| 07 | КТ + план | [фото](https://drive.google.com/file/d/1yNGo1ktQSKpZ3NQ_T7PTff3wnVXsQWtp/view) | [видео](https://drive.google.com/file/d/1-o4Gs39hEduj38oPVZWN4wkTe_kSfH1O/view) | шатенка | КТ + план лечения в Реутове · 4 200 ₽ | КТ двух челюстей, осмотр главврача, письменный план. Фиксируем цены на 30 дней. |
-| 08 | Брекеты | [фото](https://drive.google.com/file/d/1YwI2ubyTFKTMDxE8_tm8ln96u7eoXP1A/view) | [видео](https://drive.google.com/file/d/18JSCzkPloKv78pJTGd6I4dJsQMUliVZH/view) | молодая брюнетка | Брекеты в Реутове от 35 000 ₽ · Консультация бесплатно | Брекеты под ключ. Стаж ортодонта 15 лет. Гарантия 10 лет. 500+ отзывов 5,0. |
+| 01 | Пенсионерам −10% | [01-pensioneram-skidka-10.png](https://drive.google.com/file/d/14goaPjz2xZ0w58DeeZkgQl1Ei_kVDkL4/view) | [video-01-…mp4](https://drive.google.com/file/d/1ioFTKP4Y9ETbOc810JBrCWxbwAmL7x-U/view) | пожилая женщина | Пенсионерам — скидка 10% на лечение зубов в Реутове | Имплантация, протезирование, гигиена. 10 мин от м. Новокосино. Запись на сегодня. |
+| 02 | Чистка 5000 | [02-chistka-bezbol-5000.png](https://drive.google.com/file/d/1M2KQU4kkKmsApFU2UlM63YwUygl3CD_E/view) | [video-02-…mp4](https://drive.google.com/file/d/1pVqeIjHX-GRTPDych968t27Dd6bPcUt7/view) | блондинка | Чистка зубов в Реутове — безболезненно · 5 000 ₽ | Ультразвук, Air Flow, фторирование. Стаж 15+ лет. Запишитесь в удобное время. |
+| 03 | Виниры E.max | [03-viniry-emax.png](https://drive.google.com/file/d/1ZgJka4A0YTCBcA9y_QdKIizXy5Kwe06Y/view) | [video-03-…mp4](https://drive.google.com/file/d/1TG8cI0SpVh9A_IVe9Czk4TstOiWoz1vc/view) | блондинка, белый халат | Виниры E.max в Реутове от 22 000 ₽ | Голливудская улыбка за 2 визита. КТ и план лечения бесплатно. Стаж 15+ лет. |
+| 04 | Протезирование | [04-protezirovanie.png](https://drive.google.com/file/d/1F3O_qRG3SP2EYUbNnAV2Q6SDepmLBIgj/view) | [video-04-…mp4](https://drive.google.com/file/d/1SK1UxtTyWQCGk-dNk9KLCBwQ4qY4_cFB/view) | пожилой мужчина | Протезирование зубов под ключ в Реутове — от 12 000 ₽ | Коронки, мосты, съёмные протезы. Бесплатный план лечения. Стаж врачей 15+. |
+| 05 | Имплантация (3-й в подарок) | [05-implantaciya-…png](https://drive.google.com/file/d/1tv_1A4YHFIqJrkf2IX-1_6x2CE_bCPiZ/view) | [video-05-…mp4](https://drive.google.com/file/d/1wiJH9NRqZLAvhdyaKximwyX2YoiQE-ST/view) | мужчина | Имплантация в Реутове — каждый 3-й имплант в подарок | Хирург-имплантолог 15 лет стажа. Гарантия 10 лет. КТ и план лечения бесплатно. |
+| 06 | Чистка в подарок | [06-chistka-podarok-…png](https://drive.google.com/file/d/11-3ZNqRhvh21qDSGK1qKtnLzPqFQTyCo/view) | [video-06-…mp4](https://drive.google.com/file/d/1Wb_Qgh-hxepWwGMaRmwXDFF3V-INdLlp/view) | тёмное каре | Чистка зубов в подарок при имплантации или брекетах | Air Flow, ультразвук и полировка. Дарим при имплантации или лечении брекетами. |
+| 07 | КТ + план | [07-kt-plan-lecheniya.png](https://drive.google.com/file/d/1KcExt84SHhDqv8QngDK5MMCc1iWlWIQI/view) | [video-07-…mp4](https://drive.google.com/file/d/1Os7h3sZTTb5CoEJs1EAAqSXQdVJPCter/view) | шатенка | КТ + план лечения в Реутове · 4 200 ₽ | КТ двух челюстей, осмотр главврача, письменный план. Фиксируем цены на 30 дней. |
+| 08 | Брекеты | [08-brekety.png](https://drive.google.com/file/d/1C1RtCapL9yy2zEJ4cHW0RqyH-iKhNhLa/view) | [video-08-brekety.mp4](https://drive.google.com/file/d/1z1I9Wo2lIb1T7i8_Mu0lj1gPhVOId_B1/view) | молодая брюнетка | Брекеты в Реутове от 35 000 ₽ · Консультация бесплатно | Брекеты под ключ. Стаж ортодонта 15 лет. Гарантия 10 лет. 500+ отзывов 5,0. |
 
 ## Сопоставление видео — статус
-- **Точно** (по имени файла в Drive): 01 Пенсионерам, 08 Брекеты.
+- **Точно** (по исходному имени файла): 01 Пенсионерам, 08 Брекеты.
 - **По лицу** (сверял кадр видео с фото-визуалом): 02, 03, 04, 05, 06, 07 — если
-  где-то перепутал тему, скажи — поправлю строку.
+  где-то перепутана тема, скажи — поправлю строку.
 
-## Как я качаю эти файлы при необходимости
-У меня есть прямой доступ к Drive через MCP (см. CLAUDE.md, раздел про Google Drive).
-По ссылке/ID выше могу скачать любой файл (кроме самых тяжёлых >7 МБ — их MCP-загрузка
-рвёт, такие проще дать ссылкой или перезалить полегче).
+## Примечания
+- Файлы в папке — **копии** (владелец `adriaaante@gmail.com`), сделаны с исходников.
+  Исходные файлы-оригиналы (часть с именами вида `hf_…`) остались на прежних местах
+  в Drive — при желании их можно удалить вручную, на ссылки выше это не влияет.
+- Скачать любой файл могу напрямую через Drive-коннектор по ссылке/ID из таблицы.
