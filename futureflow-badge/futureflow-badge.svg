@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="190" height="36" viewBox="0 0 190 36" role="img" aria-label="Сделано в FutureFlow">
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="36" viewBox="0 0 210 36" role="img" aria-label="Сделано в FutureFlow">
   <defs>
     <linearGradient id="ffBrandGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#c8dcf4"/>
@@ -9,7 +9,7 @@
   </defs>
 
   <!-- Pill background -->
-  <rect x="0.5" y="0.5" width="189" height="35" rx="17.5"
+  <rect x="0.5" y="0.5" width="209" height="35" rx="17.5"
         fill="#0f1f3a" stroke="rgba(255,255,255,0.14)"/>
 
   <!-- Chip mark -->
