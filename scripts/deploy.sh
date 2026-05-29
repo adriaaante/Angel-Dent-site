@@ -70,6 +70,7 @@ EXCLUDES=(
     --exclude='.gitignore'
     --exclude='api/config.php.example'
     --exclude='assets/img/portfolio/_originals/'
+    --exclude='_materials/'
     --exclude='preview.html'
     --exclude='.DS_Store'
     --exclude='Thumbs.db'

@@ -247,7 +247,9 @@ Apache, то, что отдаётся посетителям).
 
 Что попадает на хостинг: всё, кроме `.git/`, `.github/`, `.claude/`,
 `scripts/`, `CLAUDE.md`, `README.md`, `.gitignore`, оригиналов фото
-портфолио (`assets/img/portfolio/_originals/`) и `api/config.php.example`.
+портфолио (`assets/img/portfolio/_originals/`), внутренних материалов
+клиники (`_materials/` — объявления, буклеты, паспорт имплантов) и
+`api/config.php.example`.
 
 `api/config.php` (токен Telegram-бота и chat_id) лежит **только на
 сервере**, в `.gitignore`. Создаётся один раз вручную при первом
