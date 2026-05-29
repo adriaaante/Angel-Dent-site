@@ -45,6 +45,8 @@ window.AD_PORTFOLIO = {
       date: '05.2026',
       before: '../assets/img/portfolio/drobkova-marpe-openbite-before.webp',
       after: '../assets/img/portfolio/drobkova-marpe-openbite-after.webp',
+      beforeFull: '../assets/img/portfolio/drobkova-marpe-openbite-before-full.webp',
+      afterFull: '../assets/img/portfolio/drobkova-marpe-openbite-after-full.webp',
       details: {
         problem: 'Пациентка 10 лет обратилась с родителями по поводу неправильного прикуса и тесного положения зубов. Клинически — открытый прикус: передние зубы не смыкались при закрывании рта. Из-за нехватки места постоянным зубам было некуда прорезываться.',
         diagnosis: 'Сделаны ТРГ, КТ челюстей и сняты диагностические модели. Выявлен 100% дефицит места под клыки на верхней челюсти и под второй премоляр справа на нижней челюсти, сужение верхней зубной дуги и открытый прикус. Возраст пациентки благоприятен для скелетного расширения верхней челюсти.',
@@ -691,14 +693,15 @@ window.AD_PORTFOLIO = {
       imgBefore.removeAttribute('src');
     } else {
       figBefore.classList.remove('is-placeholder');
-      imgBefore.src = item.before;
+      // В лайтбоксе показываем полную (необрезанную) версию, если она есть
+      imgBefore.src = item.beforeFull || item.before;
     }
     if (isPlaceholder(item.after)) {
       figAfter.classList.add('is-placeholder');
       imgAfter.removeAttribute('src');
     } else {
       figAfter.classList.remove('is-placeholder');
-      imgAfter.src = item.after;
+      imgAfter.src = item.afterFull || item.after;
     }
 
     // Заголовок и краткое описание
