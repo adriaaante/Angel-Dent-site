@@ -502,7 +502,7 @@ p { margin: 0 0 1em; }
 .pf-card__images { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--c-border); position: relative; }
 .pf-card__images::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--c-primary); display: grid; place-items: center; font-weight: 700; font-size: 13px; letter-spacing: .04em; box-shadow: var(--shadow-sm); content: "→"; }
 .pf-img { margin: 0; position: relative; background: var(--c-primary-50); overflow: hidden; aspect-ratio: 4 / 3; }
-.pf-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .25s ease; }
+.pf-img img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .25s ease; }
 .pf-card:hover .pf-img img { transform: scale(1.03); }
 .pf-img figcaption { position: absolute; left: 10px; top: 10px; background: rgba(15,31,58,.78); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; }
 .pf-img--after figcaption { background: var(--c-primary); }
