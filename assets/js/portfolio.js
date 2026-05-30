@@ -42,6 +42,7 @@ window.AD_PORTFOLIO = {
       title: 'Расширение зубных дуг аппаратом MARPE и исправление открытого прикуса',
       description: 'Пациентка 10 лет: 100% дефицит места под клыки и открытый прикус. Несъёмный аппарат MARPE с абсолютной опорой на нёбе для расширения верхней челюсти + самолигирующая брекет-система. Дуги расширены, прикус закрыт.',
       services: ['Детская ортодонтия', 'Аппарат MARPE', 'Брекеты', 'Открытый прикус'],
+      date: '05.2026',
       before: '../assets/img/portfolio/drobkova-marpe-openbite-before.webp',
       after: '../assets/img/portfolio/drobkova-marpe-openbite-after.webp',
       beforeFull: '../assets/img/portfolio/drobkova-marpe-openbite-before-full.webp',
