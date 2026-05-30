@@ -13,7 +13,6 @@
      title       — короткое название случая
      description — 1–2 предложения о работе
      services    — массив тегов (видимые «бейджи» под фото)
-     duration    — срок лечения (необязательно)
      before      — путь к фото "до" (если нет — оставьте плейсхолдер)
      after       — путь к фото "после"
      date        — дата работы в формате 'MM.YYYY' (необязательно)
@@ -69,7 +68,6 @@ window.AD_PORTFOLIO = {
       title: 'Исправление скученности брекетами Damon Q',
       description: 'Самолигирующая система Damon Q на обе челюсти. Без удаления зубов, по завершении установлен несъёмный ретейнер.',
       services: ['Брекеты', 'Damon Q', 'Ретейнер'],
-      duration: '18 месяцев',
       date: '12.2024',
       before: 'placeholder',
       after: 'placeholder',
@@ -94,7 +92,6 @@ window.AD_PORTFOLIO = {
       title: 'Элайнеры Star Smile у взрослого пациента',
       description: 'Скученность нижнего ряда и лёгкая ротация резцов. 24 каппы по графику смены раз в 10 дней, без удалений.',
       services: ['Элайнеры', 'Star Smile'],
-      duration: '8 месяцев',
       date: '02.2025',
       before: 'placeholder',
       after: 'placeholder',
@@ -119,7 +116,6 @@ window.AD_PORTFOLIO = {
       title: 'Коррекция дистального прикуса у подростка',
       description: 'Лечение керамическими брекетами Clarity с межчелюстными тягами. Получен стабильный физиологичный прикус.',
       services: ['Брекеты Clarity', 'Подросток', 'Дистальный прикус'],
-      duration: '22 месяца',
       date: '05.2025',
       before: 'placeholder',
       after: 'placeholder',
@@ -144,7 +140,6 @@ window.AD_PORTFOLIO = {
       title: 'Исправление мезиального прикуса у взрослого',
       description: 'Комбинированное лечение брекетами Damon Q с использованием микроимплантов для опоры. Прикус нормализован без хирургии.',
       services: ['Брекеты', 'Damon Q', 'Мезиальный прикус'],
-      duration: '24 месяца',
       date: '09.2024',
       before: 'placeholder',
       after: 'placeholder',
@@ -173,7 +168,6 @@ window.AD_PORTFOLIO = {
       title: 'All-on-4 — полное восстановление верхней челюсти',
       description: 'Установка четырёх имплантов Straumann и временного несъёмного протеза за один день. Через 4 месяца — постоянная конструкция.',
       services: ['All-on-4', 'Straumann', 'Имплантация'],
-      duration: '4 месяца',
       date: '03.2025',
       before: '../assets/img/portfolio/implant-noteeth.webp',
       after: '../assets/img/portfolio/implant-arch.webp',
@@ -198,7 +192,6 @@ window.AD_PORTFOLIO = {
       title: 'Открытый синус-лифтинг с одномоментной имплантацией',
       description: 'Восстановление костного объёма верхней челюсти материалом Geistlich Bio-Oss и установка импланта AnyRidge за одну операцию.',
       services: ['Синус-лифтинг', 'Bio-Oss', 'AnyRidge'],
-      duration: '5 месяцев',
       date: '11.2024',
       before: '../assets/img/portfolio/implant-gap.webp',
       after: '../assets/img/portfolio/implant-restored.webp',
@@ -223,7 +216,6 @@ window.AD_PORTFOLIO = {
       title: 'Удаление ретинированной восьмёрки с костной пластикой',
       description: 'Сложное хирургическое удаление горизонтально расположенного зуба мудрости с сохранением объёма кости для будущей имплантации.',
       services: ['Хирургия', 'Восьмёрки', 'Костная пластика'],
-      duration: '1 визит',
       date: '01.2025',
       before: 'placeholder',
       after: 'placeholder',
@@ -248,7 +240,6 @@ window.AD_PORTFOLIO = {
       title: 'Имплантация в эстетически значимой зоне',
       description: 'Установка импланта Straumann на место центрального резца с временной коронкой в день операции. Сохранён контур десны.',
       services: ['Имплантация', 'Straumann', 'Эстетика'],
-      duration: '4 месяца',
       date: '06.2025',
       before: 'placeholder',
       after: 'placeholder',
@@ -277,7 +268,6 @@ window.AD_PORTFOLIO = {
       title: 'Имплантация двух зубов SNUCONE на нижней челюсти',
       description: 'Малоинвазивный хирургический протокол по системе Implantium & SuperLine. Через 3 месяца установлены постоянные коронки.',
       services: ['Имплантация', 'SNUCONE'],
-      duration: '3 месяца',
       date: '04.2025',
       before: '../assets/img/portfolio/implant-gap.webp',
       after: '../assets/img/portfolio/implant-restored.webp',
@@ -302,7 +292,6 @@ window.AD_PORTFOLIO = {
       title: 'Одномоментная имплантация Osstem после удаления',
       description: 'Удаление разрушенного жевательного зуба и установка импланта Osstem в ту же лунку. Сокращение общего срока лечения вдвое.',
       services: ['Одномоментная имплантация', 'Osstem'],
-      duration: '3 месяца',
       date: '02.2025',
       before: 'placeholder',
       after: 'placeholder',
@@ -327,7 +316,6 @@ window.AD_PORTFOLIO = {
       title: 'Костная пластика материалом Bio-Oss',
       description: 'Восстановление объёма альвеолярного гребня перед имплантацией. Биоматериал Geistlich Bio-Oss и резорбируемая мембрана.',
       services: ['Костная пластика', 'Bio-Oss'],
-      duration: '4 месяца',
       date: '10.2024',
       before: 'placeholder',
       after: 'placeholder',
@@ -352,7 +340,6 @@ window.AD_PORTFOLIO = {
       title: 'Сложное удаление зуба мудрости',
       description: 'Удаление горизонтально расположенного зуба мудрости с минимальной травмой соседних структур. По авторскому протоколу из курса.',
       services: ['Хирургия', 'Зубы мудрости'],
-      duration: '1 визит',
       date: '07.2025',
       before: 'placeholder',
       after: 'placeholder',
@@ -381,7 +368,6 @@ window.AD_PORTFOLIO = {
       title: 'Виниры E.max на 8 передних зубов',
       description: 'Цифровое моделирование улыбки по протоколу Digital Smile Design, керамические виниры E.max минимальной толщины. Естественный результат.',
       services: ['Виниры', 'E.max', 'DSD'],
-      duration: '6 недель',
       date: '03.2025',
       before: '../assets/img/portfolio/veneers-before.webp',
       after: '../assets/img/portfolio/veneers-after.webp',
@@ -406,7 +392,6 @@ window.AD_PORTFOLIO = {
       title: 'Циркониевые коронки на жевательную группу',
       description: 'Сканирование 3Shape Trios, моделирование в CAD/CAM, четыре коронки из диоксида циркония с точной посадкой по цифровому слепку.',
       services: ['Коронки Zr', 'CAD/CAM', '3Shape Trios'],
-      duration: '3 недели',
       date: '05.2025',
       before: '../assets/img/portfolio/crowns-before.webp',
       after: '../assets/img/portfolio/crowns-after.webp',
@@ -431,7 +416,6 @@ window.AD_PORTFOLIO = {
       title: 'Мостовидный протез из диоксида циркония',
       description: 'Восстановление трёх единиц мостовидной конструкцией на основе циркония. Цифровая фиксация прикуса и эстетичный результат.',
       services: ['Мост Zr', 'Протезирование'],
-      duration: '4 недели',
       date: '12.2024',
       before: 'placeholder',
       after: 'placeholder',
@@ -456,7 +440,6 @@ window.AD_PORTFOLIO = {
       title: 'Протезирование на двух имплантах — циркониевые коронки',
       description: 'Снятие цифрового слепка 3Shape Trios с имплантов, изготовление индивидуальных абатментов и коронок Zr. Идеальная окклюзия.',
       services: ['Коронки на имплантах', 'Zr', '3Shape Trios'],
-      duration: '5 недель',
       date: '08.2024',
       before: 'placeholder',
       after: 'placeholder',
@@ -485,7 +468,6 @@ window.AD_PORTFOLIO = {
       title: 'Художественная реставрация переднего зуба',
       description: 'Восстановление скола центрального резца композитом Estelite Asteria с послойным нанесением оттенков. Реставрация неотличима от соседних зубов.',
       services: ['Реставрация', 'Estelite Asteria', 'Эстетика'],
-      duration: '1 визит',
       date: '04.2025',
       before: '../assets/img/portfolio/restoration-before.webp',
       after: '../assets/img/portfolio/restoration-after.webp',
@@ -510,7 +492,6 @@ window.AD_PORTFOLIO = {
       title: 'Лечение пульпита под микроскопом',
       description: 'Эндодонтическое лечение трёхканального моляра под микроскопом Carl Zeiss с инструментами ProTaper. Каналы запломбированы герметично.',
       services: ['Эндодонтия', 'Микроскоп Zeiss', 'ProTaper'],
-      duration: '2 визита',
       date: '02.2025',
       before: '../assets/img/portfolio/caries-cavity.webp',
       after: '../assets/img/portfolio/caries-restored.webp',
@@ -535,7 +516,6 @@ window.AD_PORTFOLIO = {
       title: 'Лечение глубокого кариеса с сохранением пульпы',
       description: 'Бережное препарирование под микроскопом, лечебная прокладка и реставрация композитом Estelite Asteria. Зуб сохранён живым.',
       services: ['Кариес', 'Микроскоп', 'Estelite Asteria'],
-      duration: '1 визит',
       date: '11.2024',
       before: 'placeholder',
       after: 'placeholder',
@@ -560,7 +540,6 @@ window.AD_PORTFOLIO = {
       title: 'Перелечивание корневых каналов под микроскопом',
       description: 'Распломбировка и повторная обработка двухканального премоляра с устранением очага инфекции. Контроль КЛКТ через 6 месяцев — норма.',
       services: ['Эндодонтия', 'Перелечивание', 'Микроскоп Zeiss'],
-      duration: '3 визита',
       date: '06.2025',
       before: 'placeholder',
       after: 'placeholder',
@@ -637,7 +616,6 @@ window.AD_PORTFOLIO = {
       return '<span class="pf-tag">' + escapeHTML(s) + '</span>';
     }).join('');
     var meta = [];
-    if (item.duration) meta.push('<span class="pf-meta__item">⏱ ' + escapeHTML(item.duration) + '</span>');
     if (item.date) meta.push('<span class="pf-meta__item">📅 ' + escapeHTML(item.date) + '</span>');
 
     return (
@@ -729,11 +707,10 @@ window.AD_PORTFOLIO = {
       }
     }
 
-    // Мета: длительность / дата
+    // Мета: дата
     var metaWrap = lb.querySelector('[data-pf-lb-meta]');
     if (metaWrap) {
       var metaParts = [];
-      if (item.duration) metaParts.push('<span class="pf-meta__item">⏱ ' + escapeHTML(item.duration) + '</span>');
       if (item.date) metaParts.push('<span class="pf-meta__item">📅 ' + escapeHTML(item.date) + '</span>');
       if (metaParts.length) {
         metaWrap.innerHTML = metaParts.join('');
