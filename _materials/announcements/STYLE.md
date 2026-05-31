@@ -22,6 +22,19 @@
   сверху, плечи срезаются нижней кромкой (проверено владельцем: «слишком близкий»
   кроп с обрезанной макушкой — отклонён; «голова+плечи целиком» — чуть мелко;
   верный баланс — между ними). Все визуалы серии держим в этом одном кадре.
+
+### Точные пропорции кадра (замерено с эталона `08-brekety.png`)
+
+Эталон — квадрат 1:1. Привязываемся к этим долям (отсчёт сверху):
+- **воздух над макушкой ~4 %** — голова НЕ обрезана;
+- **глаза ~22 %** от верхней кромки;
+- **улыбка/рот ~40 %** от верха;
+- **подбородок ~50 %** — у вертикального центра квадрата;
+- **плечи и верх груди заполняют нижнюю половину**, срезаются нижней кромкой;
+- **лицо строго по центру** по горизонтали, прямой взгляд в камеру.
+
+Итого: верхняя половина кадра — голова, нижняя — плечи/грудь. Эти числа
+прописаны прямо в промпте ниже — не менять.
 - **Максимум фотореализма и привлекательности** (DSLR, 85 mm, мягкий свет,
   естественная кожа) — как на присланном владельцем эталоне.
 - **Никакого текста, надписей, водяных знаков** на фото (текст оффера задаётся
@@ -61,15 +74,18 @@
 трогать — кадр и стиль уже выверены:
 
 ```
-Photorealistic tight head-and-shoulders advertising portrait, square 1:1. The
-face is large and fills much of the frame, only a small headroom above the hair
-(the head is NOT cropped at the top), shoulders cropped at the bottom edge,
-person centered. [ОПИСАНИЕ ГЕРОЯ: пол, возраст, тёплая искренняя улыбка с
+Photorealistic head-and-shoulders advertising portrait, square 1:1. Framing must
+match these exact proportions: the head occupies the upper half of the frame with
+a small headroom above the hair (about 4% gap at the top, head NOT cropped); the
+eyes sit at about 22% from the top; the smiling mouth at about 40% from the top;
+the chin near the vertical center of the square; the shoulders and upper chest
+fill the lower half and are cropped by the bottom edge; the face centered
+horizontally. [ОПИСАНИЕ ГЕРОЯ: пол, возраст, большая тёплая искренняя улыбка с
 белыми зубами, особенность услуги], looking directly into the camera. Soft
-out-of-focus bright modern dental clinic in the background with hints of a
-dental chair and bright window light, blue-white palette. Natural soft daylight,
-clean, friendly, high-key. Photorealistic, professional advertising quality,
-edge-to-edge, no border. No text, no logos, no watermark.
+out-of-focus bright modern dental clinic background, blue-white palette, bright
+window light, lots of light and air. Natural soft daylight, high-key, clean.
+Photorealistic, professional advertising quality, edge-to-edge, no border. No
+text, no logos, no watermark.
 ```
 
 Кастинг героя под «входные» услуги (продолжение списка из §1):
