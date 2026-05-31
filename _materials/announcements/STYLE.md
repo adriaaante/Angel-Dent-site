@@ -34,11 +34,25 @@
 - **плечи заполняют низ**, срезаются нижней кромкой;
 - **лицо строго по центру** по горизонтали, прямой взгляд в камеру.
 
-Ключевые правила серии (не менять):
-1. **Макушка обрезана сверху** на каждом кадре, голова крупная.
-2. **Улыбка — в самом центре квадрата.**
-3. **Фокус всегда на улыбку** — зубы максимально резкие (tack-sharp),
-   малая ГРИП, остальное чуть мягче. Улыбка — смысловой и резкостный центр.
+### 🔒 ЖЕЛЕЗНОЕ ПРАВИЛО (нарушать нельзя)
+
+**Улыбка/зубы — в ТОЧНОМ геометрическом центре квадрата: 50 % по ширине
+И 50 % по высоте.** Над улыбкой и под ней — поровну высоты кадра. Это
+главный и самый строгий критерий приёмки; если рот ушёл вниз/вверх — кадр
+бракуем и генерим заново.
+
+Как этого добиваемся технически (модель сама не центрирует рот — заставляем):
+- **сверху агрессивно срезаем** макушку, волосы и бóльшую часть лба
+  (верх головы уходит за кромку);
+- **снизу добавляем** подбородок, шею, плечи и верх груди — заполняют всю
+  нижнюю половину;
+- так рот оказывается ровно посередине.
+
+Остальные правила серии (не менять):
+1. **Голова крупная**, макушка обрезана сверху на каждом кадре.
+2. **Фокус всегда на улыбку** — зубы максимально резкие (tack-sharp),
+   малая ГРИП, остальное чуть мягче.
+3. Лицо строго по центру по горизонтали, прямой взгляд в камеру.
 
 Эти правила прописаны прямо в промпте ниже.
 - **Максимум фотореализма и привлекательности** (DSLR, 85 mm, мягкий свет,
@@ -80,18 +94,20 @@
 трогать — кадр и стиль уже выверены:
 
 ```
-Photorealistic beauty headshot portrait, square 1:1. The head is LARGE and fills
-the frame; the top of the hair (crown) is clearly CROPPED off by the top edge on
-purpose. The smiling mouth sits at the exact center of the square (horizontally
-and vertically) AND is the sharp focal point of the photo: tack-sharp bright
+Photorealistic beauty headshot, square 1:1. CRITICAL COMPOSITION RULE: the
+smiling mouth with visible teeth must be at the EXACT geometric center of the
+square image (50% of the width and 50% of the height) — there must be equal image
+height above the smile and below it. To achieve this, crop the top of the head,
+hair and most of the forehead aggressively (the crown and upper forehead are cut
+off by the top edge), and include the chin, neck, shoulders and upper chest
+filling the entire lower half. The smile is the sharp focal point: tack-sharp
 white teeth in crisp focus, shallow depth of field, the rest slightly softer.
-Eyes about 28% from the top, chin about 65%, shoulders fill the bottom and are
-cropped by the bottom edge, face centered horizontally. [ОПИСАНИЕ ГЕРОЯ: пол,
-возраст, большая тёплая искренняя улыбка с белыми зубами, особенность услуги],
-looking directly into the camera. Soft out-of-focus bright modern dental clinic
-background, blue-white palette, bright window light. Natural soft daylight,
-high-key, clean. Photorealistic, professional advertising quality, edge-to-edge,
-no border. No text, no logos, no watermark.
+Face centered horizontally, looking directly into the camera. [ОПИСАНИЕ ГЕРОЯ:
+пол, возраст, большая тёплая искренняя улыбка с белыми зубами, особенность
+услуги]. Soft out-of-focus bright modern dental clinic background, blue-white
+palette, bright window light. Natural soft daylight, high-key, clean.
+Photorealistic, professional advertising quality, edge-to-edge, no border. No
+text, no logos, no watermark.
 ```
 
 Кастинг героя под «входные» услуги (продолжение списка из §1):
