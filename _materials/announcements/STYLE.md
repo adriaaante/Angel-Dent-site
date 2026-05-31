@@ -41,14 +41,17 @@
 главный и самый строгий критерий приёмки; если рот ушёл вниз/вверх — кадр
 бракуем и генерим заново.
 
-**ЛИЦО ЦЕЛИКОМ: лоб и глаза ОБЯЗАТЕЛЬНО видны.** Лоб НЕ срезаем — режется
-только самый верх волос/макушка. (Слишком тесный кроп без лба/глаз — брак.)
+**Два условия одновременно (оба обязательны):**
+1. **Макушка СРЕЗАНА** — над головой НЕТ воздуха, верх головы/волос уходит за
+   верхнюю кромку.
+2. **Лоб и глаза ВИДНЫ** — лоб не срезаем (глаза ~28 % от верха).
 
-Как добиваемся центра рта (модель сама не центрирует — заставляем):
-- сверху срезаем только **макушку/волосы**, лоб и глаза оставляем (глаза ~30 %);
-- **снизу добавляем** подбородок, шею, плечи и верх груди — заполняют всю
-  нижнюю половину вплоть до кромки;
-- так рот оказывается ровно по центру (~50 %), а лицо остаётся целым.
+Именно срез макушки (без воздуха сверху) поднимает рот к центру. Снизу
+добираем подбородок, шею, плечи, верх груди до нижней кромки. В итоге:
+- макушка — за кромкой (0 %), лоб ~15 %, глаза ~28 %, **рот ~50 % (центр)**,
+  подбородок ~62 %, плечи/грудь — низ.
+
+Брак = либо воздух над головой (рот падает вниз), либо срезаны глаза/лоб.
 
 Остальные правила серии (не менять):
 1. **Голова крупная**, макушка обрезана сверху на каждом кадре.
@@ -96,19 +99,19 @@
 трогать — кадр и стиль уже выверены:
 
 ```
-Photorealistic beauty headshot, square 1:1. COMPOSITION: the whole face is
-visible INCLUDING the forehead and the eyes (do NOT crop the forehead or the
-eyes); only the very top of the hair/crown may be slightly cropped by the top
-edge. The smiling mouth with visible teeth is at the EXACT vertical and
-horizontal center of the square (50%/50%): eyes about 30% from the top, forehead
-and hairline visible above the eyes, chin about 62%, and the neck, shoulders and
-upper chest fill the lower part down to the bottom edge so the smile lands
-exactly in the middle. The smile is the sharp focal point: tack-sharp teeth in
-crisp focus, shallow depth of field, the rest slightly softer. Face centered
-horizontally, looking directly into the camera. [ОПИСАНИЕ ГЕРОЯ: пол, возраст,
-большая тёплая искренняя улыбка с белыми зубами, особенность услуги]. Soft
-out-of-focus bright modern dental clinic background, blue-white palette, bright
-window light. Natural soft daylight, high-key, clean. Photorealistic,
+Photorealistic beauty headshot, square 1:1. STRICT COMPOSITION: there is NO empty
+space above the head — the top of the head and the top of the hair (crown) are
+CUT OFF by the top edge. At the same time the forehead, eyebrows and EYES remain
+fully visible (do not crop the eyes). The smiling mouth with teeth is at the EXACT
+vertical and horizontal center of the square (50% / 50%): with the crown cropped,
+the eyes fall around 28% from the top, forehead just above them, chin around 62%,
+and the neck, shoulders and upper chest fill the bottom down to the edge, so the
+smile sits exactly in the middle. The smile is the sharp focal point: tack-sharp
+teeth in crisp focus, shallow depth of field, the rest slightly softer. Face
+centered horizontally, looking directly into the camera. [ОПИСАНИЕ ГЕРОЯ: пол,
+возраст, большая тёплая искренняя улыбка с белыми зубами, особенность услуги].
+Soft out-of-focus bright modern dental clinic background, blue-white palette,
+bright window light. Natural soft daylight, high-key, clean. Photorealistic,
 professional advertising quality, edge-to-edge, no border. No text, no logos,
 no watermark.
 ```
