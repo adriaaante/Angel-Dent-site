@@ -26,16 +26,21 @@
 ### Точные пропорции кадра (эталон `08-brekety.png`, утверждено владельцем)
 
 Эталон — квадрат 1:1. Привязываемся к этим долям (отсчёт сверху):
-- **макушку сверху СЛЕГКА подрезаем** — самый верх волос уходит за кромку
-  (НЕ оставляем воздух над головой — проверено: вариант с воздухом отклонён);
-- **глаза ~30 %** от верхней кромки;
-- **улыбка/рот ~50 % — строго по центру и по середине кадра** (главный акцент);
-- **подбородок ~62 %**;
-- **плечи и верх груди заполняют низ**, срезаются нижней кромкой;
+- **голова КРУПНАЯ, заполняет кадр; макушка сверху ОБРЕЗАНА** — верх волос
+  уходит за верхнюю кромку на каждом фото (воздуха над головой нет);
+- **глаза ~28 %** от верхней кромки;
+- **улыбка/рот ~50 % — строго по центру и по середине кадра**;
+- **подбородок ~65 %**;
+- **плечи заполняют низ**, срезаются нижней кромкой;
 - **лицо строго по центру** по горизонтали, прямой взгляд в камеру.
 
-Ключевое правило серии: **улыбка — в самом центре квадрата, макушка слегка
-обрезана.** Эти числа прописаны прямо в промпте ниже — не менять.
+Ключевые правила серии (не менять):
+1. **Макушка обрезана сверху** на каждом кадре, голова крупная.
+2. **Улыбка — в самом центре квадрата.**
+3. **Фокус всегда на улыбку** — зубы максимально резкие (tack-sharp),
+   малая ГРИП, остальное чуть мягче. Улыбка — смысловой и резкостный центр.
+
+Эти правила прописаны прямо в промпте ниже.
 - **Максимум фотореализма и привлекательности** (DSLR, 85 mm, мягкий свет,
   естественная кожа) — как на присланном владельцем эталоне.
 - **Никакого текста, надписей, водяных знаков** на фото (текст оффера задаётся
@@ -75,18 +80,18 @@
 трогать — кадр и стиль уже выверены:
 
 ```
-Photorealistic head-and-shoulders advertising portrait, square 1:1, classic
-beauty headshot framing. FRAMING RULES: the very top of the hair (crown) is
-SLIGHTLY cropped by the top edge; the smiling mouth is centered both horizontally
-and vertically, at the exact middle of the square (about 50% from the top); the
-eyes are in the upper third (about 30% from the top); the chin around 62%; the
-shoulders and upper chest fill the lower part and are cropped by the bottom edge;
-the face perfectly centered horizontally. [ОПИСАНИЕ ГЕРОЯ: пол, возраст, большая
-тёплая искренняя улыбка с белыми зубами, особенность услуги], looking directly
-into the camera. Soft out-of-focus bright modern dental clinic background,
-blue-white palette, bright window light, lots of light and air. Natural soft
-daylight, high-key, clean. Photorealistic, professional advertising quality,
-edge-to-edge, no border. No text, no logos, no watermark.
+Photorealistic beauty headshot portrait, square 1:1. The head is LARGE and fills
+the frame; the top of the hair (crown) is clearly CROPPED off by the top edge on
+purpose. The smiling mouth sits at the exact center of the square (horizontally
+and vertically) AND is the sharp focal point of the photo: tack-sharp bright
+white teeth in crisp focus, shallow depth of field, the rest slightly softer.
+Eyes about 28% from the top, chin about 65%, shoulders fill the bottom and are
+cropped by the bottom edge, face centered horizontally. [ОПИСАНИЕ ГЕРОЯ: пол,
+возраст, большая тёплая искренняя улыбка с белыми зубами, особенность услуги],
+looking directly into the camera. Soft out-of-focus bright modern dental clinic
+background, blue-white palette, bright window light. Natural soft daylight,
+high-key, clean. Photorealistic, professional advertising quality, edge-to-edge,
+no border. No text, no logos, no watermark.
 ```
 
 Кастинг героя под «входные» услуги (продолжение списка из §1):
