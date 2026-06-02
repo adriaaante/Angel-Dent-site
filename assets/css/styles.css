@@ -294,6 +294,16 @@ p { margin: 0 0 1em; }
 .service-card--promo .promo-card__body { display: flex; flex-direction: column; flex-grow: 1; padding: 22px 24px 24px; }
 .service-card--promo .promo-card__body h3 { margin-bottom: 8px; }
 
+/* Cards with a photo thumbnail (blog / services listings) */
+.service-card--media { padding: 0; overflow: hidden; }
+.service-card--media .card-media { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--c-primary-50); overflow: hidden; }
+.service-card--media .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
+.service-card--media:hover .card-media img { transform: scale(1.04); }
+.service-card--media .card-body { display: flex; flex-direction: column; flex-grow: 1; padding: 22px 24px 24px; }
+.service-card--media .card-body h3 { margin-bottom: 8px; }
+.service-card--media .card-body p { flex-grow: 0; }
+.service-card--media .card-body .service-card__price { margin-top: auto; }
+
 /* Doctors */
 .doctors-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 .doctor-card { background: #fff; border: 1px solid var(--c-border); border-radius: var(--radius); overflow: hidden; transition: transform .15s ease, box-shadow .15s ease; display: flex; flex-direction: column; }
