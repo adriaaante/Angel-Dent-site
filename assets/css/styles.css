@@ -788,6 +788,9 @@ p { margin: 0 0 1em; }
 
 /* ── Пометка «Акция» рядом с ценой в прайс-таблицах ── */
 .badge-promo { display: inline-block; background: var(--c-accent); color: #1a2638; font-weight: 700; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; padding: 2px 9px; border-radius: 100px; margin-left: 8px; vertical-align: middle; white-space: nowrap; }
+/* Название услуги + бейдж «Акция»: ровный отступ и аккуратный перенос на узких экранах */
+.prices-table .cell-promo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.prices-table .cell-promo .badge-promo { margin-left: 0; }
 .prices-table .price-was { display: block; font-size: 12px; font-weight: 500; color: var(--c-text-muted); text-decoration: line-through; }
 .prices-table .price-now { color: var(--c-primary); }
 
