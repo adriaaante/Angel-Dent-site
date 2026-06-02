@@ -279,7 +279,8 @@ p { margin: 0 0 1em; }
 .service-card__icon { width: 56px; height: 56px; border-radius: 12px; background: var(--c-primary-50); color: var(--c-primary); display: grid; place-items: center; margin-bottom: 16px; }
 .service-card h3 { font-size: 19px; margin-bottom: 8px; color: var(--c-text); }
 .service-card p { color: var(--c-text-muted); font-size: 14.5px; flex-grow: 1; }
-.service-card__price { font-weight: 700; color: var(--c-primary); margin: 12px 0 0; font-size: 15px; }
+.service-card__price { font-weight: 700; color: var(--c-primary); margin: 12px 0 0; font-size: 15px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.service-card__price .badge-promo { margin-left: 0; }
 .service-card__link { margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; }
 .service-card__link svg { transition: transform .15s ease; }
 .service-card:hover .service-card__link svg { transform: translateX(3px); }
