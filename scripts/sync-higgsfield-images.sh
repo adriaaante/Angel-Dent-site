@@ -39,7 +39,7 @@ declare -A IMAGES=(
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260602_091410_2fb2855c-c650-42e8-8746-2785fec03f57.png"]="promo-whitening.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260602_091412_0be343a6-0048-4f88-b95b-c7b9de83560e.png"]="promo-benefits.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260602_091415_2d904009-5544-4944-93f8-40aa9e3e369d.png"]="promo-cleaning-gift.png"
-  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260602_091417_f44be080-5300-4277-8f5c-6c12bc30bc4b.png"]="promo-implant-gift.png"
+  ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260602_093543_16c0d917-db22-416e-a7c9-b8660004599c.png"]="promo-implant-gift.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260602_091418_4da0d31b-6410-4ef9-aa1c-3a675d4ca8a2.png"]="promo-ortho-free.png"
   ["https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260602_091421_fa364727-340a-41a2-bfc3-37b41221e255.png"]="promo-family.png"
 )
