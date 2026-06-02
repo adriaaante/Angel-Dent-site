@@ -285,6 +285,15 @@ p { margin: 0 0 1em; }
 .service-card__link svg { transition: transform .15s ease; }
 .service-card:hover .service-card__link svg { transform: translateX(3px); }
 
+/* Promo cards with photo (promotions page) */
+.service-card--promo { padding: 0; overflow: hidden; }
+.service-card--promo .promo-card__media { position: relative; aspect-ratio: 16 / 9; background: var(--c-primary-50); overflow: hidden; }
+.service-card--promo .promo-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
+.service-card--promo:hover .promo-card__media img { transform: scale(1.04); }
+.service-card--promo .promo-card__media .hero__offer-tag { position: absolute; top: 12px; left: 12px; margin: 0; box-shadow: var(--shadow-sm); }
+.service-card--promo .promo-card__body { display: flex; flex-direction: column; flex-grow: 1; padding: 22px 24px 24px; }
+.service-card--promo .promo-card__body h3 { margin-bottom: 8px; }
+
 /* Doctors */
 .doctors-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 .doctor-card { background: #fff; border: 1px solid var(--c-border); border-radius: var(--radius); overflow: hidden; transition: transform .15s ease, box-shadow .15s ease; display: flex; flex-direction: column; }
