@@ -73,38 +73,27 @@ rows = [
 
 HEADER = ["Название", "Цена", "Категория", "Описание"]
 
-# ВНИМАНИЕ про картинки: ручной XLS-импорт Яндекс.Бизнеса НЕ поддерживает
-# колонку с URL картинки (отдаёт «Неизвестные поля»). Поэтому фото в прайсе
-# через XLS не передать — либо добавлять вручную в карточке товара, либо
-# перейти на YML-фид по ссылке (там есть <picture>). JPEG-копии и маппинг ниже
-# оставлены ДЛЯ БУДУЩЕГО YML-фида (assets/img/yb/*.jpg).
+# Картинки для YML-фида: по одной сгенерированной фотографии на категорию,
+# лежат в assets/img/yb/yb-<slug>.jpg (деплоятся вместе с сайтом). XLS-импорт
+# YB колонку с фото НЕ поддерживает — картинки подключаются только через
+# YML-фид (тег <picture>), см. README.md.
 IMG_BASE = "https://angel-denta.ru/assets/img/yb/"
 CAT_IMG = {
-    "Имплантация": "implant",
-    "Ортодонтия": "orthodontics",
-    "Лечение зубов": "caries-treatment",
-    "Хирургия": "surgery",
-    "Протезирование": "prosthetics",
-    "Виниры": "veneers",
-    "Гигиена": "hygiene",
-    "Лечение дёсен": "periodontology",
-    "Детская стоматология": "pediatric",
-    "Акции": "promo-benefits",
-}
-PROMO_IMG = {
-    "Акция: КТ + план лечения": "promo-ct-plan",
-    "Акция: отбеливание Amazing White": "promo-whitening",
-    "Акция: каждый 3-й имплант в подарок": "promo-implant-gift",
-    "Акция: чистка в подарок при имплантации или брекетах": "promo-cleaning-gift",
-    "Скидка 10% пенсионерам, многодетным и военнослужащим": "promo-benefits",
-    "Семейная программа — скидка 3–10%": "promo-family",
-    "Бесплатная консультация ортодонта": "promo-ortho-free",
+    "Имплантация": "yb-implantaciya",
+    "Ортодонтия": "yb-ortodontiya",
+    "Лечение зубов": "yb-terapiya",
+    "Хирургия": "yb-hirurgiya",
+    "Протезирование": "yb-protezirovanie",
+    "Виниры": "yb-viniry",
+    "Гигиена": "yb-gigiena",
+    "Лечение дёсен": "yb-parodontologiya",
+    "Детская стоматология": "yb-detskaya",
+    "Акции": "yb-akcii",
 }
 
 
-def img_for(name, category):
-    slug = PROMO_IMG.get(name) or CAT_IMG.get(category, "implant")
-    return IMG_BASE + slug + ".jpg"
+def img_for(category):
+    return IMG_BASE + CAT_IMG.get(category, "yb-akcii") + ".jpg"
 
 
 def _esc(s):
@@ -162,8 +151,59 @@ def build(out_path):
     return len(rows)
 
 
+def build_yml(out_path):
+    """YML-фид для автозагрузки в Яндекс.Бизнес по ссылке (цены + картинки).
+    Включаем только позиции с ценой — в YML <price> обязателен. Бесплатные и
+    подарочные акции (цена пустая) в фид не идут: их место — раздел «Акции» в YB.
+    """
+    from datetime import datetime
+    cats = list(CAT_IMG.keys())
+    cat_id = {c: i + 1 for i, c in enumerate(cats)}
+    cats_xml = "".join(
+        f'<category id="{cat_id[c]}">{_esc(c)}</category>' for c in cats
+    )
+    offers = []
+    oid = 0
+    skipped = 0
+    for name, price, cat, desc in rows:
+        if price == 0 or price == "":
+            skipped += 1
+            continue
+        oid += 1
+        offers.append(
+            f'<offer id="{oid}" available="true">'
+            f'<name>{_esc(name)}</name>'
+            f'<price>{price}</price><currencyId>RUB</currencyId>'
+            f'<categoryId>{cat_id.get(cat, cat_id["Акции"])}</categoryId>'
+            f'<picture>{_esc(img_for(cat))}</picture>'
+            f'<description>{_esc(desc)}</description>'
+            f'</offer>'
+        )
+    date = datetime.now().strftime("%Y-%m-%d %H:%M")
+    yml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        f'<yml_catalog date="{date}">\n<shop>\n'
+        '<name>Ангел-Дент</name>\n'
+        '<company>ООО «Ангел-Дент»</company>\n'
+        '<url>https://angel-denta.ru/</url>\n'
+        '<currencies><currency id="RUB" rate="1"/></currencies>\n'
+        f'<categories>{cats_xml}</categories>\n'
+        f'<offers>{"".join(offers)}</offers>\n'
+        '</shop>\n</yml_catalog>\n'
+    )
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(yml)
+    return oid, skipped
+
+
 if __name__ == "__main__":
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                       "angel-dent-yandex-business-price.xlsx")
-    n = build(out)
-    print(f"Готово: {out} ({n} позиций)")
+    here = os.path.dirname(os.path.abspath(__file__))
+    repo_root = os.path.abspath(os.path.join(here, "..", ".."))
+
+    out_xlsx = os.path.join(here, "angel-dent-yandex-business-price.xlsx")
+    n = build(out_xlsx)
+    print(f"XLSX: {out_xlsx} ({n} позиций)")
+
+    out_yml = os.path.join(repo_root, "yandex-business.yml")
+    o, sk = build_yml(out_yml)
+    print(f"YML:  {out_yml} ({o} офферов с ценой, пропущено без цены: {sk})")
