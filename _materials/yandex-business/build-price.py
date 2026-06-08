@@ -71,7 +71,38 @@ rows = [
  ("Семейная программа — скидка 3–10%",0,"Акции","Скидка от 3% до 10% всем членам семьи при лечении 3 и более человек."),
 ]
 
-HEADER = ["Название", "Цена", "Категория", "Описание"]
+HEADER = ["Название", "Цена", "Категория", "Описание", "Ссылка на фото"]
+
+# Картинки берём с САЙТА (JPEG-копии в assets/img/yb/, сделаны из
+# assets/img/generated/*.webp — YB может не принять webp). Маппинг по категории
+# и по конкретной акции. Базовый URL — боевой домен.
+IMG_BASE = "https://angel-denta.ru/assets/img/yb/"
+CAT_IMG = {
+    "Имплантация": "implant",
+    "Ортодонтия": "orthodontics",
+    "Лечение зубов": "caries-treatment",
+    "Хирургия": "surgery",
+    "Протезирование": "prosthetics",
+    "Виниры": "veneers",
+    "Гигиена": "hygiene",
+    "Лечение дёсен": "periodontology",
+    "Детская стоматология": "pediatric",
+    "Акции": "promo-benefits",
+}
+PROMO_IMG = {
+    "Акция: КТ + план лечения": "promo-ct-plan",
+    "Акция: отбеливание Amazing White": "promo-whitening",
+    "Акция: каждый 3-й имплант в подарок": "promo-implant-gift",
+    "Акция: чистка в подарок при имплантации или брекетах": "promo-cleaning-gift",
+    "Скидка 10% пенсионерам, многодетным и военнослужащим": "promo-benefits",
+    "Семейная программа — скидка 3–10%": "promo-family",
+    "Бесплатная консультация ортодонта": "promo-ortho-free",
+}
+
+
+def img_for(name, category):
+    slug = PROMO_IMG.get(name) or CAT_IMG.get(category, "implant")
+    return IMG_BASE + slug + ".jpg"
 
 
 def _esc(s):
@@ -92,11 +123,14 @@ def _row(rn, vals):
 
 
 def build(out_path):
-    sd = [_row(1, HEADER)] + [_row(i, list(r)) for i, r in enumerate(rows, 2)]
+    sd = [_row(1, HEADER)] + [
+        _row(i, list(r) + [img_for(r[0], r[2])]) for i, r in enumerate(rows, 2)
+    ]
     sheet = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
              '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
              '<cols><col min="1" max="1" width="60"/><col min="2" max="2" width="12"/>'
-             '<col min="3" max="3" width="22"/><col min="4" max="4" width="75"/></cols>'
+             '<col min="3" max="3" width="22"/><col min="4" max="4" width="75"/>'
+             '<col min="5" max="5" width="55"/></cols>'
              '<sheetData>' + "".join(sd) + '</sheetData></worksheet>')
     ct = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
           '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
