@@ -123,8 +123,10 @@ JSON-LD стоит на **всех** HTML-страницах (в `<head>`), ве
   телефон, `priceRange`, `sameAs`, `areaServed`, `medicalSpecialty` и
   **`aggregateRating`**).
 - Услуги (`services/*.html`) — `MedicalProcedure` + `Offer` + `FAQPage`.
-- Врачи (`doctors/*.html`) — **`Physician`** (`medicalSpecialty`, `url`,
-  `worksFor` → клиника по `@id`). НЕ откатывать в `Person`.
+- Врачи (`doctors/*.html`) — **`Person`** (`jobTitle`, `url`, `knowsAbout`
+  со специализацией, `worksFor` → клиника по `@id`). Именно `Person`, НЕ
+  `Physician`: в Schema.org `Physician` — это медучреждение/кабинет, а не
+  человек, и на нём `jobTitle`/`worksFor` дают предупреждения валидатора.
 - Блог — `Article`/`Blog`/`HowTo`. Везде — `BreadcrumbList`.
 
 **🔢 Рейтинг/отзывы — держать в синхроне с живой карточкой Яндекса.**
