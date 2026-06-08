@@ -25,6 +25,9 @@
     RedirectMatch 301 ^/uslugi/viniry(/.*)?$                 /services/viniry.html
     # общий «хвост» для остальных старых /uslugi/* → витрина услуг
     RedirectMatch 301 ^/uslugi(/.*)?$                        /services/
+
+    # --- старый блог Tilda (/tpost/*) → новый блог ---
+    RedirectMatch 301 ^/tpost(/.*)?$                         /blog/
 </IfModule>
 
 # Брендовая страница 404 вместо дефолтной reg.ru.
