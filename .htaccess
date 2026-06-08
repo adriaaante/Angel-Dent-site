@@ -9,6 +9,9 @@
     RedirectMatch 301 ^/breket/?$    /services/ortodontiya.html
     RedirectMatch 301 ^/ortodont/?$  /services/ortodontiya.html
     RedirectMatch 301 ^/hiryrgia/?$  /services/hirurgiya.html
+    RedirectMatch 301 ^/hiryrg/?$    /services/hirurgiya.html
+    RedirectMatch 301 ^/therapy/?$   /services/terapiya.html
+    RedirectMatch 301 ^/price/?$     /services/
     RedirectMatch 301 ^/about/?$     /about.html
     RedirectMatch 301 ^/ovsepyan/?$  /doctors/
 
