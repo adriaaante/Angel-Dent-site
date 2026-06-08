@@ -26,6 +26,13 @@
     # общий «хвост» для остальных старых /uslugi/* → витрина услуг
     RedirectMatch 301 ^/uslugi(/.*)?$                        /services/
 
+    # --- прочие корневые слаги старой Tilda (префиксы /health_*, /child_*) ---
+    # частные выше общих
+    RedirectMatch 301 ^/health_breket/?$                     /services/ortodontiya.html
+    RedirectMatch 301 ^/child_orto/?$                        /services/ortodontiya.html
+    RedirectMatch 301 ^/health_.*$                           /services/
+    RedirectMatch 301 ^/child_.*$                            /services/detskaya.html
+
     # --- старый блог Tilda (/tpost/*) → новый блог ---
     RedirectMatch 301 ^/tpost(/.*)?$                         /blog/
 </IfModule>
