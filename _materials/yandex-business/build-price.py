@@ -96,6 +96,28 @@ def img_for(category):
     return IMG_BASE + CAT_IMG.get(category, "yb-akcii") + ".jpg"
 
 
+# Ссылка на страницу товара (раздел сайта) — делает карточку кликабельной в
+# Картах. С UTM, чтобы клики считались в Метрике (см. CLAUDE.md, цели Директа).
+SITE = "https://angel-denta.ru/"
+UTM = "?utm_source=yandex_business&utm_medium=tovary&utm_campaign=catalog"
+CAT_URL = {
+    "Имплантация": "services/implantaciya.html",
+    "Ортодонтия": "services/ortodontiya.html",
+    "Лечение зубов": "services/terapiya.html",
+    "Хирургия": "services/hirurgiya.html",
+    "Протезирование": "services/protezirovanie.html",
+    "Виниры": "services/viniry.html",
+    "Гигиена": "services/gigiena.html",
+    "Лечение дёсен": "services/parodontologiya.html",
+    "Детская стоматология": "services/detskaya.html",
+    "Акции": "promotions.html",
+}
+
+
+def url_for(category):
+    return SITE + CAT_URL.get(category, "services/") + UTM
+
+
 def _esc(s):
     return html.escape(str(s), quote=False)
 
@@ -173,6 +195,7 @@ def build_yml(out_path):
         offers.append(
             f'<offer id="{oid}" available="true">'
             f'<name>{_esc(name)}</name>'
+            f'<url>{_esc(url_for(cat))}</url>'
             f'<price>{price}</price><currencyId>RUB</currencyId>'
             f'<categoryId>{cat_id.get(cat, cat_id["Акции"])}</categoryId>'
             f'<picture>{_esc(img_for(cat))}</picture>'
