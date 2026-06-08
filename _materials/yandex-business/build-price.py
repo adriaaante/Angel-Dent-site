@@ -71,11 +71,13 @@ rows = [
  ("Семейная программа — скидка 3–10%",0,"Акции","Скидка от 3% до 10% всем членам семьи при лечении 3 и более человек."),
 ]
 
-HEADER = ["Название", "Цена", "Категория", "Описание", "Ссылка на фото"]
+HEADER = ["Название", "Цена", "Категория", "Описание"]
 
-# Картинки берём с САЙТА (JPEG-копии в assets/img/yb/, сделаны из
-# assets/img/generated/*.webp — YB может не принять webp). Маппинг по категории
-# и по конкретной акции. Базовый URL — боевой домен.
+# ВНИМАНИЕ про картинки: ручной XLS-импорт Яндекс.Бизнеса НЕ поддерживает
+# колонку с URL картинки (отдаёт «Неизвестные поля»). Поэтому фото в прайсе
+# через XLS не передать — либо добавлять вручную в карточке товара, либо
+# перейти на YML-фид по ссылке (там есть <picture>). JPEG-копии и маппинг ниже
+# оставлены ДЛЯ БУДУЩЕГО YML-фида (assets/img/yb/*.jpg).
 IMG_BASE = "https://angel-denta.ru/assets/img/yb/"
 CAT_IMG = {
     "Имплантация": "implant",
@@ -123,9 +125,12 @@ def _row(rn, vals):
 
 
 def build(out_path):
-    sd = [_row(1, HEADER)] + [
-        _row(i, list(r) + [img_for(r[0], r[2])]) for i, r in enumerate(rows, 2)
-    ]
+    data = []
+    for i, r in enumerate(rows, 2):
+        name, price, cat, desc = r
+        price = "" if price == 0 else price  # YB не принимает 0 как цену
+        data.append(_row(i, [name, price, cat, desc]))
+    sd = [_row(1, HEADER)] + data
     sheet = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
              '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
              '<cols><col min="1" max="1" width="60"/><col min="2" max="2" width="12"/>'
