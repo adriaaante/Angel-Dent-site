@@ -34,7 +34,7 @@
 | 12 | Детская стоматология | [12-detskaya-stomatologiya.png](https://drive.google.com/file/d/1Ct34zhbOKTkrA7l1eKWDW7nqCvXNcyiv/view) | — | ребёнок ~8, радостная улыбка | Детский стоматолог в Реутове — без слёз | Молочные зубы, цветные пломбы, седация. Запишитесь онлайн в удобное время. |
 | 13 | Лечение дёсен | [13-lechenie-desen.png](https://drive.google.com/file/d/1dHAhBvDN0NMO24vyz75EUM18PAs2xrcN/view) | — | женщина ~50, здоровая улыбка | Кровоточат дёсны? Лечение в Реутове | Vector-терапия, Plasmolifting. Уберём воспаление, сохраним зубы. Онлайн запись. |
 | 14 | Консультация ортодонта | [14-konsultaciya-ortodonta.png](https://drive.google.com/file/d/1VqMFI7pJnmpYFQyPv46BUO4nXWlxLwn9/view) | — | девушка ~20 с брекетами | Кривые зубы? Консультация ортодонта — 0 ₽ | Исправим прикус в любом возрасте. Подберём систему, рассчитаем ТРГ бесплатно. |
-| 15 | Все виды услуг (бренд) | [15-vse-uslugi.png](https://drive.google.com/file/d/1m0UFr7qjK55SaVSZE2s2-dnME_q4vHO0/view) | `15-vse-uslugi.mp4` — _залить в Drive_ | приятная женщина ~35 | Стоматология в Реутове — все виды лечения зубов | Имплантация, брекеты, виниры, гигиена. Стаж 15+ лет. Запишитесь онлайн. |
+| 15 | Все виды услуг (бренд) | [15-vse-uslugi.png](https://drive.google.com/file/d/1m0UFr7qjK55SaVSZE2s2-dnME_q4vHO0/view) | [15-vse-uslugi.mp4](https://drive.google.com/file/d/1MbELf5Y4zK7eoPGvUJv7RpFnP7ZwwqWZ/view) | приятная женщина ~35 | Стоматология в Реутове — все виды лечения зубов | Имплантация, брекеты, виниры, гигиена. Стаж 15+ лет. Запишитесь онлайн. |
 
 > **№ 10–14 — «входные» услуги (витрина Яндекс.Бизнес + Директ).** Фото-визуалы
 > 1024×1024 PNG, без текста, кадр по `STYLE.md` (макушка срезана, улыбка по центру,
@@ -56,10 +56,8 @@
   (`nano_banana_pro`, 1:1, 2048×2048, кадр по `STYLE.md`). **Утверждён вариант Б**
   (улыбка по центру, плечи в кадре), залит владельцем в Drive как
   `15-vse-uslugi.png` (`fileId 1m0UFr7qjK55SaVSZE2s2-dnME_q4vHO0`). Запущено в
-  Яндекс.Бизнес 2026-06. Видео-оживление сгенерировано (Seedance 2.0, 1:1,
-  8 сек, 720p, без речи — только инструментал). Скачать и залить в Drive как
-  `15-vse-uslugi.mp4`:
-  https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260608_090953_4e245133-4ab0-4b19-8752-b0ab9bdffa17.mp4
-  (на 1080p Seedance дважды ловил ложный NSFW на улыбке — известный баг; 720p
-  прошёл.)
+  Яндекс.Бизнес 2026-06. Видео-оживление сгенерировано и залито в Drive как
+  `15-vse-uslugi.mp4` (`fileId 1MbELf5Y4zK7eoPGvUJv7RpFnP7ZwwqWZ`) — Seedance 2.0,
+  1:1, 8 сек, 720p, без речи (только инструментал). На 1080p Seedance дважды
+  ловил ложный NSFW на улыбке — известный баг; 720p прошёл.
   - запасной вариант А (кадр плотнее): https://d8j0ntlcm91z4.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/hf_20260608_085019_44473a0e-4989-40d2-9ea8-73dcff7db036.png
