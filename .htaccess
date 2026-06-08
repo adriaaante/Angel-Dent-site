@@ -1,0 +1,31 @@
+# Angel-Dent — 301-редиректы со старых (Tilda) URL на новый сайт + брендовый 404.
+# Лежит в корне публичной папки (деплоится из репозитория обычным deploy.sh).
+# Цель: старые адреса не отдают 404 (теряя накопленный вес), а постоянным
+# редиректом переливают сигнал на соответствующие новые /services/*.html и
+# быстрее заменяются в индексе Яндекса. Порядок важен: частные правила выше общих.
+
+<IfModule mod_alias.c>
+    # --- точечные старые страницы ---
+    RedirectMatch 301 ^/breket/?$    /services/ortodontiya.html
+    RedirectMatch 301 ^/ortodont/?$  /services/ortodontiya.html
+    RedirectMatch 301 ^/hiryrgia/?$  /services/hirurgiya.html
+    RedirectMatch 301 ^/about/?$     /about.html
+    RedirectMatch 301 ^/ovsepyan/?$  /doctors/
+
+    # --- старый раздел /uslugi/* → профильные услуги (частное выше общего) ---
+    RedirectMatch 301 ^/uslugi/implantaciya(/.*)?$            /services/implantaciya.html
+    RedirectMatch 301 ^/uslugi/ortodontiya(/.*)?$            /services/ortodontiya.html
+    RedirectMatch 301 ^/uslugi/ortopediya(/.*)?$             /services/protezirovanie.html
+    RedirectMatch 301 ^/uslugi/protezirovanie(/.*)?$         /services/protezirovanie.html
+    RedirectMatch 301 ^/uslugi/parodontologiya(/.*)?$        /services/parodontologiya.html
+    RedirectMatch 301 ^/uslugi/terapiya(/.*)?$               /services/terapiya.html
+    RedirectMatch 301 ^/uslugi/detskaya-stomatologiya(/.*)?$ /services/detskaya.html
+    RedirectMatch 301 ^/uslugi/hirurgiya(/.*)?$              /services/hirurgiya.html
+    RedirectMatch 301 ^/uslugi/gigiena(/.*)?$                /services/gigiena.html
+    RedirectMatch 301 ^/uslugi/viniry(/.*)?$                 /services/viniry.html
+    # общий «хвост» для остальных старых /uslugi/* → витрина услуг
+    RedirectMatch 301 ^/uslugi(/.*)?$                        /services/
+</IfModule>
+
+# Брендовая страница 404 вместо дефолтной reg.ru.
+ErrorDocument 404 /404.html
