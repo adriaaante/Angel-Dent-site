@@ -115,6 +115,44 @@
 футер всех страниц, FAB-виджет в конце `<body>`, JSON-LD
 `LocalBusiness` в `<head>` главной, топбар на главной.
 
+## Микроразметка (Schema.org / JSON-LD) и цифры отзывов
+
+JSON-LD стоит на **всех** HTML-страницах (в `<head>`), весь валидный. Структура:
+- Главная, `contacts.html`, `reviews.html` — сущность клиники **`Dentist`**
+  с единым `@id` = `https://angel-denta.ru/#clinic` (адрес, гео, часы,
+  телефон, `priceRange`, `sameAs`, `areaServed`, `medicalSpecialty` и
+  **`aggregateRating`**).
+- Услуги (`services/*.html`) — `MedicalProcedure` + `Offer` + `FAQPage`.
+- Врачи (`doctors/*.html`) — **`Physician`** (`medicalSpecialty`, `url`,
+  `worksFor` → клиника по `@id`). НЕ откатывать в `Person`.
+- Блог — `Article`/`Blog`/`HowTo`. Везде — `BreadcrumbList`.
+
+**🔢 Рейтинг/отзывы — держать в синхроне с живой карточкой Яндекса.**
+Сейчас в коде **204 оценки / 131 отзыв** (`ratingValue` 5.0). Завышать
+НЕЛЬЗЯ — для медицины (YMYL) расхождение разметки с реальной карточкой Яндекса
+= риск санкций/потери звёзд. Когда на карточке станет больше — обновить **во
+всех местах сразу**:
+- JSON-LD `aggregateRating` (`ratingCount`=оценки, `reviewCount`=отзывы):
+  `index.html`, `contacts.html`, `reviews.html`.
+- Видимый текст («204 оценки», «131 отзыв», в т.ч. `<title>` reviews и
+  упоминание в `blog/kak-vybrat-stomatologa.html`): `index.html`,
+  `reviews.html`, `blog/kak-vybrat-stomatologa.html`.
+- Грамматика числа: для оканчивающихся на 1 — «отзыв», на 2–4 — «оценки/отзыва»,
+  на 5–0 и 11–14 — «оценок/отзывов».
+
+Карточки клиники для `sameAs` (реальные, не заглушки): Яндекс
+`https://yandex.ru/profile/1155929397`, 2ГИС
+`https://2gis.ru/reutov/firm/70000001006686367`, плюс соцсети `stomangeldent`.
+
+## Редиректы старого сайта (Tilda) — корневой `.htaccess`
+
+Сайт переехал с Tilda; старые URL закрыты 301-редиректами в корневом
+`.htaccess` (он деплоится из репо, переживает `rsync --delete`):
+`/breket`,`/hiryrgia`,`/ortodont`,`/about/`,`/ovsepyan`, весь `/uslugi/*` →
+профильные `/services/*.html`; `/tpost/*` (старый блог) → `/blog/`. Там же
+`ErrorDocument 404 /404.html` (брендовая 404 вместо дефолтной reg.ru).
+Появится ещё старый хвост — добавлять правило туда же.
+
 ## Яндекс.Метрика и цели для Директа
 
 Счётчик `109369174` подключён в `<head>` **каждой** HTML-страницы
