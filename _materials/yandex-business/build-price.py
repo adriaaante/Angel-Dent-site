@@ -188,9 +188,9 @@ def build_yml(out_path):
     oid = 0
     skipped = 0
     for name, price, cat, desc in rows:
-        if price == 0 or price == "":
-            skipped += 1
-            continue
+        # бесплатные/подарочные/скидочные акции тоже включаем — с price=0
+        if price == "" or price is None:
+            price = 0
         oid += 1
         offers.append(
             f'<offer id="{oid}" available="true">'
