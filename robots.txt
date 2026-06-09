@@ -9,4 +9,3 @@ Allow: /blog/
 Disallow: /404.html
 
 Sitemap: https://angel-denta.ru/sitemap.xml
-Host: angel-denta.ru

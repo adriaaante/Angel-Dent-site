@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemaps-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://angel-denta.ru/</loc>
     <lastmod>2026-05-18</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/drobkova.png</image:loc>
-      <image:title>Дробкова Кристина Олеговна — главный врач, стоматолог-ортодонт</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/geworkyan.png</image:loc>
-      <image:title>Геворкян Санатрук Иванович — стоматолог-хирург, имплантолог</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamli.png</image:loc>
-      <image:title>Рустамли Руслан Рустамович — стоматолог-хирург, имплантолог</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamov.png</image:loc>
-      <image:title>Рустамов Эмиль Дилгамович — стоматолог-ортопед</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/smolyakova.png</image:loc>
-      <image:title>Смолякова Радана Сергеевна — стоматолог-терапевт</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://angel-denta.ru/services/</loc>
@@ -98,50 +77,30 @@
     <lastmod>2026-05-18</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/drobkova.png</image:loc>
-      <image:title>Дробкова Кристина Олеговна — главный врач клиники «Ангел-Дент», стоматолог-ортодонт</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://angel-denta.ru/doctors/geworkyan.html</loc>
     <lastmod>2026-05-18</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/geworkyan.png</image:loc>
-      <image:title>Геворкян Санатрук Иванович — генеральный директор, стоматолог-хирург, имплантолог</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://angel-denta.ru/doctors/rustamli.html</loc>
     <lastmod>2026-05-18</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamli.png</image:loc>
-      <image:title>Рустамли Руслан Рустамович — стоматолог-хирург, имплантолог</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://angel-denta.ru/doctors/rustamov.html</loc>
     <lastmod>2026-05-18</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/rustamov.png</image:loc>
-      <image:title>Рустамов Эмиль Дилгамович — стоматолог-ортопед</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://angel-denta.ru/doctors/smolyakova.html</loc>
     <lastmod>2026-05-18</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://angel-denta.ru/assets/img/doctors/smolyakova.png</image:loc>
-      <image:title>Смолякова Радана Сергеевна — стоматолог-терапевт, эндодонтист</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://angel-denta.ru/about.html</loc>
