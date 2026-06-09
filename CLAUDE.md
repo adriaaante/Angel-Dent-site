@@ -161,7 +161,7 @@ JSON-LD стоит на **всех** HTML-страницах (в `<head>`), ве
 в раздел «Акции» карточки YB.
 
 **Источник цен — САЙТ** (`services/*.html`, `promotions.html`): правим цену на
-сайте → `python3 _materials/yandex-business/build-price.py` → `~/deploy.sh`. НЕ
+сайте → `python3 _materials/yandex-business/build-price.py` → `~/angel-dent.sh`. НЕ
 наоборот. Правила (цена не в названии, «от/вместо» в описании, бесплатное =
 пустая цена, без просроченных дат, у брекетов без «1 челюсть») —
 `_materials/yandex-business/README.md`.
@@ -313,17 +313,26 @@ PR не создаём, если не попросили явно.
 и `rsync` из репо в `~/www/angel-denta.ru/` (это публичная папка
 Apache, то, что отдаётся посетителям).
 
-Скрипт: `scripts/deploy.sh` в репо. На сервере существует симлинк
-`~/deploy.sh → ~/Angel-Dent-site/scripts/deploy.sh`, поэтому любая
+Скрипт: `scripts/deploy.sh` в репо. На сервере есть короткий ярлык-симлинк
+`~/angel-dent.sh → ~/Angel-Dent-site/scripts/deploy.sh`, поэтому любая
 правка скрипта в git автоматом «обновляется» на сервере после
 `git pull` — отдельно поддерживать ничего не надо.
+
+> ⚠️ **На этом сервере reg.ru живут ДВЕ клиники** — Angel-Dent и Версаль.
+> У каждой свой репозиторий, своя публичная папка и свой ярлык. Обновление
+> одной **не затрагивает** другую (rsync работает только внутри своей
+> папки сайта):
+> - **Angel** → `~/angel-dent.sh` (репо `~/Angel-Dent-site` → `~/www/angel-denta.ru`)
+> - **Версаль** → `~/versal-dent.sh` (репо `~/Versal-Dent-site` → `~/www/versal-dent.ru`)
+>
+> Не перепутать команду — каждая трогает только свой сайт.
 
 Запуск из Shell-клиента ISPmanager
 (<https://server292.hosting.reg.ru:1500/> → раздел «Shell-клиент»):
 
 ```
-~/deploy.sh           # выкатить
-~/deploy.sh --dry     # показать план, ничего не менять
+~/angel-dent.sh           # выкатить Angel
+~/angel-dent.sh --dry     # показать план, ничего не менять
 ```
 
 Что попадает на хостинг: всё, кроме `.git/`, `.github/`, `.claude/`,
@@ -347,8 +356,8 @@ Apache, то, что отдаётся посетителям).
 3. Скопировать шаблон конфига и заполнить токен:
    `cp Angel-Dent-site/api/config.php.example Angel-Dent-site/api/config.php`
    и отредактировать `Angel-Dent-site/api/config.php`.
-4. Симлинк короткой команды: `ln -s ~/Angel-Dent-site/scripts/deploy.sh ~/deploy.sh`
-5. `~/deploy.sh --dry` (посмотреть план) → `~/deploy.sh` (выкатить).
+4. Симлинк короткой команды: `ln -sf ~/Angel-Dent-site/scripts/deploy.sh ~/angel-dent.sh`
+5. `~/angel-dent.sh --dry` (посмотреть план) → `~/angel-dent.sh` (выкатить).
 
 ## Что НЕ нужно делать без явной просьбы
 
