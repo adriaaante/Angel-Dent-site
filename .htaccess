@@ -4,6 +4,18 @@
 # редиректом переливают сигнал на соответствующие новые /services/*.html и
 # быстрее заменяются в индексе Яндекса. Порядок важен: частные правила выше общих.
 
+# --- Домен-«близнец» angel-dent.ru → основной angel-denta.ru (массовый 301) ---
+# Бесплатная замена платной «переадресации» reg.ru: домен angel-dent.ru
+# направлен DNS-ом на этот же хостинг (алиасом к папке angel-denta.ru), а
+# разворот делает правило ниже. Срабатывает ТОЛЬКО для хоста angel-dent.ru
+# (и его www/поддоменов) — на сам angel-denta.ru и его www не влияет.
+# %{REQUEST_URI} сохраняет путь: angel-dent.ru/foo → angel-denta.ru/foo.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} (^|\.)angel-dent\.ru$ [NC]
+    RewriteRule ^ https://angel-denta.ru%{REQUEST_URI} [R=301,L]
+</IfModule>
+
 <IfModule mod_alias.c>
     # --- точечные старые страницы ---
     RedirectMatch 301 ^/breket/?$    /services/ortodontiya.html
