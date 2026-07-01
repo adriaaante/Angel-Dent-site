@@ -363,6 +363,26 @@ PR не создаём, если не попросили явно.
 `python3 scripts/seo-portfolio-noscript.py` (идемпотентно, читает данные
 через Node). Иначе `<noscript>` разойдётся с живым портфолио.
 
+## Фото врачей — WebP и мгновенная загрузка (важно)
+
+Видимые `<img>` портретов врачей ссылаются на **`.webp`** (в ~15 раз легче
+PNG). PNG оставляем **только** для `og:image` и JSON-LD `"image"` (мессенджеры/
+схема любят png/jpg) — их не трогаем. Фото над сгибом грузятся **сразу**:
+герой на `doctors/<slug>.html` — `loading="eager" fetchpriority="high"` (это
+LCP), карточки на `doctors/index.html` — `loading="eager"`; карусель на
+`index.html` (ниже сгиба) — `lazy`.
+
+**Добавляешь/меняешь фото врача:**
+1. Положить PNG в `assets/img/doctors/<slug>.png` и `<slug>-thumb.png`.
+2. `python3 scripts/doctor-photos-to-webp.py` — сгенерит `.webp` рядом.
+3. `python3 scripts/seo-doctor-img-perf.py` — переключит видимые `<img>` на
+   webp и проставит loading/fetchpriority (идемпотентно).
+4. Закоммитить png **и** webp.
+
+Анимация «проявления» карточек (`.js-reveal` в `main.js`) **не трогает то, что
+уже видно на экране** — иначе при `defer` была вспышка и «по очереди». Логика —
+в reveal-блоке `assets/js/main.js` (пропускаем элементы во вьюпорте на старте).
+
 ## FAB-виджет (WhatsApp / Telegram / Позвонить)
 
 Разметка `<div class="fab" data-fab>…</div>` должна быть **на каждой
