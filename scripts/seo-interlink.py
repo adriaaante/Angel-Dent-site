@@ -1,22 +1,33 @@
 #!/usr/bin/env python3
 """Идемпотентно добавляет на страницы услуг блок «Полезные статьи» со ссылками
 на релевантные статьи блога (перелинковка услуги↔блог, топические кластеры).
-Использует существующие CSS-классы .related. Запуск из корня репозитория."""
+Использует существующие CSS-классы .related. Запуск из корня репозитория.
+
+Идемпотентно и ОБНОВЛЯЕМО: старый авто-блок (по `id="articles-title"`)
+вырезается и пишется заново — можно расширять MAP и перегонять."""
 import re, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 MAP = {
- "implantaciya": [("implantaciya-ili-most","Имплантация или мост — что выбрать","Сравнение, цены и сроки службы"),
+ "implantaciya": [("skolko-stoit-implantaciya","Сколько стоит имплантация зуба","Из чего складывается цена «под ключ»"),
+                  ("implantaciya-ili-most","Имплантация или мост — что выбрать","Сравнение, цены и сроки службы"),
                   ("uxod-posle-implantacii","Уход после имплантации","Памятка по дням и на годы вперёд")],
  "protezirovanie": [("implantaciya-ili-most","Имплантация или мост","Что выбрать в 2026: разбор"),
                     ("viniry-ili-koronki","Виниры или коронки","Когда что уместнее")],
  "viniry": [("viniry-ili-koronki","Виниры или коронки","Что выбрать — с примерами")],
- "hirurgiya": [("zub-mudrosti-udalyat-ili-lechit","Зуб мудрости: удалять или лечить","Разбор хирурга: показания, восстановление")],
+ "hirurgiya": [("ostraya-zubnaya-bol-flyus","Острая боль и флюс — что делать","Первая помощь до приёма"),
+               ("zub-mudrosti-udalyat-ili-lechit","Зуб мудрости: удалять или лечить","Разбор хирурга: показания, восстановление"),
+               ("lechenie-zubov-pod-narkozom","Лечение под наркозом и седацией","Когда что применяют")],
  "parodontologiya": [("krovotochat-desny","Кровоточат дёсны при чистке","Причины и что реально помогает")],
  "gigiena": [("krovotochat-desny","Кровоточат дёсны","Почему и как лечить")],
- "terapiya": [("kak-vybrat-stomatologa","Как выбрать стоматолога","Чек-лист из 9 пунктов")],
+ "terapiya": [("ostraya-zubnaya-bol-flyus","Острая зубная боль и флюс","Что делать до приёма"),
+              ("kak-vybrat-stomatologa","Как выбрать стоматолога","Чек-лист из 9 пунктов")],
+ "detskaya": [("rebenok-u-stomatologa","Как подготовить ребёнка к визиту","Без страха, с какого возраста"),
+              ("lechenie-zubov-pod-narkozom","Наркоз и седация детям","Закись азота и когда нужен наркоз")],
 }
 related_re = re.compile(r'(<section class="related" aria-labelledby="related-title">.*?</section>)', re.S)
+# старый авто-блок «Полезные статьи» (для обновления/идемпотентности)
+articles_re = re.compile(r'<section class="related" aria-labelledby="articles-title">.*?</section>', re.S)
 
 def block(items):
     cards="".join(
@@ -29,13 +40,15 @@ def block(items):
 n=0
 for key,items in MAP.items():
     p=ROOT/"services"/f"{key}.html"
-    if not p.exists(): continue
+    if not p.exists():
+        print("!! страница услуги не найдена:", p.name); continue
     s=p.read_text(encoding="utf-8")
-    if 'id="articles-title"' in s:  # уже добавлено
-        continue
+    s=articles_re.sub("", s)  # убрать прежний авто-блок (обновляемость)
     m=related_re.search(s)
     if not m:
         print("!! related-блок не найден:", p.name); continue
-    s=s[:m.end()]+block(items)+s[m.end():]
-    p.write_text(s,encoding="utf-8"); n+=1
-print(f"Блок «Полезные статьи» добавлен на {n} страниц услуг")
+    new=s[:m.end()]+block(items)+s[m.end():]
+    if new!=p.read_text(encoding="utf-8"):
+        p.write_text(new,encoding="utf-8"); n+=1
+        print("обновлено:", p.name, f"({len(items)} ссылок)")
+print(f"Блок «Полезные статьи» проставлен на {n} страниц услуг")

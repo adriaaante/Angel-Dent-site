@@ -198,4 +198,34 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/lechenie-zubov-pod-narkozom.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/skolko-stoit-implantaciya.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/rebenok-u-stomatologa.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/nalogovyy-vychet-lechenie-zubov.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/blog/ostraya-zubnaya-bol-flyus.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
