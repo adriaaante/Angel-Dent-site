@@ -12,3 +12,7 @@ Thumbs.db
 # Создаётся один раз вручную из api/config.php.example
 # (см. CLAUDE.md, раздел «Форма заявки»).
 api/config.php
+
+# Python bytecode
+__pycache__/
+*.pyc
