@@ -1,9 +1,45 @@
-# Angel-Dent — 301-редиректы со старых (Tilda) URL на новый сайт + брендовый 404.
-# Лежит в корне публичной папки (деплоится из репозитория обычным deploy.sh).
-# Цель: старые адреса не отдают 404 (теряя накопленный вес), а постоянным
-# редиректом переливают сигнал на соответствующие новые /services/*.html и
-# быстрее заменяются в индексе Яндекса. Порядок важен: частные правила выше общих.
+# Angel-Dent — канонизация хоста, кэш/сжатие, 301-редиректы со старых (Tilda)
+# URL и брендовый 404. Лежит в корне публичной папки (деплоится из репозитория).
 
+# --- Канонический хост: только https и без www (единый 301) ---
+# Убирает дубли http/https и www/non-www (важно для Яндекса и склейки веса).
+# Проверка X-Forwarded-Proto — чтобы не зациклиться за SSL-прокси reg.ru.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # www.angel-denta.ru → angel-denta.ru (сразу на https)
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+    # http → https
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# --- Сжатие (gzip) ---
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/xml application/xml \
+        application/javascript application/json image/svg+xml
+</IfModule>
+
+# --- Кэширование статики (ускоряет повторные заходы, помогает Core Web Vitals) ---
+# Без хэшей в именах файлов, поэтому css/js кэшируем умеренно (7 дней),
+# изображения — 30 дней, html — 1 час.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css                "access plus 7 days"
+    ExpiresByType application/javascript  "access plus 7 days"
+    ExpiresByType image/webp              "access plus 30 days"
+    ExpiresByType image/png               "access plus 30 days"
+    ExpiresByType image/jpeg              "access plus 30 days"
+    ExpiresByType image/x-icon            "access plus 30 days"
+    ExpiresByType image/svg+xml           "access plus 30 days"
+    ExpiresByType text/html               "access plus 1 hour"
+</IfModule>
+<IfModule mod_headers.c>
+    Header append Vary: Accept-Encoding
+</IfModule>
+
+# 301-редиректы со старых (Tilda) URL. Порядок важен: частные правила выше общих.
 <IfModule mod_alias.c>
     # --- точечные старые страницы ---
     RedirectMatch 301 ^/breket/?$    /services/ortodontiya.html
