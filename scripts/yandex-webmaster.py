@@ -10,11 +10,12 @@ YANDEX_WEBMASTER_TOKEN (OAuth-токен с правами webmaster:hostinfo + 
 
 Скрипт не деплоится (scripts/ исключён из rsync).
 """
-import os, sys, json, urllib.request, urllib.parse, urllib.error
+import os, sys, re, json, time, pathlib, urllib.request, urllib.parse, urllib.error
 
 WM_API = "https://api.webmaster.yandex.net/v4"
 MT_API = "https://api-metrika.yandex.net/stat/v1/data"
 METRIKA_COUNTER = "109369174"  # счётчик Метрики Ангел-Дент
+SITE = "https://angel-denta.ru"
 
 
 def _token():
@@ -29,6 +30,19 @@ def _get(url):
     try:
         with urllib.request.urlopen(req, timeout=40) as r:
             return json.load(r)
+    except urllib.error.HTTPError as e:
+        return {"_http_error": e.code, "_body": e.read().decode("utf-8", "replace")[:400]}
+    except Exception as e:
+        return {"_error": str(e)}
+
+
+def _post(url, payload):
+    data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(url, data=data, method="POST", headers={
+        "Authorization": "OAuth " + _token(), "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=40) as r:
+            return {"_code": r.status, **(json.load(r) if r.length != 0 else {})}
     except urllib.error.HTTPError as e:
         return {"_http_error": e.code, "_body": e.read().decode("utf-8", "replace")[:400]}
     except Exception as e:
@@ -92,9 +106,64 @@ def metrika():
             print(f"    {int(r['metrics'][0]):>4}  {r['dimensions'][0]['name'][:64]}")
 
 
+def sitemap_urls():
+    """Канонические URL из корневого sitemap.xml (источник списка для переобхода)."""
+    sm = (pathlib.Path(__file__).resolve().parent.parent / "sitemap.xml")
+    if not sm.exists():
+        return []
+    return re.findall(r"<loc>(" + re.escape(SITE) + r"/[^<]*)</loc>", sm.read_text(encoding="utf-8"))
+
+
+def recrawl(uid, host_id, urls):
+    """Отправить страницы на переобход (Webmaster → «Переобход страниц»).
+
+    Квота суточная (см. --quota). На каждый URL — отдельный POST. Полезно
+    ПОСЛЕ деплоя, чтобы Яндекс быстрее увидел новые/обновлённые страницы и
+    канонические URL вместо старых Tilda-адресов.
+    """
+    q = urllib.parse.quote(host_id, safe="")
+    quota = _get(f"{WM_API}/user/{uid}/hosts/{q}/recrawl/quota/")
+    rem = quota.get("quota_remainder")
+    print(f"  Квота переобхода: осталось {rem} из {quota.get('daily_quota', '—')} на сутки")
+    if isinstance(rem, int) and len(urls) > rem:
+        print(f"  ⚠️ URL-ов ({len(urls)}) больше остатка квоты ({rem}) — отправлю первые {rem}.")
+        urls = urls[:rem]
+    ok = 0
+    for u in urls:
+        r = _post(f"{WM_API}/user/{uid}/hosts/{q}/recrawl/queue/", {"url": u})
+        tid = r.get("task_id")
+        if tid:
+            ok += 1
+            print(f"    ✓ {u}  (task {tid})")
+        else:
+            print(f"    ✗ {u}  → {r}")
+        time.sleep(0.3)  # бережно к рейт-лимиту
+    print(f"  Отправлено на переобход: {ok} из {len(urls)}")
+    return ok
+
+
 def main():
+    args = sys.argv[1:]
     uid = user_id(); print(f"user_id: {uid}")
-    for h in hosts(uid):
+    hs = hosts(uid)
+    if not hs:
+        sys.exit("Хостов не найдено (проверьте права токена).")
+    host_id = hs[0]["host_id"]
+
+    if args and args[0] == "--quota":
+        q = urllib.parse.quote(host_id, safe="")
+        print(json.dumps(_get(f"{WM_API}/user/{uid}/hosts/{q}/recrawl/quota/"), ensure_ascii=False))
+        return 0
+
+    if args and args[0] == "--recrawl":
+        urls = args[1:] or sitemap_urls()
+        if not urls:
+            sys.exit("Нет URL для переобхода (пустой sitemap.xml?).")
+        print(f"\n===== ПЕРЕОБХОД ({len(urls)} URL) =====")
+        recrawl(uid, host_id, urls)
+        return 0
+
+    for h in hs:
         print("\n===== %s =====" % h.get("ascii_host_url", h.get("host_id")))
         print(f"  подтверждён: {h.get('verified')}")
         host_report(uid, h["host_id"])

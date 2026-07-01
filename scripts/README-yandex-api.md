@@ -23,3 +23,18 @@
 YANDEX_WEBMASTER_TOKEN=xxxx python3 scripts/yandex-webmaster.py
 ```
 Счётчик Метрики зашит в скрипте (`METRIKA_COUNTER = 109369174`).
+
+## Переобход страниц (recrawl)
+Для scope нужен доступ на запись: при выпуске токена добавить
+**`webmaster:verify`** к `webmaster:hostinfo` (иначе POST переобхода вернёт 403).
+
+```
+python3 scripts/yandex-webmaster.py --quota           # остаток суточной квоты
+python3 scripts/yandex-webmaster.py --recrawl         # все URL из sitemap.xml
+python3 scripts/yandex-webmaster.py --recrawl https://angel-denta.ru/services/  ...  # точечно
+```
+
+**Важно:** переобход отправляет Яндексу текущую живую версию страницы.
+После правок на сайте сначала деплой (`~/angel-dent.sh`), **потом** `--recrawl`,
+иначе робот заберёт старую версию. Квота суточная (сейчас 470/сут),
+сбрасывается — можно гонять хоть каждый день.
