@@ -16,14 +16,12 @@ MAP = {
                     ("viniry-ili-koronki","Виниры или коронки","Когда что уместнее")],
  "viniry": [("viniry-ili-koronki","Виниры или коронки","Что выбрать — с примерами")],
  "hirurgiya": [("ostraya-zubnaya-bol-flyus","Острая боль и флюс — что делать","Первая помощь до приёма"),
-               ("zub-mudrosti-udalyat-ili-lechit","Зуб мудрости: удалять или лечить","Разбор хирурга: показания, восстановление"),
-               ("lechenie-zubov-pod-narkozom","Лечение под наркозом и седацией","Когда что применяют")],
+               ("zub-mudrosti-udalyat-ili-lechit","Зуб мудрости: удалять или лечить","Разбор хирурга: показания, восстановление")],
  "parodontologiya": [("krovotochat-desny","Кровоточат дёсны при чистке","Причины и что реально помогает")],
  "gigiena": [("krovotochat-desny","Кровоточат дёсны","Почему и как лечить")],
  "terapiya": [("ostraya-zubnaya-bol-flyus","Острая зубная боль и флюс","Что делать до приёма"),
               ("kak-vybrat-stomatologa","Как выбрать стоматолога","Чек-лист из 9 пунктов")],
- "detskaya": [("rebenok-u-stomatologa","Как подготовить ребёнка к визиту","Без страха, с какого возраста"),
-              ("lechenie-zubov-pod-narkozom","Наркоз и седация детям","Закись азота и когда нужен наркоз")],
+ "detskaya": [("rebenok-u-stomatologa","Как подготовить ребёнка к визиту","Без страха, с какого возраста")],
 }
 related_re = re.compile(r'(<section class="related" aria-labelledby="related-title">.*?</section>)', re.S)
 # старый авто-блок «Полезные статьи» (для обновления/идемпотентности)
