@@ -19,9 +19,13 @@ SITE = "https://angel-denta.ru"
 
 
 def _token():
-    t = os.environ.get("YANDEX_WEBMASTER_TOKEN", "").strip()
+    # Angel — отдельный аккаунт Яндекса (свой токен). Приоритет —
+    # YANDEX_WEBMASTER_TOKEN_ANGEL (парно с ..._VERSAL у Версаля),
+    # фолбэк на старое имя YANDEX_WEBMASTER_TOKEN.
+    t = (os.environ.get("YANDEX_WEBMASTER_TOKEN_ANGEL")
+         or os.environ.get("YANDEX_WEBMASTER_TOKEN") or "").strip()
     if not t:
-        sys.exit("Нет токена: задайте YANDEX_WEBMASTER_TOKEN (см. scripts/README-yandex-api.md).")
+        sys.exit("Нет токена: задайте YANDEX_WEBMASTER_TOKEN_ANGEL (см. scripts/README-yandex-api.md).")
     return t
 
 

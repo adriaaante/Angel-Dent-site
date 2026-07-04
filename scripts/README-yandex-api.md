@@ -15,12 +15,12 @@
 
 ## Куда положить токен (постоянный доступ)
 Токен — секрет (как пароль). Задаётся **переменной окружения**
-`YANDEX_WEBMASTER_TOKEN` в настройках окружения Claude Code (не в репозиторий!).
+`YANDEX_WEBMASTER_TOKEN_ANGEL` в настройках окружения Claude Code (не в репозиторий!).
 Обновить при истечении (ошибка `INVALID_OAUTH_TOKEN` / 401) — повторить п.4.
 
 ## Запуск
 ```
-YANDEX_WEBMASTER_TOKEN=xxxx python3 scripts/yandex-webmaster.py
+YANDEX_WEBMASTER_TOKEN_ANGEL=xxxx python3 scripts/yandex-webmaster.py
 ```
 Счётчик Метрики зашит в скрипте (`METRIKA_COUNTER = 109369174`).
 
