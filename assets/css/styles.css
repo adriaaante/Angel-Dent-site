@@ -840,3 +840,37 @@ p { margin: 0 0 1em; }
 .promo-note__icon { flex: 0 0 auto; font-size: 20px; line-height: 1.3; }
 .promo-note strong { color: var(--c-primary); }
 .promo-note a { color: var(--c-primary); font-weight: 600; }
+
+/* --- Компактный cookie-баннер на мобильном (не перекрывает CTA) --- */
+@media (max-width: 640px) {
+  .cookie-banner { left: 8px; right: 8px; bottom: 8px; padding: 10px 12px; border-radius: 12px; }
+  .cookie-banner__inner { gap: 10px; flex-wrap: nowrap; flex-direction: row; align-items: center; }
+  .cookie-banner__text { flex: 1 1 auto; font-size: 11.5px; line-height: 1.35; }
+  .cookie-banner__actions .btn { padding: 9px 14px; font-size: 13px; white-space: nowrap; }
+}
+
+/* --- Мобильный герой: компактнее, CTA выше сгиба (75% трафика — телефоны) --- */
+@media (max-width: 720px) {
+  .hero__grid > div { min-width: 0; }
+  .hero__title { font-size: 25px; margin-bottom: 12px; }
+  .hero__lead { font-size: 15px; margin-bottom: 16px; }
+  .hero__badges { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    margin: 0 -20px 16px; padding: 2px 20px 6px; scrollbar-width: none; }
+  .hero__badges::-webkit-scrollbar { display: none; }
+  .hero__badge { flex: 0 0 auto; font-size: 12.5px; padding: 6px 12px; white-space: nowrap; }
+  .hero__cta { margin-bottom: 14px; }
+  .hero__cta .btn--lg { padding: 14px 20px; font-size: 15px; }
+  .hero__note { font-size: 12.5px; }
+}
+/* Подпись логотипа в шапке — в одну строку на узких экранах */
+@media (max-width: 480px) {
+  .logo__name small { font-size: 9.5px; letter-spacing: .02em; white-space: nowrap; }
+}
+
+/* --- Якорная цена в герое услуги (для трафика по «цена»-запросам) --- */
+.page-hero__prices { margin: 14px 0 0; font-size: 15px; color: var(--c-text-muted); }
+.page-hero__prices strong { color: var(--c-primary); font-weight: 700; }
+.page-hero__prices a { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* --- Форма контактов: не даём инпутам распирать грид (гориз. скролл на мобильном) --- */
+.contact-grid > * { min-width: 0; }
