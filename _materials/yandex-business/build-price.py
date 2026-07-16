@@ -93,7 +93,48 @@ CAT_IMG = {
 }
 
 
-def img_for(category):
+# Позиционные картинки (важнее категорийных): согласованные владельцем кадры
+# витрины (16.07.2026), лежат в assets/img/yb/pos/ (деплоятся). Именно они
+# уезжают в «Товары и услуги» по фиду, а оттуда копируются в витрину Карт —
+# один источник для всего. Ключ — точное название позиции из rows.
+POS_IMG = {
+    "Комплексная гигиена (ультразвук + Air Flow + полировка)": "yb-pos-01-chistka",
+    "Чистка Air Flow": "yb-pos-01-chistka",
+    "Лечение кариеса": "yb-pos-02-karies",
+    "Акция: КТ + план лечения": "yb-pos-03-kt",
+    "Акция: отбеливание Amazing White": "yb-pos-04-otbelivanie",
+    "Винир керамический E-max": "yb-pos-05-viniry",
+    "Люминир Cerinate": "yb-pos-05-viniry",
+    "Композитный винир": "yb-pos-05-viniry",
+    "Голливудская улыбка под ключ (10 виниров)": "yb-pos-05-viniry",
+    "Бесплатная консультация ортодонта": "yb-pos-06-ortodont",
+    "Брекеты под ключ": "yb-pos-07-brekety",
+    "Элайнеры — полный курс": "yb-pos-06-ortodont",
+    "Лечение молочного зуба": "yb-pos-08-detskiy",
+    "Цветная пломба Twinky Star": "yb-pos-08-detskiy",
+    "Удаление молочного зуба": "yb-pos-08-detskiy",
+    "Консультация детского стоматолога": "yb-pos-08-detskiy",
+    "Удаление зуба для взрослого": "yb-pos-09-udalenie",
+    "Удаление зуба мудрости (ретинированного)": "yb-pos-09-udalenie",
+    "Лечение дёсен Vector (1 челюсть)": "yb-pos-10-desny",
+    "Plasmolifting (1 пробирка)": "yb-pos-10-desny",
+    "Имплант Osstem (Корея)": "yb-pos-11-implant",
+    "Имплант Dentium (Корея)": "yb-pos-11-implant",
+    "Имплант Straumann (Швейцария)": "yb-pos-11-implant",
+    "Имплант + коронка металлокерамика «под ключ»": "yb-pos-12-implant-kluch",
+    "Имплант + коронка цирконий «под ключ»": "yb-pos-12-implant-kluch",
+    "Коронка металлокерамика": "yb-pos-13-protez",
+    "Коронка цирконий монолит": "yb-pos-13-protez",
+    "Коронка E-max": "yb-pos-13-protez",
+    "Съёмный протез акрил (1 челюсть)": "yb-pos-13-protez",
+    "Бюгельный протез с замками": "yb-pos-13-protez",
+}
+IMG_BASE_POS = "https://angel-denta.ru/assets/img/yb/pos/"
+
+
+def img_for(category, name=None):
+    if name and name in POS_IMG:
+        return IMG_BASE_POS + POS_IMG[name] + ".jpg"
     return IMG_BASE + CAT_IMG.get(category, "yb-akcii") + ".jpg"
 
 
@@ -201,7 +242,7 @@ def build_yml(out_path):
             f'<url>{_esc(url_for(cat))}</url>'
             f'<price>{price}</price><currencyId>RUB</currencyId>'
             f'<categoryId>{cat_id.get(cat, cat_id["Акции"])}</categoryId>'
-            f'<picture>{_esc(img_for(cat))}</picture>'
+            f'<picture>{_esc(img_for(cat, name))}</picture>'
             f'<description>{_esc(desc)}</description>'
             f'</offer>'
         )
