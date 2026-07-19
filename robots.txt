@@ -8,4 +8,8 @@ Allow: /blog/
 # Технические страницы — для индексации не требуются
 Disallow: /404.html
 
+# Склейка адресов с рекламными метками (Яндекс; межсекционная директива).
+# Google игнорирует — там дубли закрывает rel="canonical" на страницах.
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&yclid&gclid
+
 Sitemap: https://angel-denta.ru/sitemap.xml
