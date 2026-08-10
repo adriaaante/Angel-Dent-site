@@ -1,0 +1,30 @@
+# Выполнение команды на сервере reg.ru (общий сервер трёх клиник —
+# Angel, Versal, Венеция). Запуск: вкладка Actions → Server command →
+# Run workflow (или агентом через GitHub API). Только для владельца:
+# доступ к workflow_dispatch есть лишь у коллабораторов репозитория.
+# Требуется секрет REGRU_SSH_PASSWORD.
+name: Server command
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Команда для выполнения на сервере'
+        required: true
+        type: string
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run over SSH
+        env:
+          SSHPASS: ${{ secrets.REGRU_SSH_PASSWORD }}
+          CMD: ${{ inputs.command }}
+        run: |
+          if [ -z "$SSHPASS" ]; then
+            echo "::error::Секрет REGRU_SSH_PASSWORD не задан"; exit 1
+          fi
+          sudo apt-get install -y -qq sshpass >/dev/null
+          sshpass -e ssh -o StrictHostKeyChecking=accept-new \
+            -o PubkeyAuthentication=no -o PreferredAuthentications=password \
+            u3501870@server292.hosting.reg.ru "$CMD"
