@@ -19,7 +19,7 @@ Usage:
 
 Examples:
     python scripts/prepare-doctor-photo.py /tmp/raw/geworkyan.webp geworkyan
-    python scripts/prepare-doctor-photo.py /tmp/raw/smolyakova.png smolyakova
+    python scripts/prepare-doctor-photo.py /tmp/raw/drobkova.png drobkova
     python scripts/prepare-doctor-photo.py ~/Downloads/drobkova.jpg drobkova
 
 Output files (relative to repo root):

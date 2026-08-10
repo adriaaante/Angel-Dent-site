@@ -57,6 +57,8 @@ AddDefaultCharset UTF-8
     RedirectMatch 301 ^/price/?$     /services/
     RedirectMatch 301 ^/about/?$     /about.html
     RedirectMatch 301 ^/ovsepyan/?$  /doctors/
+    # врач больше не работает в клинике (снята 10.08.2026)
+    RedirectMatch 301 ^/doctors/smolyakova\.html$ /doctors/
 
     # --- старый раздел /uslugi/* → профильные услуги (частное выше общего) ---
     RedirectMatch 301 ^/uslugi/implantaciya(/.*)?$            /services/implantaciya.html

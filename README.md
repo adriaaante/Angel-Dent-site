@@ -48,7 +48,7 @@ python3 -m http.server 8080
 │   legal.html, oferta.html, privacy.html, consent.html, cookies.html, 404.html
 ├── services/        — индекс + 9 страниц услуг
 ├── doctors/         — индекс + 5 страниц врачей (slug-и: drobkova,
-│                       geworkyan, rustamli, rustamov, smolyakova)
+│                       geworkyan, rustamli, rustamov)
 ├── blog/            — индекс + 6 SEO-статей
 ├── assets/
 │   ├── css/styles.css
