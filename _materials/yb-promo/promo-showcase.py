@@ -14,13 +14,12 @@
    Акции без цены («чистка в подарок», «−10 % льготным») в витрину не
    кладём — их место в разделе «Акции».
 
-⚠️ Ссылка на картинку «Детский стоматолог» из старого дока умерла (403):
-   кадр с ребёнком не прошёл автомодерацию хранилища. Восстановлен
-   13.08.2026 — оригинал взят из папки Диска «Витрина ЯБ — картинки»
-   (файл «Детский стоматолог.jpg», id `18GdKcyqq0NZWyqpnzYk3ipMz8wDTi8HE`),
-   копия лежит в `from-drive/showcase-detskaya.jpg`. Если ссылка снова
-   отвалится — перезалить этот файл (`media_upload` → curl PUT →
-   `media_confirm`) и поменять id ниже.
+⚠️ Картинка «Детский стоматолог» живёт НА САЙТЕ, а не в хранилище
+   генераций: кадр с ребёнком дважды не прошёл его автомодерацию и
+   ссылка отдавала 403. Файл лежит в `assets/img/yb/showcase-detskaya.jpg`
+   (деплоится вместе с сайтом), оригинал — в `from-drive/`. Поэтому у
+   этой позиции в поле картинки полный URL, а не id хранилища —
+   так и оставить.
 
 Запуск: python3 promo-showcase.py  → promo.json
 """
@@ -71,7 +70,7 @@ VITRINA = [
     ('Комплексная чистка зубов', '5 000 ₽', '/services/gigiena.html', 'ee3ed04c-3134-4d9a-a07d-a76a48edcf04'),
     ('КТ + план лечения', '4 200 ₽', '/promotions.html', 'c1449cdf-73d9-4c0f-9dd9-dc9cf1254007'),
     ('Консультация ортодонта — бесплатно', '', '/services/ortodontiya.html', '9df33289-408a-4806-bd58-c7be539d0219'),
-    ('Детский стоматолог — лечение молочного зуба', '1 500 ₽', '/services/detskaya.html', '2de0d887-59db-4200-bc7c-6f0ab485d540'),
+    ('Детский стоматолог — лечение молочного зуба', '1 500 ₽', '/services/detskaya.html', 'https://angel-denta.ru/assets/img/yb/showcase-detskaya.jpg'),
     ('Лечение кариеса', '5 500 ₽', '/services/terapiya.html', '6c7c43f2-279f-4167-bde2-ddcbd2c2fb22'),
     ('Лечение дёсен — кюретаж, 1 зуб', '800 ₽', '/services/parodontologiya.html', '262595b5-cf97-4b85-bb1b-a9786532b588'),
     ('Удаление зуба', '4 500 ₽', '/services/hirurgiya.html', 'dba8a29f-cd20-420b-9af8-08453cc320b0'),
@@ -85,6 +84,11 @@ VITRINA = [
 SITE = 'https://angel-denta.ru'
 
 
+def img(ref):
+    """id картинки в хранилище — или готовый URL, если она лежит на сайте."""
+    return ref if ref.startswith('http') else CDN + ref + '.jpg'
+
+
 def export():
     sections = [
         {'title': 'Акции', 'kind': 'promo',
@@ -94,13 +98,13 @@ def export():
          'labels': {'title': 'Анонс', 'desc': 'Описание'},
          'limits': {'title': 70, 'desc': 200},
          'items': [{'key': k, 'title': t, 'desc': d, 'price': '',
-                    'link': SITE + l, 'img': CDN + i + '.jpg'} for k, t, d, l, i in AKCII]},
+                    'link': SITE + l, 'img': img(i)} for k, t, d, l, i in AKCII]},
         {'title': 'Витрина (товары и услуги)', 'kind': 'showcase',
          'note': 'Название (≤56), цена и ссылка — описания в форме витрины нет. Порядок: '
                  'недорогие входные услуги первыми, они видны без скролла.',
          'labels': {'title': 'Название'}, 'limits': {'title': 56},
          'items': [{'key': f'vitrina-{n}', 'title': t, 'desc': '', 'price': p,
-                    'link': SITE + l, 'img': CDN + i + '.jpg'}
+                    'link': SITE + l, 'img': img(i)}
                    for n, (t, p, l, i) in enumerate(VITRINA, 1)]},
     ]
     json.dump({'sections': sections}, open(os.path.join(HERE, 'promo.json'), 'w'),
