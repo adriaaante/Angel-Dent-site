@@ -229,6 +229,12 @@ def load_promo(repo):
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
 
 
+def load_stories(repo):
+    """Истории (сторис) — линейки, собранные раньше и перенесённые с Диска."""
+    p = os.path.join(ROOT, repo, '_materials', 'yb-stories', 'stories.json')
+    return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
+
+
 def load_posts(repo):
     p = os.path.join(ROOT, repo, '_materials', 'yb-posts', 'posts.json')
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
@@ -251,7 +257,7 @@ def render_posts(items, prefix):
     return ''.join(out)
 
 
-def checklist(data, posts, promo=None):
+def checklist(data, posts, promo=None, stories=None):
     """Что уже есть в кабинете и что осталось — чтобы ничего не потерялось."""
     ads = sum(len(s['items']) for s in data['sections']) if data else 0
     rows = [
@@ -262,7 +268,8 @@ def checklist(data, posts, promo=None):
          if promo else 'состав — с promotions.html сайта', bool(promo)),
         ('Витрина', f'{len(promo["sections"][1]["items"])} позиций готово'
          if promo else 'позиции — с ceny.html', bool(promo)),
-        ('Истории', 'линейка v1 собрана ранее, файлы — в Google Drive', None),
+        ('Истории', f'{len(stories["items"])} собрано, слайды на странице'
+         if stories else 'линейка v1 — файлы на Google Диске', bool(stories)),
         ('Фотографии карточки', 'реальные фото клиники', None),
     ]
     li = ''.join(
@@ -276,9 +283,11 @@ def build():
         data = load(repo)
         posts = load_posts(repo)
         promo = load_promo(repo)
+        stories = load_stories(repo)
         n = sum(len(s['items']) for s in data['sections']) if data else 0
         n += len(posts['items']) if posts else 0
         n += sum(len(s['items']) for s in promo['sections']) if promo else 0
+        n += len(stories['items']) if stories else 0
         tabs.append(f'<button class="tab" data-id="{cid}">{name} <i>{city}'
                     + (f' · {n}' if n else ' · нет материалов') + '</i></button>')
         b = (data or {}).get('brand', {'accent': '#4b5563', 'bg': '#fff',
@@ -286,7 +295,7 @@ def build():
         head = (f'<div class="hd"><h2>{name} — {city}</h2>'
                 + (f'<a href="{data["site"]}" target="_blank" rel="noopener">{data["site"]}</a>' if data else '')
                 + '</div>')
-        if not data and not posts and not promo:
+        if not data and not posts and not promo and not stories:
             # объявлений и публикаций ещё нет — но материалы с Диска показываем,
             # иначе вкладка выглядит пустой при живом архиве
             body = ('<div class="empty">Объявления и публикации для этой клиники ещё не собраны: '
@@ -312,7 +321,7 @@ def build():
             site = data['site'] if data else ''
             body = ('<div class="grid2">'
                     '<div class="card"><h4>Что уже готово к заливке</h4><ul>'
-                    + checklist(data, posts, promo) + '</ul></div>'
+                    + checklist(data, posts, promo, stories) + '</ul></div>'
                     '<div class="card"><h4>Яндекс Директ</h4><ul>'
                     '<li>Метрика подключена, 6 целей заведены: <b>lead_submit</b>, call_click, '
                     'whatsapp_click, telegram_click, modal_open, form_start</li>'
@@ -336,6 +345,27 @@ def build():
                     body += f'<div class="note">{html.escape(sec.get("note", ""))}</div>'
                     body += render_items(sec['items'], cid,
                                          sec.get('labels'), sec.get('limits'))
+            if stories:
+                body += '<div class="sec">Истории (сторис)</div>'
+                body += ('<div class="note">Формат 1080×1920. В кабинете у истории свои поля: '
+                         'название ≤15 символов и текст кнопки ≤15 — они указаны в каждой карточке. '
+                         'Самая свежая история показывается первой, поэтому сильнейшую тему '
+                         'заливаем последней. ⚠️ Фото «до/после» в сторис Яндекс отклоняет.</div>')
+                for it in stories['items']:
+                    gal = ''.join(
+                        f'<figure><img src="{u}" alt="" loading="lazy">'
+                        f'<button class="dl" data-dl="{u}" data-name="{cid}-{it["key"]}-{i}.jpg">'
+                        f'Скачать</button></figure>' for i, u in enumerate(it['imgs'], 1))
+                    body += ('<article class="post">'
+                             f'<h3>{html.escape(it["title"])} '
+                             f'<span>{len(it["imgs"])} слайда · название {len(it["title"])}/15 · '
+                             f'кнопка «{html.escape(it["btn"])}» {len(it["btn"])}/15</span></h3>'
+                             f'<div class="post__gal">{gal}</div>'
+                             f'<div class="f"><span class="f__k">О чём история</span>'
+                             f'<div class="f__v">{html.escape(it["about"])}</div></div>'
+                             f'<div class="f"><span class="f__k">Ссылка кнопки</span>'
+                             f'<div class="f__v" data-copy>{it["link"]}</div></div>'
+                             '</article>')
             if DRIVE.get(cid):
                 body += '<div class="sec">Готовые материалы на Google Диске</div>'
                 body += ('<div class="note">Собрано раньше и в репозиториях не хранится — '
