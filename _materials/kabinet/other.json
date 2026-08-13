@@ -112,17 +112,17 @@
  ],
  "venecia": [
   {
-   "title": "QR-код на сайт",
-   "about": "⚠️ Карточки с отзывами у «Венеции» ещё нет, поэтому код ведёт на сайт — на нём цены, врачи и запись. Появится ссылка на отзывы в кабинете — пришлите, перегенерирую на неё за минуту. Табличка A6 — на стойку, чистый код — для визиток и наклеек.",
+   "title": "QR-код на отзыв в Яндексе",
+   "about": "Ведёт на отзывы в карточке клиники (yandex.ru/profile/104110939502). Табличка A6 — на стойку ресепшена, чистый код — для визиток и наклеек. Отзывов пока нет, и первые особенно важны: карточка без них проигрывает соседям в выдаче Карт.",
    "previews": [
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/704c6d0d-0497-4d9a-9b32-981fb79309d0.jpg",
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/813351be-dea8-4105-88f8-4bdf4ac33275.png"
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/bb85522d-a950-4502-ba0d-600d5c71691a.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/b12a6c85-d9ff-40b3-b9e1-ff4b95302370.png"
    ],
    "files": [
     {
      "label": "Табличка A6 (PDF)",
-     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/aefa895d-20eb-443e-b16e-bacb06247f58.pdf",
-     "name": "qr-sait-card-A6.pdf"
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3bdf2043-a5cb-447b-aa78-1df6fb9313fa.pdf",
+     "name": "qr-otziv-card-A6.pdf"
     }
    ],
    "path": "venecia-dent.ru/_materials/qr"
