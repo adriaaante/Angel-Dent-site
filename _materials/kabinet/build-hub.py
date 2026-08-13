@@ -241,6 +241,24 @@ def load_posts(repo):
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
 
 
+def load_videos(repo):
+    """Ролики лежат на Диске (десятки мегабайт) — отдаём ссылками, не файлами."""
+    p = os.path.join(ROOT, repo, '_materials', 'yb-video', 'videos.json')
+    return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
+
+
+def render_videos(v):
+    out = ['<div class="grid2">']
+    for it in v['items']:
+        out.append(
+            f'<div class="card"><h4>{it["no"]}. {html.escape(it["title"])}</h4><ul>'
+            f'<li><a href="{it["video"]}" target="_blank" rel="noopener">Ролик (mp4)</a></li>'
+            f'<li><a href="{it["poster"]}" target="_blank" rel="noopener">Постер (png)</a></li>'
+            '</ul></div>')
+    out.append('</div>')
+    return ''.join(out)
+
+
 def render_posts(items, prefix):
     """Публикация = текст + до 4 картинок. Текст копируется целиком по клику."""
     out = []
@@ -258,7 +276,7 @@ def render_posts(items, prefix):
     return ''.join(out)
 
 
-def checklist(data, posts, promo=None, stories=None):
+def checklist(data, posts, promo=None, stories=None, videos=None):
     """Что уже есть в кабинете и что осталось — чтобы ничего не потерялось."""
     ads = sum(len(s['items']) for s in data['sections']) if data else 0
     rows = [
@@ -271,6 +289,7 @@ def checklist(data, posts, promo=None, stories=None):
          if promo else 'позиции — с ceny.html', bool(promo)),
         ('Истории', f'{len(stories["items"])} собрано, слайды на странице'
          if stories else 'линейка v1 — файлы на Google Диске', bool(stories)),
+        ('Видео', f'{len(videos["items"])} роликов на Диске' if videos else 'нет', bool(videos)),
         ('Фотографии карточки', 'реальные фото клиники', None),
     ]
     li = ''.join(
@@ -285,10 +304,12 @@ def build():
         posts = load_posts(repo)
         promo = load_promo(repo)
         stories = load_stories(repo)
+        videos = load_videos(repo)
         n = sum(len(s['items']) for s in data['sections']) if data else 0
         n += len(posts['items']) if posts else 0
         n += sum(len(s['items']) for s in promo['sections']) if promo else 0
         n += len(stories['items']) if stories else 0
+        n += len(videos['items']) if videos else 0
         tabs.append(f'<button class="tab" data-id="{cid}">{name} <i>{city}'
                     + (f' · {n}' if n else ' · нет материалов') + '</i></button>')
         b = (data or {}).get('brand', {'accent': '#4b5563', 'bg': '#fff',
@@ -296,7 +317,7 @@ def build():
         head = (f'<div class="hd"><h2>{name} — {city}</h2>'
                 + (f'<a href="{data["site"]}" target="_blank" rel="noopener">{data["site"]}</a>' if data else '')
                 + '</div>')
-        if not data and not posts and not promo and not stories:
+        if not data and not posts and not promo and not stories and not videos:
             # объявлений и публикаций ещё нет — но материалы с Диска показываем,
             # иначе вкладка выглядит пустой при живом архиве
             body = ('<div class="empty">Объявления и публикации для этой клиники ещё не собраны: '
@@ -322,7 +343,7 @@ def build():
             site = data['site'] if data else ''
             body = ('<div class="grid2">'
                     '<div class="card"><h4>Что уже готово к заливке</h4><ul>'
-                    + checklist(data, posts, promo, stories) + '</ul></div>'
+                    + checklist(data, posts, promo, stories, videos) + '</ul></div>'
                     '<div class="card"><h4>Яндекс Директ</h4><ul>'
                     '<li>Метрика подключена, 6 целей заведены: <b>lead_submit</b>, call_click, '
                     'whatsapp_click, telegram_click, modal_open, form_start</li>'
@@ -388,6 +409,13 @@ def build():
                          'самую сильную тему заливаем последней. Публиковать хотя бы раз в месяц: '
                          'это влияет на локальное ранжирование карточки.</div>')
                 body += render_posts(posts['items'], cid)
+            if videos:
+                body += '<div class="sec">Видео</div>'
+                body += ('<div class="note">Готовые ролики для карточки и Директа — лежат на Google '
+                         'Диске, здесь ссылками (файлы тяжёлые, в репозитории их не держим). '
+                         'В кабинете: «Фото и видео» → загрузить mp4. Постер — тот же кадр, '
+                         'с которого собирался ролик.</div>')
+                body += render_videos(videos)
         panes.append(f'''<section class="pane" id="pane-{cid}"
   data-accent="{b['accent']}" data-accent-soft="{soft(b['accent'])}"
   data-line="{b['line']}" data-soft="{soft(b['accent'], 0.05)}">{head}{body}</section>''')
