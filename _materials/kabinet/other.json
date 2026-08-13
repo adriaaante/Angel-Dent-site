@@ -18,12 +18,19 @@
   },
   {
    "title": "QR-код на отзыв в Яндексе",
-   "about": "Ведёт прямо на форму отзыва в карточке клиники. Печатать на ресепшене и на карточке-памятке: отзывы — главный фактор локального ранжирования.",
+   "about": "Ведёт на отзывы в карточке клиники. Два варианта: табличка A6 на стойку ресепшена (печатать на плотной бумаге, ставить в подставку) и чистый код — для визиток, наклеек и памяток, его можно печатать хоть 2×2 см. Отзывы — главный рычаг локального ранжирования, поэтому просить их лучше на месте, пока пациент доволен.",
    "previews": [
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d6d336c1-317c-4967-b790-915b85595105.png"
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0e444276-c218-4343-9cbc-10d54614d856.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/24a2f1bd-46b2-4e6d-87c9-00cb85f7da07.png"
    ],
-   "files": [],
-   "path": "Angel-Dent-site/_materials/seo"
+   "files": [
+    {
+     "label": "Табличка A6 (PDF)",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d0817912-9413-4762-806c-7d272b049bc7.pdf",
+     "name": "qr-otziv-card-A6.pdf"
+    }
+   ],
+   "path": "Angel-Dent-site/_materials/qr"
   },
   {
    "title": "Прайс для кабинета",
@@ -74,6 +81,22 @@
  ],
  "versal": [
   {
+   "title": "QR-код на отзыв в Яндексе",
+   "about": "Табличка A6 на стойку ресепшена и чистый код для визиток и наклеек. Ведёт на отзывы в карточке клиники на Яндекс.Картах.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/b03ad6e7-9f48-48bf-b43a-351af32b2591.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/4dee4f2b-4ae7-4376-9fe9-7c336de653ba.png"
+   ],
+   "files": [
+    {
+     "label": "Табличка A6 (PDF)",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/224dd613-ddef-470c-b1ae-0b11ef1752be.pdf",
+     "name": "qr-otziv-card-A6.pdf"
+    }
+   ],
+   "path": "Versal-Dent-site/_materials/qr"
+  },
+  {
    "title": "Прайс для кабинета",
    "about": "Для ручной загрузки в «Товары и услуги». Основной способ — автозагрузка по ссылке versal-dent.ru/yandex-business.yml.",
    "previews": [],
@@ -88,6 +111,22 @@
   }
  ],
  "venecia": [
+  {
+   "title": "QR-код на сайт",
+   "about": "⚠️ Карточки с отзывами у «Венеции» ещё нет, поэтому код ведёт на сайт — на нём цены, врачи и запись. Появится ссылка на отзывы в кабинете — пришлите, перегенерирую на неё за минуту. Табличка A6 — на стойку, чистый код — для визиток и наклеек.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/704c6d0d-0497-4d9a-9b32-981fb79309d0.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/813351be-dea8-4105-88f8-4bdf4ac33275.png"
+   ],
+   "files": [
+    {
+     "label": "Табличка A6 (PDF)",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/aefa895d-20eb-443e-b16e-bacb06247f58.pdf",
+     "name": "qr-sait-card-A6.pdf"
+    }
+   ],
+   "path": "venecia-dent.ru/_materials/qr"
+  },
   {
    "title": "Паспорт имплантов",
    "about": "Двусторонний A4 с тройным фальцем в стиле «Венеции». Панели неравные — 99,5 + 99,5 + 98 мм, сгибы на 99,5 и 199 мм от верхнего реза (схема от типографии).",
