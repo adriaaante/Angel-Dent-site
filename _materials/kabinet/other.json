@@ -1,0 +1,206 @@
+{
+ "angel": [
+  {
+   "title": "Паспорт имплантов",
+   "about": "Двусторонний A4 с тройным фальцем: пациент уносит данные об установленных имплантатах, гарантии и памятку по уходу. Печатать без полей, фальцовка на 99,5 и 199 мм от верхнего реза.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d568223c-d220-4cad-8edb-a603f905d0dd.png",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6d046e4b-e8ea-4d60-be65-bd12555f240e.png"
+   ],
+   "files": [
+    {
+     "label": "PDF для типографии",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/fe8d2227-e0ab-45b3-83d8-df43d66130f4.pdf",
+     "name": "Паспорт_имплантов_Ангел-Дент.pdf"
+    }
+   ],
+   "path": "Angel-Dent-site/_materials/implant-passport"
+  },
+  {
+   "title": "QR-код на отзыв в Яндексе",
+   "about": "Ведёт прямо на форму отзыва в карточке клиники. Печатать на ресепшене и на карточке-памятке: отзывы — главный фактор локального ранжирования.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d6d336c1-317c-4967-b790-915b85595105.png"
+   ],
+   "files": [],
+   "path": "Angel-Dent-site/_materials/seo"
+  },
+  {
+   "title": "Прайс для кабинета",
+   "about": "Файл для ручной загрузки в «Товары и услуги». Основной способ — автозагрузка по ссылке angel-denta.ru/yandex-business.yml, файл нужен как запасной.",
+   "previews": [],
+   "files": [
+    {
+     "label": "XLSX",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6e7fca92-035f-45cd-badf-af0a5940ee82.xlsx",
+     "name": "angel-dent-yandex-business-price.xlsx"
+    }
+   ],
+   "path": "Angel-Dent-site/_materials/yandex-business"
+  },
+  {
+   "title": "Документы по продвижению",
+   "about": "Договор, счёт и акты между клиникой и исполнителем, плюс выписка из ЕГРЮЛ, по которой сверены реквизиты. Комплект на каждый месяц: счёт → платёж → акт.",
+   "previews": [],
+   "files": [
+    {
+     "label": "Договор № 1547",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/4cdf61ae-a349-4ff3-83f4-c651cecb5734.docx",
+     "name": "Договор № 1547 (продвижение сайтов клиник).docx"
+    },
+    {
+     "label": "Счёт № 1547",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/97298d46-b4d7-41f5-a5c5-87f1c9622bad.docx",
+     "name": "Счёт № 1547 от 15.08.2026 (75 000,00).docx"
+    },
+    {
+     "label": "Акт № 3",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/eb150e89-6aec-4ccd-8002-6466ffbc6c8a.docx",
+     "name": "Акт № 3 от 15.08.2026 (период с 01.05.2026 по 31.07.2026).docx"
+    },
+    {
+     "label": "Акт сверки",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/fd5816fd-88e1-4c7e-a954-28d2b00cfe9e.docx",
+     "name": "Акт сверки взаимных расчётов.docx"
+    },
+    {
+     "label": "Выписка ЕГРЮЛ",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/2f3f7102-12bc-4776-b880-0ff70635fdd6.pdf",
+     "name": "egrul-angel-dent-2026-08-13.pdf"
+    }
+   ],
+   "path": "Angel-Dent-site/_materials/docs/out"
+  }
+ ],
+ "versal": [
+  {
+   "title": "Прайс для кабинета",
+   "about": "Для ручной загрузки в «Товары и услуги». Основной способ — автозагрузка по ссылке versal-dent.ru/yandex-business.yml.",
+   "previews": [],
+   "files": [
+    {
+     "label": "XLSX",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/91c81e0d-0e30-41a4-90ed-d94be339fa8e.xlsx",
+     "name": "versal-dent-yandex-business-price.xlsx"
+    }
+   ],
+   "path": "Versal-Dent-site/_materials/yandex-business"
+  }
+ ],
+ "venecia": [
+  {
+   "title": "Паспорт имплантов",
+   "about": "Двусторонний A4 с тройным фальцем в стиле «Венеции». Панели неравные — 99,5 + 99,5 + 98 мм, сгибы на 99,5 и 199 мм от верхнего реза (схема от типографии).",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6c5aa3a8-f834-41bd-b83d-177e71237341.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/5e2a21fa-0b94-4fa8-9534-332f801b78de.jpg"
+   ],
+   "files": [
+    {
+     "label": "PDF для типографии",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/24e8c0f3-a298-48b0-a959-958cac2e17ec.pdf",
+     "name": "Паспорт_имплантов_Венеция.pdf"
+    }
+   ],
+   "path": "venecia-dent.ru/_materials/implant-passport/out"
+  },
+  {
+   "title": "Визитки врачей",
+   "about": "По визитке на каждого врача плюс общий оборот с контактами и QR. Печать 90×50 мм с вылетами.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/75c06b67-4682-41a4-b137-bba5d86cc6e1.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d0675f54-b25a-429c-8bfa-2dddffb59f1c.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/99faeeca-a187-4dbf-8d22-ca3c027aad7b.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/239dae53-7ef8-45a7-ab1f-58f4a39b0216.jpg"
+   ],
+   "files": [
+    {
+     "label": "PDF для типографии",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/08e794b5-57d4-4f0e-8b4d-88281493c345.pdf",
+     "name": "venecia-vizitki-print.pdf"
+    }
+   ],
+   "path": "venecia-dent.ru/_materials/vizitki"
+  },
+  {
+   "title": "Рекламный буклет A5",
+   "about": "⚠️ В буклете свои акционные цены — они действуют только при предъявлении буклета и могут отличаться от сайта. На каждой стороне дисклеймер и оговорка «не является публичной офертой».",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1bc5487b-2720-4616-a319-e2c8aaf2f1f7.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/17a627b2-884c-44c7-97e0-ea363ed0f31d.jpg"
+   ],
+   "files": [
+    {
+     "label": "PDF для типографии",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d7316f96-a505-4427-a2e4-b472941caec8.pdf",
+     "name": "venecia-buklet-A5-print.pdf"
+    }
+   ],
+   "path": "venecia-dent.ru/_materials/buklet/out"
+  },
+  {
+   "title": "Консольная вывеска-зуб",
+   "about": "Фигурный рез по контуру зуба, высота 700 мм, внутри только надпись «ВЕНЕЦИЯ». Для чёрного фасада взята светлая схема: белое поле с золотой каймой. Контур реза один на все цветовые схемы.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d1a1a4df-212c-49af-8994-834db5224d74.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1780a999-49af-4947-bcb3-7d8d11f75ede.jpg"
+   ],
+   "files": [
+    {
+     "label": "Макет 1:1 (печать)",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/2e57e2c8-a7b4-4010-aa93-f50e8b779e43.pdf",
+     "name": "venecia-tooth-sign-white-gold-edge-print.pdf"
+    },
+    {
+     "label": "Контур реза",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/f45fba4a-a672-47f9-9815-0efc0335cfae.pdf",
+     "name": "venecia-tooth-sign-cutline.pdf"
+    },
+    {
+     "label": "Чертёж с размерами",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/71a6e660-90f1-47a0-9693-78a2ce8d307c.pdf",
+     "name": "venecia-tooth-sign-drawing.pdf"
+    }
+   ],
+   "path": "venecia-dent.ru/_materials/naruzhka/izgotovlenie"
+  },
+  {
+   "title": "Билборд 3×6 м",
+   "about": "Два варианта: семейный и про улыбку. Полоса с предупреждением о противопоказаниях занимает больше 5 % площади — этого требует закон о рекламе, обрезать её нельзя.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d8aa344b-a285-45a0-958d-7180d8acbdc9.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d7d0c2e3-11f8-4068-b780-dcb423d2c76d.jpg"
+   ],
+   "files": [],
+   "path": "venecia-dent.ru/_materials/naruzhka"
+  },
+  {
+   "title": "Боковая вывеска 60×80 см",
+   "about": "Панель на фасад рядом с входом: логотип, название и режим работы.",
+   "previews": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3e556ba6-4dbb-449b-b988-fc9539ab9c41.jpg"
+   ],
+   "files": [
+    {
+     "label": "PDF для печати",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/05e7054b-7e05-4983-bd27-e1a3faced498.pdf",
+     "name": "venecia-side-sign-60x80.pdf"
+    }
+   ],
+   "path": "venecia-dent.ru/_materials/naruzhka"
+  },
+  {
+   "title": "Прайс для кабинета",
+   "about": "Для ручной загрузки в «Товары и услуги». Основной способ — автозагрузка по ссылке venecia-dent.ru/yandex-business.yml.",
+   "previews": [],
+   "files": [
+    {
+     "label": "XLSX",
+     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3ba5cd44-8616-4bb2-9386-8acb3d082fc2.xlsx",
+     "name": "venecia-dent-yandex-business-price.xlsx"
+    }
+   ],
+   "path": "venecia-dent.ru/_materials/yandex-business"
+  }
+ ]
+}

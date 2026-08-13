@@ -124,6 +124,11 @@ body{margin:0;background:#f2f3f5;color:#1d2226;font:16px/1.55 Manrope,system-ui,
   padding:12px 14px;cursor:pointer;font-size:15px;line-height:1.5}
 .post__txt:hover{border-color:var(--accent);background:#fff}
 .post__txt.copied{border-color:var(--accent);background:var(--accent-soft)}
+.fbtns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.fbtn{display:inline-block;padding:9px 14px;border:1px solid var(--accent);border-radius:8px;
+  background:#fff;color:var(--accent);font:600 13px Manrope,sans-serif;text-decoration:none;
+  transition:.15s}
+.fbtn:hover{background:var(--accent);color:#fff}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 22px}
 .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
 .card h4{margin:0 0 8px;font-size:15px}
@@ -247,6 +252,36 @@ def load_posts(repo):
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
 
 
+def load_other():
+    """Печать, наружка, документы — всё, что не про кабинет ЯБ."""
+    p = os.path.join(HERE, 'other.json')
+    return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else {}
+
+
+def render_other(cards, prefix):
+    out = []
+    for it in cards:
+        gal = ''.join(
+            f'<figure><img src="{u}" alt="" loading="lazy">'
+            f'<button class="dl" data-dl="{u}" data-name="{prefix}-{i}.jpg">Скачать</button>'
+            f'</figure>' for i, u in enumerate(it['previews'], 1))
+        # тот же механизм, что у картинок: fetch → blob → сохранение под
+        # человеческим именем. Атрибут download на чужой домен браузер
+        # игнорирует, и PDF просто открылся бы вкладкой вместо загрузки.
+        files = ''.join(
+            f'<button class="fbtn" data-dl="{f["url"]}" '
+            f'data-name="{html.escape(f["name"])}">⤓ {html.escape(f["label"])}</button>'
+            for f in it['files'])
+        out.append(
+            '<article class="post">'
+            f'<h3>{html.escape(it["title"])}</h3>'
+            + (f'<div class="post__gal">{gal}</div>' if gal else '')
+            + f'<div class="f__v" style="cursor:default">{html.escape(it["about"])}</div>'
+            + (f'<div class="fbtns">{files}</div>' if files else '')
+            + '</article>')
+    return ''.join(out)
+
+
 def load_videos(repo):
     """Ролики лежат на Диске (десятки мегабайт) — отдаём ссылками, не файлами."""
     p = os.path.join(ROOT, repo, '_materials', 'yb-video', 'videos.json')
@@ -305,17 +340,20 @@ def checklist(data, posts, promo=None, stories=None, videos=None):
 
 def build():
     tabs, panes = [], []
+    other = load_other()
     for cid, name, city, repo in CLINICS:
         data = load(repo)
         posts = load_posts(repo)
         promo = load_promo(repo)
         stories = load_stories(repo)
         videos = load_videos(repo)
+        extra = other.get(cid, [])
         n = sum(len(s['items']) for s in data['sections']) if data else 0
         n += len(posts['items']) if posts else 0
         n += sum(len(s['items']) for s in promo['sections']) if promo else 0
         n += len(stories['items']) if stories else 0
         n += len(videos['items']) if videos else 0
+        n += len(extra)
         tabs.append(f'<button class="tab" data-id="{cid}">{name} <i>{city}'
                     + (f' · {n}' if n else ' · нет материалов') + '</i></button>')
         b = (data or {}).get('brand', {'accent': '#4b5563', 'bg': '#fff',
@@ -323,7 +361,7 @@ def build():
         head = (f'<div class="hd"><h2>{name} — {city}</h2>'
                 + (f'<a href="{data["site"]}" target="_blank" rel="noopener">{data["site"]}</a>' if data else '')
                 + '</div>')
-        if not data and not posts and not promo and not stories and not videos:
+        if not data and not posts and not promo and not stories and not videos and not extra:
             # объявлений и публикаций ещё нет — но материалы с Диска показываем,
             # иначе вкладка выглядит пустой при живом архиве
             body = ('<div class="empty">Объявления и публикации для этой клиники ещё не собраны: '
@@ -406,6 +444,13 @@ def build():
                              f'<div class="f"><span class="f__k">Ссылка кнопки</span>'
                              f'<div class="f__v" data-copy>{it["link"]}</div></div>'
                              '</article>')
+            if extra:
+                body += '<div class="sec">Печать, наружка и документы</div>'
+                body += ('<div class="note">Всё, что сделано для клиники помимо кабинета: '
+                         'паспорта имплантов, визитки, буклеты, вывески, прайсы и документы. '
+                         'Кнопка ⤓ скачивает готовый файл — макеты можно отправлять в '
+                         'типографию как есть, ничего не пересобирая.</div>')
+                body += render_other(extra, cid)
             if DRIVE.get(cid):
                 body += '<div class="sec">Готовые материалы на Google Диске</div>'
                 body += ('<div class="note">Собрано раньше и в репозиториях не хранится — '
