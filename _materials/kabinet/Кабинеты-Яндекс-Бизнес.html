@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Кабинеты Яндекс.Бизнеса — три клиники</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f2f3f5;color:#1d2226;font:16px/1.55 Manrope,system-ui,sans-serif}
+.top{background:#fff;border-bottom:1px solid #e3e6ea;position:sticky;top:0;z-index:5}
+.top__in{max-width:1080px;margin:0 auto;padding:16px 20px 0}
+.top h1{font-size:20px;margin:0 0 3px}
+.top p{margin:0 0 14px;color:#6c757d;font-size:14px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{border:0;background:transparent;padding:11px 18px;border-radius:10px 10px 0 0;cursor:pointer;
+  font:600 15px Manrope,sans-serif;color:#6c757d;border-bottom:3px solid transparent}
+.tab:hover{color:#1d2226}
+.tab.on{color:#1d2226;background:var(--accent-soft);border-bottom-color:var(--accent)}
+.tab i{font-style:normal;font-weight:400;color:#9aa3ab;font-size:13px;margin-left:6px}
+.pane{display:none;max-width:1080px;margin:0 auto;padding:26px 20px 80px}
+.pane.on{display:block}
+.hd{display:flex;align-items:baseline;gap:12px;margin:0 0 6px}
+.hd h2{margin:0;font-size:22px}
+.hd a{color:var(--accent);font-size:14px;text-decoration:none}
+.note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
+  padding:14px 16px;border-radius:10px;margin:14px 0 22px;font-size:15px}
+.ad{display:grid;grid-template-columns:190px 1fr;gap:20px;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:18px;margin:0 0 14px;position:relative}
+.ad__num{position:absolute;left:-11px;top:18px;width:26px;height:26px;border-radius:50%;
+  background:var(--accent);color:#fff;font:700 13px Manrope,sans-serif;display:grid;place-items:center}
+.ad__pic img{width:190px;height:190px;object-fit:cover;border-radius:10px;display:block}
+.dl{display:block;width:190px;margin-top:8px;padding:8px 10px;border:1px solid var(--accent);
+  border-radius:8px;background:#fff;color:var(--accent);font:600 12.5px/1.2 Manrope,sans-serif;
+  cursor:pointer;transition:.15s}
+.dl:hover{background:var(--accent);color:#fff}
+.dl:disabled{opacity:.6;cursor:default}
+.f{margin:0 0 11px}
+.f__k{display:block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#8d949b;margin-bottom:4px}
+.f__k em{font-style:normal;color:#b6bcc2}
+.f__v{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:9px 12px;
+  cursor:pointer;transition:.15s;font-size:15px}
+.f__v:hover{border-color:var(--accent);background:#fff}
+.f__v.copied{border-color:var(--accent);background:var(--accent-soft)}
+.f__v i{color:#a4abb2}
+.f2{display:grid;grid-template-columns:150px 1fr;gap:14px}
+.empty{background:#fff;border:1px dashed #ccd2d8;border-radius:14px;padding:28px;color:#6c757d}
+@media(max-width:720px){.ad{grid-template-columns:1fr}.ad__pic img{width:100%;height:auto}
+  .dl{width:100%}.f2{grid-template-columns:1fr}}
+</style></head><body>
+<div class="top"><div class="top__in">
+  <h1>Материалы для кабинетов Яндекс.Бизнеса</h1>
+  <p>Три клиники в одном месте. Клик по полю копирует текст, кнопка — скачивает картинку.</p>
+  <div class="tabs"><button class="tab" data-id="versal">Версаль <i>Реутов · 14</i></button><button class="tab" data-id="angel">Ангел-Дент <i>Реутов · нет материалов</i></button><button class="tab" data-id="venecia">Венеция <i>Мытищи · 14</i></button></div>
+</div></div>
+<section class="pane" id="pane-versal"
+  data-accent="#C2A14E" data-accent-soft="rgba(194,161,78,0.12)"
+  data-line="#E7DFCF" data-soft="rgba(194,161,78,0.05)"><div class="hd"><h2>Версаль — Реутов</h2><a href="https://versal-dent.ru" target="_blank" rel="noopener">https://versal-dent.ru</a></div><div class="note"><b>Свои объявления.</b> Заливать снизу вверх — свежие показываются первыми.<br>В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену не дублируем. Срок размещения не ставим — объявления вечные.</div>
+<article class="ad">
+  <div class="ad__num">1</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ade7f3bd-1228-4759-b648-3b7690980359.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ade7f3bd-1228-4759-b648-3b7690980359.jpg" data-name="versal-kariés.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>39/56</em></span>
+      <div class="f__v" data-copy>Лечение кариеса в Реутове за один визит</div></div>
+    <div class="f"><span class="f__k">Описание <em>63/81</em></span>
+      <div class="f__v" data-copy>Пломба за визит, анестезия без боли. Цены фиксируем в договоре.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>5 500 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/terapiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">2</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/9364fb8b-b040-4fa5-9b56-cdd77da7e2fe.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/9364fb8b-b040-4fa5-9b56-cdd77da7e2fe.jpg" data-name="versal-kanaly.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>45/56</em></span>
+      <div class="f__v" data-copy>Лечение каналов — сохраняем зуб, а не удаляем</div></div>
+    <div class="f"><span class="f__k">Описание <em>64/81</em></span>
+      <div class="f__v" data-copy>Пульпит и периодонтит под контролем КТ. Реутов, у м. Новокосино.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>7 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/terapiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">3</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/9c21a0b6-bc75-4bca-a7f7-a4ac6fa1c82d.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/9c21a0b6-bc75-4bca-a7f7-a4ac6fa1c82d.jpg" data-name="versal-bol.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>39/56</em></span>
+      <div class="f__v" data-copy>Болит зуб? Примем сегодня, без выходных</div></div>
+    <div class="f"><span class="f__k">Описание <em>68/81</em></span>
+      <div class="f__v" data-copy>Ежедневно 10:00–20:00, 10 минут от м. Новокосино. Снимем боль сразу.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy><i>оставить пустым</i></div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/contacts.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">4</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/75468904-7d65-4634-a1cb-49861a6aa6de.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/75468904-7d65-4634-a1cb-49861a6aa6de.jpg" data-name="versal-mudrosti.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>32/56</em></span>
+      <div class="f__v" data-copy>Удаление зуба мудрости в Реутове</div></div>
+    <div class="f"><span class="f__k">Описание <em>58/81</em></span>
+      <div class="f__v" data-copy>Даже сложное: по КТ, с анестезией и планом восстановления.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>9 500 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/hirurgiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">5</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/b1305a20-2573-49e7-aa6b-d6ff9c471f6a.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/b1305a20-2573-49e7-aa6b-d6ff9c471f6a.jpg" data-name="versal-kt.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>38/56</em></span>
+      <div class="f__v" data-copy>КТ и письменный план лечения со сметой</div></div>
+    <div class="f"><span class="f__k">Описание <em>63/81</em></span>
+      <div class="f__v" data-copy>Вместо 7 500 ₽. Увидите свою ситуацию и точные цены до лечения.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>4 200 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/promotions.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">6</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ed967af5-bd70-4ce7-a773-49f6f9d9aaa6.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ed967af5-bd70-4ce7-a773-49f6f9d9aaa6.jpg" data-name="versal-cirkon.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>34/56</em></span>
+      <div class="f__v" data-copy>Циркониевая коронка — как свой зуб</div></div>
+    <div class="f"><span class="f__k">Описание <em>66/81</em></span>
+      <div class="f__v" data-copy>Прочная, не отличить от родного. Цифровой слепок без массы во рту.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>22 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/protezirovanie.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">7</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/395fcfee-a986-47c5-a775-e28903b9db05.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/395fcfee-a986-47c5-a775-e28903b9db05.jpg" data-name="versal-implant.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>35/56</em></span>
+      <div class="f__v" data-copy>Имплант с коронкой под ключ, Реутов</div></div>
+    <div class="f"><span class="f__k">Описание <em>65/81</em></span>
+      <div class="f__v" data-copy>Фиксированная цена: имплант, абатмент и коронка. Osstem, Dentium.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>45 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/implantaciya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">8</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/64bba5c1-9a82-40ba-9634-981e9404bbb2.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/64bba5c1-9a82-40ba-9634-981e9404bbb2.jpg" data-name="versal-allon4.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>38/56</em></span>
+      <div class="f__v" data-copy>Все зубы на 4 имплантах — за один этап</div></div>
+    <div class="f"><span class="f__k">Описание <em>58/81</em></span>
+      <div class="f__v" data-copy>Несъёмный протез вместо съёмного. Вернём жевание и улыбку.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>120 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/implantaciya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">9</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d914676a-c45d-4433-a987-54207d182824.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d914676a-c45d-4433-a987-54207d182824.jpg" data-name="versal-protez.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>38/56</em></span>
+      <div class="f__v" data-copy>Съёмный протез в Реутове, у Новокосино</div></div>
+    <div class="f"><span class="f__k">Описание <em>58/81</em></span>
+      <div class="f__v" data-copy>Акрил, нейлон или бюгель. Подберём тот, что удобно носить.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>28 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/protezirovanie.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">10</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/884f2eb1-dfdb-42be-8b2f-113a6e13c64f.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/884f2eb1-dfdb-42be-8b2f-113a6e13c64f.jpg" data-name="versal-brekety.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>47/56</em></span>
+      <div class="f__v" data-copy>Брекеты взрослым — ровные зубы в любом возрасте</div></div>
+    <div class="f"><span class="f__k">Описание <em>57/81</em></span>
+      <div class="f__v" data-copy>И в 30, и в 45. Консультация ортодонта с ТРГ — бесплатно.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>35 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/ortodontiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">11</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/159d63b0-27e8-42e2-91a8-1fa8667ac828.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/159d63b0-27e8-42e2-91a8-1fa8667ac828.jpg" data-name="versal-elaynery.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>36/56</em></span>
+      <div class="f__v" data-copy>Элайнеры — выравнивание без брекетов</div></div>
+    <div class="f"><span class="f__k">Описание <em>51/81</em></span>
+      <div class="f__v" data-copy>Прозрачные капы, незаметны на работе и на встречах.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>120 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/ortodontiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">12</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/a0a19556-ed95-41a9-b68d-300794fd9c86.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/a0a19556-ed95-41a9-b68d-300794fd9c86.jpg" data-name="versal-otbelivanie.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>39/56</em></span>
+      <div class="f__v" data-copy>Отбеливание Amazing White за один визит</div></div>
+    <div class="f"><span class="f__k">Описание <em>60/81</em></span>
+      <div class="f__v" data-copy>Вместо 25 000 ₽. До 6–8 тонов, обе челюсти, с защитой эмали.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>17 500 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/gigiena.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">13</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/9bb6cb69-7234-4661-8d40-96ed0bec439a.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/9bb6cb69-7234-4661-8d40-96ed0bec439a.jpg" data-name="versal-desny.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>34/56</em></span>
+      <div class="f__v" data-copy>Кровоточат дёсны? Лечим пародонтит</div></div>
+    <div class="f"><span class="f__k">Описание <em>68/81</em></span>
+      <div class="f__v" data-copy>Чистка карманов, Vector-терапия, шинирование. Остановим подвижность.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy><i>оставить пустым</i></div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/parodontologiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">14</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/e961f151-4355-4d28-9ff1-ad10ba91766d.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/e961f151-4355-4d28-9ff1-ad10ba91766d.jpg" data-name="versal-restavraciya.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>42/56</em></span>
+      <div class="f__v" data-copy>Скол переднего зуба — реставрация за визит</div></div>
+    <div class="f"><span class="f__k">Описание <em>48/81</em></span>
+      <div class="f__v" data-copy>Восстановим форму и цвет. Незаметно даже вблизи.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>8 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/terapiya.html</div></div>
+    </div>
+  </div>
+</article></section><section class="pane" id="pane-angel"
+  data-accent="#4b5563" data-accent-soft="rgba(75,85,99,0.12)"
+  data-line="#e3e6ea" data-soft="rgba(75,85,99,0.05)"><div class="hd"><h2>Ангел-Дент — Реутов</h2></div><div class="empty">Материалы для кабинета этой клиники пока не собраны: в репозитории лежат только скрипты и реестры, самих картинок нет. Скажите — соберу такой же пакет объявлений, и вкладка заполнится.</div></section><section class="pane" id="pane-venecia"
+  data-accent="#0F6E66" data-accent-soft="rgba(15,110,102,0.12)"
+  data-line="#DCE8E3" data-soft="rgba(15,110,102,0.05)"><div class="hd"><h2>Венеция — Мытищи</h2><a href="https://venecia-dent.ru" target="_blank" rel="noopener">https://venecia-dent.ru</a></div><div class="note"><b>Свои объявления.</b> Заливать снизу вверх — свежие показываются первыми.<br>В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену не дублируем. Срок размещения не ставим — объявления вечные.</div>
+<article class="ad">
+  <div class="ad__num">1</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/10c2c84d-2e07-40d7-a84e-fd0dec74f597.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/10c2c84d-2e07-40d7-a84e-fd0dec74f597.jpg" data-name="venecia-karies.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>39/56</em></span>
+      <div class="f__v" data-copy>Лечение кариеса в Мытищах за один визит</div></div>
+    <div class="f"><span class="f__k">Описание <em>63/81</em></span>
+      <div class="f__v" data-copy>Пломба за визит, анестезия без боли. Цены фиксируем в договоре.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>5 500 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/terapiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">2</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0d79c379-3bde-4fcf-a8de-5051c1dd6745.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0d79c379-3bde-4fcf-a8de-5051c1dd6745.jpg" data-name="venecia-kanaly.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>45/56</em></span>
+      <div class="f__v" data-copy>Лечение каналов — сохраняем зуб, а не удаляем</div></div>
+    <div class="f"><span class="f__k">Описание <em>67/81</em></span>
+      <div class="f__v" data-copy>Пульпит и периодонтит по рентген-диагностике. Мытищи, ул. Мира, 37.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>7 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/terapiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">3</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0406bcb2-12dd-42c3-b014-ce8fb7f3aa81.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0406bcb2-12dd-42c3-b014-ce8fb7f3aa81.jpg" data-name="venecia-bol.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>39/56</em></span>
+      <div class="f__v" data-copy>Болит зуб? Примем сегодня, без выходных</div></div>
+    <div class="f"><span class="f__k">Описание <em>63/81</em></span>
+      <div class="f__v" data-copy>Ежедневно 10:00–20:00, Мытищи, ул. Мира, 37. Снимем боль сразу.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy><i>оставить пустым</i></div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/contacts.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">4</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/da40be61-7aa7-4fc9-bec2-e67487dba9ed.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/da40be61-7aa7-4fc9-bec2-e67487dba9ed.jpg" data-name="venecia-mudrosti.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>32/56</em></span>
+      <div class="f__v" data-copy>Удаление зуба мудрости в Мытищах</div></div>
+    <div class="f"><span class="f__k">Описание <em>62/81</em></span>
+      <div class="f__v" data-copy>Даже сложное: по снимку, с анестезией и планом восстановления.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>9 500 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/hirurgiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">5</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/69f1cfd7-ae98-44bc-848d-c357d8b977a7.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/69f1cfd7-ae98-44bc-848d-c357d8b977a7.jpg" data-name="venecia-plan.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>35/56</em></span>
+      <div class="f__v" data-copy>Первый визит: осмотр и план лечения</div></div>
+    <div class="f"><span class="f__k">Описание <em>56/81</em></span>
+      <div class="f__v" data-copy>Посмотрим, объясним и посчитаем смету до начала лечения.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>1 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/pervyj-vizit.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">6</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/7d2f6b7a-69ee-4730-99de-fea506045bb4.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/7d2f6b7a-69ee-4730-99de-fea506045bb4.jpg" data-name="venecia-cirkon.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>34/56</em></span>
+      <div class="f__v" data-copy>Циркониевая коронка — как свой зуб</div></div>
+    <div class="f"><span class="f__k">Описание <em>67/81</em></span>
+      <div class="f__v" data-copy>Прочная, не отличить от родного. Цифровое сканирование без слепков.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>22 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/protezirovanie.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">7</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3d6e8f3a-462e-4ef3-a135-516c16641f4d.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3d6e8f3a-462e-4ef3-a135-516c16641f4d.jpg" data-name="venecia-implant.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>35/56</em></span>
+      <div class="f__v" data-copy>Имплант с коронкой под ключ, Мытищи</div></div>
+    <div class="f"><span class="f__k">Описание <em>65/81</em></span>
+      <div class="f__v" data-copy>Фиксированная цена: имплант, абатмент и коронка. Osstem, Dentium.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>45 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/implantaciya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">8</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/210fbb04-0880-4115-9305-50cdae21f53a.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/210fbb04-0880-4115-9305-50cdae21f53a.jpg" data-name="venecia-allon4.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>38/56</em></span>
+      <div class="f__v" data-copy>Все зубы на 4 имплантах — за один этап</div></div>
+    <div class="f"><span class="f__k">Описание <em>58/81</em></span>
+      <div class="f__v" data-copy>Несъёмный протез вместо съёмного. Вернём жевание и улыбку.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>120 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/implantaciya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">9</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/8f34deab-5edf-41d3-b9c6-9086ed4cdb17.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/8f34deab-5edf-41d3-b9c6-9086ed4cdb17.jpg" data-name="venecia-protez.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>38/56</em></span>
+      <div class="f__v" data-copy>Съёмный протез в Мытищах, ул. Мира, 37</div></div>
+    <div class="f"><span class="f__k">Описание <em>58/81</em></span>
+      <div class="f__v" data-copy>Акрил, нейлон или бюгель. Подберём тот, что удобно носить.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>28 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/protezirovanie.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">10</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/eb8978b3-ae99-45f3-9c04-9fcd365f389e.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/eb8978b3-ae99-45f3-9c04-9fcd365f389e.jpg" data-name="venecia-brekety.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>47/56</em></span>
+      <div class="f__v" data-copy>Брекеты взрослым — ровные зубы в любом возрасте</div></div>
+    <div class="f"><span class="f__k">Описание <em>61/81</em></span>
+      <div class="f__v" data-copy>И в 30, и в 45. Первичная консультация ортодонта — бесплатно.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>35 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/ortodontiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">11</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/68e3f0e5-c10e-4ac7-bf86-a7e1aec78a1e.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/68e3f0e5-c10e-4ac7-bf86-a7e1aec78a1e.jpg" data-name="venecia-elaynery.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>36/56</em></span>
+      <div class="f__v" data-copy>Элайнеры — выравнивание без брекетов</div></div>
+    <div class="f"><span class="f__k">Описание <em>51/81</em></span>
+      <div class="f__v" data-copy>Прозрачные капы, незаметны на работе и на встречах.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>120 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/ortodontiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">12</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/4b5bf6af-a35b-47bf-8218-d8c0f71cfeea.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/4b5bf6af-a35b-47bf-8218-d8c0f71cfeea.jpg" data-name="venecia-otbelivanie.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>39/56</em></span>
+      <div class="f__v" data-copy>Отбеливание Amazing White за один визит</div></div>
+    <div class="f"><span class="f__k">Описание <em>55/81</em></span>
+      <div class="f__v" data-copy>Вместо 25 000 ₽. Обе челюсти под ключ, с защитой эмали.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>17 500 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/otbelivanie.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">13</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d8312c76-8dd2-4905-920a-55f82d47ac76.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d8312c76-8dd2-4905-920a-55f82d47ac76.jpg" data-name="venecia-desny.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>34/56</em></span>
+      <div class="f__v" data-copy>Кровоточат дёсны? Лечим пародонтит</div></div>
+    <div class="f"><span class="f__k">Описание <em>68/81</em></span>
+      <div class="f__v" data-copy>Чистка карманов, Vector-терапия, шинирование. Остановим подвижность.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy><i>оставить пустым</i></div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/parodontologiya.html</div></div>
+    </div>
+  </div>
+</article>
+<article class="ad">
+  <div class="ad__num">14</div>
+  <div class="ad__pic">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/a9082eda-0477-4556-b1e2-e4b5ae637a02.jpg" alt="" loading="lazy">
+    <button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/a9082eda-0477-4556-b1e2-e4b5ae637a02.jpg" data-name="venecia-gigiena.jpg">Скачать картинку</button>
+  </div>
+  <div>
+    <div class="f"><span class="f__k">Заголовок <em>42/56</em></span>
+      <div class="f__v" data-copy>Комплексная гигиена: ультразвук и Air Flow</div></div>
+    <div class="f"><span class="f__k">Описание <em>65/81</em></span>
+      <div class="f__v" data-copy>Снимем камень и налёт от кофе, чая и сигарет. Полировка включена.</div></div>
+    <div class="f2">
+      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>5 000 ₽</div></div>
+      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://venecia-dent.ru/services/gigiena.html</div></div>
+    </div>
+  </div>
+</article></section>
+<script>
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('on'); });
+    document.querySelectorAll('.pane').forEach(function(x){ x.classList.remove('on'); });
+    t.classList.add('on');
+    var pane = document.getElementById('pane-' + t.dataset.id);
+    pane.classList.add('on');
+    document.documentElement.style.setProperty('--accent', pane.dataset.accent);
+    document.documentElement.style.setProperty('--accent-soft', pane.dataset.accentSoft);
+    document.documentElement.style.setProperty('--line', pane.dataset.line);
+    document.documentElement.style.setProperty('--soft', pane.dataset.soft);
+    localStorage.setItem('kab-tab', t.dataset.id);
+  });
+});
+var saved = localStorage.getItem('kab-tab');
+var start = (saved && document.querySelector('.tab[data-id="'+saved+'"]')) || document.querySelector('.tab');
+if (start) start.click();
+
+// Скачивание: атрибут download на чужой домен браузер игнорирует, поэтому
+// тянем файл через fetch (CDN отдаёт Access-Control-Allow-Origin: *) и
+// сохраняем blob под понятным именем. Не вышло — открываем в новой вкладке.
+document.querySelectorAll('[data-dl]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var url = btn.dataset.dl, name = btn.dataset.name, txt = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Скачиваю…';
+    fetch(url).then(function(r){ return r.blob(); }).then(function(b){
+      var u = URL.createObjectURL(b), a = document.createElement('a');
+      a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(u); }, 4000);
+      btn.textContent = 'Готово ✓';
+      setTimeout(function(){ btn.textContent = txt; btn.disabled = false; }, 1400);
+    }).catch(function(){ window.open(url, '_blank'); btn.textContent = txt; btn.disabled = false; });
+  });
+});
+document.querySelectorAll('[data-copy]').forEach(function(el){
+  el.addEventListener('click', function(){
+    navigator.clipboard.writeText(el.innerText.trim()).then(function(){
+      el.classList.add('copied');
+      setTimeout(function(){ el.classList.remove('copied'); }, 900);
+    });
+  });
+});
+</script>
+</body></html>
