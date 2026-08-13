@@ -1,0 +1,44 @@
+{
+ "title": "Истории (сторис)",
+ "items": [
+  {
+   "key": "ist1",
+   "title": "Не страшно",
+   "btn": "Записаться",
+   "link": "https://angel-denta.ru/contacts.html",
+   "about": "Страх боли: анестезия, спокойный приём, можно остановиться в любой момент.",
+   "imgs": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/beef71d6-5039-48fe-9cd5-a80d11b1089b.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3274b970-f7d3-4e0a-b667-dd3b42512908.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/05f41b21-440b-45fd-9898-12e18c686b6a.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/180fb29c-1664-4521-b587-78348c956b85.jpg"
+   ]
+  },
+  {
+   "key": "ist2",
+   "title": "Цены честно",
+   "btn": "Смотреть цены",
+   "link": "https://angel-denta.ru/promotions.html",
+   "about": "План лечения с фиксированными ценами, смета до начала работы.",
+   "imgs": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0abd3b59-cb2a-4a6b-83bf-371e0bd689c6.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0e302658-5abf-4995-af60-7775952f8f4a.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/d56e9d77-8a5f-4b2c-ad5c-f4c38d8e5eb9.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/7e1247fe-9f93-478e-8206-dfd79162c8f8.jpg"
+   ]
+  },
+  {
+   "key": "ist5",
+   "title": "Наши врачи",
+   "btn": "Врачи",
+   "link": "https://angel-denta.ru/doctors/",
+   "about": "Реальные врачи клиники — единственная история, где показываем настоящие лица.",
+   "imgs": [
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/7eff582d-e980-4978-8420-c5414074812b.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/a8db50dc-fc9e-4a60-97ef-c0a20ede05d3.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/dd49aa40-9d57-40d9-8cb6-852062b0f5e8.jpg",
+    "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/242febfa-b685-40d8-9570-751123833fa9.jpg"
+   ]
+  }
+ ]
+}
