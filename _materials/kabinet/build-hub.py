@@ -200,6 +200,10 @@ def render_items(items, prefix, labels=None, limits=None):
     out = []
     for i, it in enumerate(items, 1):
         price = html.escape(it['price']) if it['price'] else '<i>оставить пустым</i>'
+        tail = ('<div class="f2">'
+                f'<div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>{price}</div></div>'
+                f'<div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>{it["link"]}</div></div>'
+                '</div>') if it.get('link') else ''
         desc = (f'<div class="f"><span class="f__k">{ld} <em>{len(it["desc"])}/{nd}</em></span>'
                 f'<div class="f__v" data-copy>{html.escape(it["desc"])}</div></div>'
                 if it.get('desc') else '')
@@ -214,10 +218,7 @@ def render_items(items, prefix, labels=None, limits=None):
     <div class="f"><span class="f__k">{lt} <em>{len(it['title'])}/{nt}</em></span>
       <div class="f__v" data-copy>{html.escape(it['title'])}</div></div>
     {desc}
-    <div class="f2">
-      <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>{price}</div></div>
-      <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>{it['link']}</div></div>
-    </div>
+    {tail}
   </div>
 </article>''')
     return ''.join(out)
