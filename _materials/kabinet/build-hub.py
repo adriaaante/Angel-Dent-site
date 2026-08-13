@@ -110,6 +110,12 @@ body{margin:0;background:#f2f3f5;color:#1d2226;font:16px/1.55 Manrope,system-ui,
 .post{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 14px}
 .post h3{margin:0 0 10px;font-size:18px}
 .post h3 span{color:#9aa3ab;font-weight:400;font-size:13px}
+.ord{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--accent);color:#fff!important;font:700 13px Manrope,sans-serif;margin-right:9px;
+  vertical-align:2px}
+.queue{background:var(--accent-soft);border:1px solid var(--line);border-radius:20px;
+  padding:3px 10px;font-size:12.5px!important;color:#5a6167!important;margin-right:6px;
+  white-space:nowrap}
 .post__gal{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}
 .post__gal figure{margin:0;width:150px}
 .post__gal img{width:150px;height:96px;object-fit:cover;border-radius:8px;display:block}
@@ -368,18 +374,30 @@ def build():
                     body += render_items(sec['items'], cid,
                                          sec.get('labels'), sec.get('limits'))
             if stories:
+                st = stories['items']
+                n = len(st)
+                # Яндекс ставит самую свежую историю первой, поэтому очередь
+                # заливки обратна порядку на карточке: нижнюю грузим первой.
+                queue = ' → '.join(f'{k}. {html.escape(s["title"])}'
+                                   for k, s in enumerate(reversed(st), 1))
                 body += '<div class="sec">Истории (сторис)</div>'
-                body += ('<div class="note">Формат 1080×1920. В кабинете у истории свои поля: '
-                         'название ≤15 символов и текст кнопки ≤15 — они указаны в каждой карточке. '
-                         'Самая свежая история показывается первой, поэтому сильнейшую тему '
-                         'заливаем последней. ⚠️ Фото «до/после» в сторис Яндекс отклоняет.</div>')
-                for it in stories['items']:
+                body += ('<div class="note">Формат 1080×1920. У истории свои поля: название ≤15 '
+                         'символов и текст кнопки ≤15 — они указаны в каждой карточке.<br>'
+                         '<b>Порядок важен: самая свежая история показывается первой</b>, поэтому '
+                         'заливать надо в обратном порядке — снизу вверх по этому списку. У каждой '
+                         'карточки указаны оба номера: <b>синий</b> — какой она встанет на карточке, '
+                         '<b>«заливать N-й»</b> — когда её загружать.<br>'
+                         f'<b>Очередь заливки:</b> {queue}.<br>'
+                         '⚠️ Фото «до/после» в сторис Яндекс отклоняет.</div>')
+                for pos, it in enumerate(st, 1):
                     gal = ''.join(
                         f'<figure><img src="{u}" alt="" loading="lazy">'
                         f'<button class="dl" data-dl="{u}" data-name="{cid}-{it["key"]}-{i}.jpg">'
                         f'Скачать</button></figure>' for i, u in enumerate(it['imgs'], 1))
                     body += ('<article class="post">'
-                             f'<h3>{html.escape(it["title"])} '
+                             f'<h3><span class="ord" title="Позиция на карточке">{pos}</span>'
+                             f'{html.escape(it["title"])} '
+                             f'<span class="queue">заливать {n - pos + 1}-й</span> '
                              f'<span>{len(it["imgs"])} слайда · название {len(it["title"])}/15 · '
                              f'кнопка «{html.escape(it["btn"])}» {len(it["btn"])}/15</span></h3>'
                              f'<div class="post__gal">{gal}</div>'
