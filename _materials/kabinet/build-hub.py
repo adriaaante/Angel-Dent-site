@@ -188,10 +188,21 @@ def load(repo):
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
 
 
-def render_items(items, prefix):
+def render_items(items, prefix, labels=None, limits=None):
+    """Карточка позиции кабинета. Подписи и лимиты полей задаёт секция:
+    у объявлений это «Заголовок 56 / Описание 81», у акций — «Анонс 70 /
+    Описание 200», у витрины описания нет вовсе. Пустые поля не рисуем."""
+    labels = labels or {}
+    limits = limits or {}
+    lt = labels.get('title', 'Заголовок')
+    ld = labels.get('desc', 'Описание')
+    nt, nd = limits.get('title', 56), limits.get('desc', 81)
     out = []
     for i, it in enumerate(items, 1):
         price = html.escape(it['price']) if it['price'] else '<i>оставить пустым</i>'
+        desc = (f'<div class="f"><span class="f__k">{ld} <em>{len(it["desc"])}/{nd}</em></span>'
+                f'<div class="f__v" data-copy>{html.escape(it["desc"])}</div></div>'
+                if it.get('desc') else '')
         out.append(f'''
 <article class="ad">
   <div class="ad__num">{i}</div>
@@ -200,10 +211,9 @@ def render_items(items, prefix):
     <button class="dl" data-dl="{it['img']}" data-name="{prefix}-{it['key']}.jpg">Скачать картинку</button>
   </div>
   <div>
-    <div class="f"><span class="f__k">Заголовок <em>{len(it['title'])}/56</em></span>
+    <div class="f"><span class="f__k">{lt} <em>{len(it['title'])}/{nt}</em></span>
       <div class="f__v" data-copy>{html.escape(it['title'])}</div></div>
-    <div class="f"><span class="f__k">Описание <em>{len(it['desc'])}/81</em></span>
-      <div class="f__v" data-copy>{html.escape(it['desc'])}</div></div>
+    {desc}
     <div class="f2">
       <div class="f"><span class="f__k">Цена</span><div class="f__v" data-copy>{price}</div></div>
       <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>{it['link']}</div></div>
@@ -211,6 +221,12 @@ def render_items(items, prefix):
   </div>
 </article>''')
     return ''.join(out)
+
+
+def load_promo(repo):
+    """Акции и витрина — материалы, собранные раньше и сведённые в манифест."""
+    p = os.path.join(ROOT, repo, '_materials', 'yb-promo', 'promo.json')
+    return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
 
 
 def load_posts(repo):
@@ -235,14 +251,17 @@ def render_posts(items, prefix):
     return ''.join(out)
 
 
-def checklist(data, posts):
+def checklist(data, posts, promo=None):
     """Что уже есть в кабинете и что осталось — чтобы ничего не потерялось."""
     ads = sum(len(s['items']) for s in data['sections']) if data else 0
     rows = [
         ('Свои объявления', f'{ads} готово' if ads else 'нет', bool(ads)),
         ('Публикации', f'{len(posts["items"])} готово' if posts else 'нет', bool(posts)),
         ('Товары и услуги', 'YML-фид на сайте, автозагрузка по ссылке', True),
-        ('Акции', 'состав — с promotions.html сайта', None),
+        ('Акции', f'{len(promo["sections"][0]["items"])} карточек готово'
+         if promo else 'состав — с promotions.html сайта', bool(promo)),
+        ('Витрина', f'{len(promo["sections"][1]["items"])} позиций готово'
+         if promo else 'позиции — с ceny.html', bool(promo)),
         ('Истории', 'линейка v1 собрана ранее, файлы — в Google Drive', None),
         ('Фотографии карточки', 'реальные фото клиники', None),
     ]
@@ -256,8 +275,10 @@ def build():
     for cid, name, city, repo in CLINICS:
         data = load(repo)
         posts = load_posts(repo)
+        promo = load_promo(repo)
         n = sum(len(s['items']) for s in data['sections']) if data else 0
         n += len(posts['items']) if posts else 0
+        n += sum(len(s['items']) for s in promo['sections']) if promo else 0
         tabs.append(f'<button class="tab" data-id="{cid}">{name} <i>{city}'
                     + (f' · {n}' if n else ' · нет материалов') + '</i></button>')
         b = (data or {}).get('brand', {'accent': '#4b5563', 'bg': '#fff',
@@ -265,12 +286,18 @@ def build():
         head = (f'<div class="hd"><h2>{name} — {city}</h2>'
                 + (f'<a href="{data["site"]}" target="_blank" rel="noopener">{data["site"]}</a>' if data else '')
                 + '</div>')
-        if not data and not posts:
+        if not data and not posts and not promo:
             # объявлений и публикаций ещё нет — но материалы с Диска показываем,
             # иначе вкладка выглядит пустой при живом архиве
             body = ('<div class="empty">Объявления и публикации для этой клиники ещё не собраны: '
                     'в репозитории лежат только скрипты и реестры. Скажите — соберу такой же '
                     'пакет, как у соседних клиник. Ниже — материалы, сделанные раньше.</div>')
+            if promo:
+                for sec in promo['sections']:
+                    body += f'<div class="sec">{html.escape(sec["title"])}</div>'
+                    body += f'<div class="note">{html.escape(sec.get("note", ""))}</div>'
+                    body += render_items(sec['items'], cid,
+                                         sec.get('labels'), sec.get('limits'))
             if DRIVE.get(cid):
                 body += '<div class="sec">Готовые материалы на Google Диске</div><div class="grid2">'
                 for title, path, what in DRIVE[cid]:
@@ -285,7 +312,7 @@ def build():
             site = data['site'] if data else ''
             body = ('<div class="grid2">'
                     '<div class="card"><h4>Что уже готово к заливке</h4><ul>'
-                    + checklist(data, posts) + '</ul></div>'
+                    + checklist(data, posts, promo) + '</ul></div>'
                     '<div class="card"><h4>Яндекс Директ</h4><ul>'
                     '<li>Метрика подключена, 6 целей заведены: <b>lead_submit</b>, call_click, '
                     'whatsapp_click, telegram_click, modal_open, form_start</li>'
@@ -303,6 +330,12 @@ def build():
                              'В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену '
                              'не дублируем. Срок размещения не ставим — объявления вечные.</div>')
                     body += render_items(s['items'], cid)
+            if promo:
+                for sec in promo['sections']:
+                    body += f'<div class="sec">{html.escape(sec["title"])}</div>'
+                    body += f'<div class="note">{html.escape(sec.get("note", ""))}</div>'
+                    body += render_items(sec['items'], cid,
+                                         sec.get('labels'), sec.get('limits'))
             if DRIVE.get(cid):
                 body += '<div class="sec">Готовые материалы на Google Диске</div>'
                 body += ('<div class="note">Собрано раньше и в репозиториях не хранится — '
