@@ -27,6 +27,46 @@ CLINICS = [
     ('venecia', 'Венеция',    'Мытищи',  'venecia-dent.ru'),
 ]
 
+# Материалы, собранные до этой страницы, лежат на Google Диске владельца
+# (инвентаризация 13.08.2026). В репозиториях их нет — раньше отдавали
+# ссылками, поэтому здесь держим прямые входы в папки, чтобы всё было
+# в одном месте. Формат: клиника → [(название, id папки/файла, что внутри)]
+DRIVE = {
+    'versal': [
+        ('Акции ЯБ — карточки', 'folder/1ojHSLN4UmihEicYsAJSb5EkhN1uoaOxT',
+         'баннеры акций 1800×960'),
+        ('Витрина ЯБ — Версаль', 'folder/1biO8_-qiNfUHv4sE4gnaQpEmuEzgnOjN',
+         'картинки позиций витрины 1200×1200'),
+        ('История 1 — Не страшно', 'folder/1VxUTwPmPdO8MSW-RmoOceDJPnco3ocfL', 'слайды 1080×1920'),
+        ('История 2 — Цены честно', 'folder/1wVH4QmkL0_RP2-SyqAWaqjxtg8RDklOd', 'слайды 1080×1920'),
+        ('История 3 — Технологии', 'folder/1pHwgDIO9VkHWx-Bz2ypNjRTu-RsXADXt', 'слайды 1080×1920'),
+        ('История 4 — Наши врачи', 'folder/1NJH0OF7MZavSPuaV3uROWtg99metwqfn', 'слайды 1080×1920'),
+        ('История 5 — Первый визит', 'folder/1n6s_PICnDw9jlQZ3sNawh-TsaIeYneXR', 'слайды 1080×1920'),
+        ('Публикации ЯБ Версаль — v1', 'document/d/1kx-zcGpEwvY6iQsc0psim5p-Fpdq9JcQjmpiTaCHjTI',
+         'тексты 2 прежних постов'),
+        ('Фото клиники и врачей', 'folder/16sRkQOeuk5TB0GuYURZPAaeip-HimR9J',
+         'исходники интерьеров, «Врачи», «Картинки услуг», «Фотки работ»'),
+    ],
+    'angel': [
+        ('Рекламные объявления — видео', 'folder/1MxkdpkSmkKVLHgmKOiIdA8tg0Tfd7-ja',
+         '15 роликов по услугам: гигиена, импланты, брекеты, виниры, КТ, отбеливание'),
+        ('Истории ЯБ', 'folder/1f2bpYeBBnOoRhb4tZnBR2VxeMbRtPOvv', 'слайды историй'),
+        ('Фотографии внутри клиники', 'folder/1lvROa-aX-dLV3EoJXTRv8hUbbzqx8ZEH', 'реальные интерьеры'),
+        ('Фотографии акций', 'folder/1-99LrVKEkg8z-WTvG0Qw8gx7CVW4Pw8W', 'кадры под акции'),
+        ('Работы врачей', 'folder/1yPE4Yjq--06T0l-1RDp90NVD7yftSu3J', 'исходники «до/после»'),
+    ],
+    'venecia': [
+        ('Венеция — Истории ЯБ v1', 'folder/1TxoepERg5fIhkx8u1TwXVXxVrD5J_Sk9',
+         'слайды + документы с порядком заливки'),
+        ('Истории ЯБ — порядок слайдов', 'document/d/1rfHKlCftp7UJ_1f6GEym7HNENmcuG9yGG1D6lAxScN8',
+         'настройки: название ≤15, кнопка ≤15, ссылки'),
+        ('Дополнение: истории 5 и 6', 'document/d/1ZYNJxQgW_oNx_t0r8Xn5Il9aDrQHVlGPy7w28nRGlZo',
+         'тексты последних двух историй'),
+        ('Фотографии клиники', 'folder/1q77x0l2jd7PzNyGXqD6YiDTutUxuaTxf',
+         '14 исходников интерьеров'),
+    ],
+}
+
 CSS = '''
 *{box-sizing:border-box}
 body{margin:0;background:#f2f3f5;color:#1d2226;font:16px/1.55 Manrope,system-ui,sans-serif}
@@ -226,9 +266,21 @@ def build():
                 + (f'<a href="{data["site"]}" target="_blank" rel="noopener">{data["site"]}</a>' if data else '')
                 + '</div>')
         if not data and not posts:
-            body = ('<div class="empty">Материалы для кабинета этой клиники пока не собраны: '
-                    'в репозитории лежат только скрипты и реестры, самих картинок нет. '
-                    'Скажите — соберу такой же пакет, и вкладка заполнится.</div>')
+            # объявлений и публикаций ещё нет — но материалы с Диска показываем,
+            # иначе вкладка выглядит пустой при живом архиве
+            body = ('<div class="empty">Объявления и публикации для этой клиники ещё не собраны: '
+                    'в репозитории лежат только скрипты и реестры. Скажите — соберу такой же '
+                    'пакет, как у соседних клиник. Ниже — материалы, сделанные раньше.</div>')
+            if DRIVE.get(cid):
+                body += '<div class="sec">Готовые материалы на Google Диске</div><div class="grid2">'
+                for title, path, what in DRIVE[cid]:
+                    url = ('https://drive.google.com/' +
+                           ('drive/folders/' + path.split('/')[1] if path.startswith('folder/')
+                            else path + '/edit'))
+                    body += (f'<div class="card"><h4><a href="{url}" target="_blank" '
+                             f'rel="noopener">{html.escape(title)}</a></h4>'
+                             f'<ul><li>{html.escape(what)}</li></ul></div>')
+                body += '</div>'
         else:
             site = data['site'] if data else ''
             body = ('<div class="grid2">'
@@ -251,6 +303,20 @@ def build():
                              'В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену '
                              'не дублируем. Срок размещения не ставим — объявления вечные.</div>')
                     body += render_items(s['items'], cid)
+            if DRIVE.get(cid):
+                body += '<div class="sec">Готовые материалы на Google Диске</div>'
+                body += ('<div class="note">Собрано раньше и в репозиториях не хранится — '
+                         'открывается прямо на Диске. Скажите, какие из них нужны на этой '
+                         'странице с превью и кнопкой скачивания, — перенесу.</div>'
+                         '<div class="grid2">')
+                for title, path, what in DRIVE[cid]:
+                    url = ('https://drive.google.com/' +
+                           ('drive/folders/' + path.split('/')[1] if path.startswith('folder/')
+                            else path.replace('document/d/', 'document/d/') + '/edit'))
+                    body += (f'<div class="card"><h4><a href="{url}" target="_blank" '
+                             f'rel="noopener">{html.escape(title)}</a></h4>'
+                             f'<ul><li>{html.escape(what)}</li></ul></div>')
+                body += '</div>'
             if posts:
                 body += '<div class="sec">Публикации</div>'
                 body += ('<div class="note">Публикация — новость клиники, а не реклама: без дат и сезонов, '
