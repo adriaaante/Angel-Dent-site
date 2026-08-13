@@ -1,0 +1,184 @@
+{
+ "sections": [
+  {
+   "title": "Акции",
+   "kind": "promo",
+   "note": "Первая акция уходит в Яндекс.Карты — там держим самый универсальный оффер (КТ + план). Лимиты: анонс ≤70, описание ≤200 символов. Дисклеймер о противопоказаниях уже впечатан в каждую картинку.",
+   "labels": {
+    "title": "Анонс",
+    "desc": "Описание"
+   },
+   "limits": {
+    "title": 70,
+    "desc": 200
+   },
+   "items": [
+    {
+     "key": "kt-plan",
+     "title": "КТ + план лечения — 4 200 ₽ вместо 7 500 ₽",
+     "desc": "Компьютерная томография обеих челюстей, осмотр главврача и план лечения с фиксированными ценами. При заключении договора диагностика — бесплатно. Запишитесь на сайте или по телефону.",
+     "price": "",
+     "link": "https://angel-denta.ru/promotions.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/07d0b05a-def1-4e0e-b52b-a339915e66da.jpg"
+    },
+    {
+     "key": "amazing-white",
+     "title": "Отбеливание Amazing White за 17 500 ₽ вместо 25 000 ₽ — обе челюсти",
+     "desc": "Профессиональное отбеливание Amazing White: обе челюсти «под ключ» за один визит. Безопасно для эмали, результат сразу. Акция действует при записи через сайт или по телефону.",
+     "price": "",
+     "link": "https://angel-denta.ru/services/gigiena.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1d089cbc-b9a2-4ff4-ab44-e29c03a3b6d9.jpg"
+    },
+    {
+     "key": "implant3",
+     "title": "Каждый 3-й имплант — в подарок при комплексной имплантации",
+     "desc": "При установке нескольких имплантатов каждый третий — бесплатно. Проверенные системы имплантации, гарантия 10 лет. Расчёт стоимости — на бесплатной консультации имплантолога.",
+     "price": "",
+     "link": "https://angel-denta.ru/services/implantaciya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/84b62a88-c4e0-436c-a04a-f32d42a414c8.jpg"
+    },
+    {
+     "key": "chistka",
+     "title": "Профгигиена в подарок при договоре на имплантацию или брекеты",
+     "desc": "Заключите договор на имплантацию или брекет-систему — комплексная профессиональная гигиена (5 000 ₽) в подарок. Здоровые дёсны перед лечением — залог результата.",
+     "price": "",
+     "link": "https://angel-denta.ru/promotions.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/5c4d3c54-f7cf-43bc-83cc-3c5a5479e0b1.jpg"
+    },
+    {
+     "key": "ortodont",
+     "title": "Бесплатная консультация ортодонта с расчётом ТРГ",
+     "desc": "Консультация ортодонта бесплатно: осмотр, расчёт ТРГ, подбор брекетов или элайнеров под ваш бюджет. Узнайте срок и стоимость исправления прикуса без обязательств.",
+     "price": "",
+     "link": "https://angel-denta.ru/services/ortodontiya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/67b6ff72-285b-4d70-a0e5-44987bf8e33a.jpg"
+    },
+    {
+     "key": "lgoty",
+     "title": "Скидка 10% пенсионерам, многодетным семьям и военным",
+     "desc": "Постоянная скидка 10% на лечение, протезирование и профгигиену для пенсионеров, многодетных семей и военнослужащих. Предъявите документ на приёме — скидка применяется сразу.",
+     "price": "",
+     "link": "https://angel-denta.ru/promotions.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/8fdabfd0-b862-48ee-ab39-7526f696a441.jpg"
+    },
+    {
+     "key": "semya",
+     "title": "Семейная программа: до −10% всем членам семьи",
+     "desc": "Лечитесь всей семьёй — выгоднее: при лечении трёх и более членов семьи скидка до 10% каждому. Действует на все услуги клиники. Подробности у администратора.",
+     "price": "",
+     "link": "https://angel-denta.ru/promotions.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ca34967c-4165-42f8-9493-ca77cf3fce94.jpg"
+    }
+   ]
+  },
+  {
+   "title": "Витрина (товары и услуги)",
+   "kind": "showcase",
+   "note": "Название (≤56), цена и ссылка — описания в форме витрины нет. Порядок: недорогие входные услуги первыми, они видны без скролла.",
+   "labels": {
+    "title": "Название"
+   },
+   "limits": {
+    "title": 56
+   },
+   "items": [
+    {
+     "key": "vitrina-1",
+     "title": "Комплексная чистка зубов",
+     "desc": "",
+     "price": "5 000 ₽",
+     "link": "https://angel-denta.ru/services/gigiena.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ee3ed04c-3134-4d9a-a07d-a76a48edcf04.jpg"
+    },
+    {
+     "key": "vitrina-2",
+     "title": "КТ + план лечения",
+     "desc": "",
+     "price": "4 200 ₽",
+     "link": "https://angel-denta.ru/promotions.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/c1449cdf-73d9-4c0f-9dd9-dc9cf1254007.jpg"
+    },
+    {
+     "key": "vitrina-3",
+     "title": "Консультация ортодонта — бесплатно",
+     "desc": "",
+     "price": "",
+     "link": "https://angel-denta.ru/services/ortodontiya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/9df33289-408a-4806-bd58-c7be539d0219.jpg"
+    },
+    {
+     "key": "vitrina-4",
+     "title": "Детский стоматолог — лечение молочного зуба",
+     "desc": "",
+     "price": "1 500 ₽",
+     "link": "https://angel-denta.ru/services/detskaya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/fc407be6-620b-4fb9-a8a9-ce0e262a2bc2.jpg"
+    },
+    {
+     "key": "vitrina-5",
+     "title": "Лечение кариеса",
+     "desc": "",
+     "price": "5 500 ₽",
+     "link": "https://angel-denta.ru/services/terapiya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6c7c43f2-279f-4167-bde2-ddcbd2c2fb22.jpg"
+    },
+    {
+     "key": "vitrina-6",
+     "title": "Лечение дёсен — кюретаж, 1 зуб",
+     "desc": "",
+     "price": "800 ₽",
+     "link": "https://angel-denta.ru/services/parodontologiya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/262595b5-cf97-4b85-bb1b-a9786532b588.jpg"
+    },
+    {
+     "key": "vitrina-7",
+     "title": "Удаление зуба",
+     "desc": "",
+     "price": "4 500 ₽",
+     "link": "https://angel-denta.ru/services/hirurgiya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/dba8a29f-cd20-420b-9af8-08453cc320b0.jpg"
+    },
+    {
+     "key": "vitrina-8",
+     "title": "Отбеливание зубов за 1 визит",
+     "desc": "",
+     "price": "17 500 ₽",
+     "link": "https://angel-denta.ru/services/gigiena.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/990b43e9-ca7c-4ea6-b478-7ea1cf0a3c88.jpg"
+    },
+    {
+     "key": "vitrina-9",
+     "title": "Виниры — композитный винир от",
+     "desc": "",
+     "price": "7 500 ₽",
+     "link": "https://angel-denta.ru/services/viniry.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1de887aa-5073-4798-a5ed-99c3f9d04746.jpg"
+    },
+    {
+     "key": "vitrina-10",
+     "title": "Протезирование — коронка от",
+     "desc": "",
+     "price": "12 000 ₽",
+     "link": "https://angel-denta.ru/services/protezirovanie.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6dea7e98-4c8e-48d7-a853-64b9325a58a4.jpg"
+    },
+    {
+     "key": "vitrina-11",
+     "title": "Имплантация — установка импланта от",
+     "desc": "",
+     "price": "28 000 ₽",
+     "link": "https://angel-denta.ru/services/implantaciya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/5e2923e3-0878-43b9-ada3-7923603bb0a4.jpg"
+    },
+    {
+     "key": "vitrina-12",
+     "title": "Брекеты под ключ — цены от",
+     "desc": "",
+     "price": "35 000 ₽",
+     "link": "https://angel-denta.ru/services/ortodontiya.html",
+     "img": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/cac91dc2-8101-43ea-a6c9-dccb1ff948df.jpg"
+    }
+   ]
+  }
+ ]
+}
