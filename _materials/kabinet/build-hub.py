@@ -67,6 +67,25 @@ body{margin:0;background:#f2f3f5;color:#1d2226;font:16px/1.55 Manrope,system-ui,
 .f__v i{color:#a4abb2}
 .f2{display:grid;grid-template-columns:150px 1fr;gap:14px}
 .empty{background:#fff;border:1px dashed #ccd2d8;border-radius:14px;padding:28px;color:#6c757d}
+.post{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 14px}
+.post h3{margin:0 0 10px;font-size:18px}
+.post h3 span{color:#9aa3ab;font-weight:400;font-size:13px}
+.post__gal{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.post__gal figure{margin:0;width:150px}
+.post__gal img{width:150px;height:96px;object-fit:cover;border-radius:8px;display:block}
+.post__gal .dl{width:150px;font-size:11.5px;padding:6px 8px}
+.post__txt{white-space:pre-wrap;background:var(--soft);border:1px solid var(--line);border-radius:8px;
+  padding:12px 14px;cursor:pointer;font-size:15px;line-height:1.5}
+.post__txt:hover{border-color:var(--accent);background:#fff}
+.post__txt.copied{border-color:var(--accent);background:var(--accent-soft)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h4{margin:0 0 8px;font-size:15px}
+.card ul{margin:0;padding-left:18px;color:#5a6167;font-size:14.5px}
+.card li{margin:3px 0}
+.card a{color:var(--accent)}
+.sec{margin:28px 0 12px;font-size:17px;font-weight:700}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
 @media(max-width:720px){.ad{grid-template-columns:1fr}.ad__pic img{width:100%;height:auto}
   .dl{width:100%}.f2{grid-template-columns:1fr}}
 '''
@@ -154,11 +173,51 @@ def render_items(items, prefix):
     return ''.join(out)
 
 
+def load_posts(repo):
+    p = os.path.join(ROOT, repo, '_materials', 'yb-posts', 'posts.json')
+    return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
+
+
+def render_posts(items, prefix):
+    """Публикация = текст + до 4 картинок. Текст копируется целиком по клику."""
+    out = []
+    for it in items:
+        gal = ''.join(
+            f'<figure><img src="{u}" alt="" loading="lazy">'
+            f'<button class="dl" data-dl="{u}" data-name="{prefix}-{it["key"]}-{i}.jpg">Скачать</button>'
+            f'</figure>' for i, u in enumerate(it['imgs'], 1))
+        out.append(
+            '<article class="post">'
+            f'<h3>{html.escape(it["title"])} <span>{it["len"]} / 3000 символов</span></h3>'
+            f'<div class="post__gal">{gal}</div>'
+            f'<div class="post__txt" data-copy>{html.escape(it["text"])}</div>'
+            '</article>')
+    return ''.join(out)
+
+
+def checklist(data, posts):
+    """Что уже есть в кабинете и что осталось — чтобы ничего не потерялось."""
+    ads = sum(len(s['items']) for s in data['sections']) if data else 0
+    rows = [
+        ('Свои объявления', f'{ads} готово' if ads else 'нет', bool(ads)),
+        ('Публикации', f'{len(posts["items"])} готово' if posts else 'нет', bool(posts)),
+        ('Товары и услуги', 'YML-фид на сайте, автозагрузка по ссылке', True),
+        ('Акции', 'состав — с promotions.html сайта', None),
+        ('Истории', 'линейка v1 собрана ранее, файлы — в Google Drive', None),
+        ('Фотографии карточки', 'реальные фото клиники', None),
+    ]
+    li = ''.join(
+        f'<li><b>{t}</b> — {v}</li>' for t, v, _ in rows)
+    return li
+
+
 def build():
     tabs, panes = [], []
     for cid, name, city, repo in CLINICS:
         data = load(repo)
+        posts = load_posts(repo)
         n = sum(len(s['items']) for s in data['sections']) if data else 0
+        n += len(posts['items']) if posts else 0
         tabs.append(f'<button class="tab" data-id="{cid}">{name} <i>{city}'
                     + (f' · {n}' if n else ' · нет материалов') + '</i></button>')
         b = (data or {}).get('brand', {'accent': '#4b5563', 'bg': '#fff',
@@ -166,17 +225,39 @@ def build():
         head = (f'<div class="hd"><h2>{name} — {city}</h2>'
                 + (f'<a href="{data["site"]}" target="_blank" rel="noopener">{data["site"]}</a>' if data else '')
                 + '</div>')
-        if not data:
+        if not data and not posts:
             body = ('<div class="empty">Материалы для кабинета этой клиники пока не собраны: '
                     'в репозитории лежат только скрипты и реестры, самих картинок нет. '
-                    'Скажите — соберу такой же пакет объявлений, и вкладка заполнится.</div>')
+                    'Скажите — соберу такой же пакет, и вкладка заполнится.</div>')
         else:
-            body = ''
-            for s in data['sections']:
-                body += (f'<div class="note"><b>{html.escape(s["title"])}.</b> {html.escape(s.get("note",""))}<br>'
-                         'В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену '
-                         'не дублируем. Срок размещения не ставим — объявления вечные.</div>')
-                body += render_items(s['items'], cid)
+            site = data['site'] if data else ''
+            body = ('<div class="grid2">'
+                    '<div class="card"><h4>Что уже готово к заливке</h4><ul>'
+                    + checklist(data, posts) + '</ul></div>'
+                    '<div class="card"><h4>Яндекс Директ</h4><ul>'
+                    '<li>Метрика подключена, 6 целей заведены: <b>lead_submit</b>, call_click, '
+                    'whatsapp_click, telegram_click, modal_open, form_start</li>'
+                    '<li>Ключевая цель для оптимизации — <b>lead_submit</b> (+ call_click вторым весом)</li>'
+                    '<li>Тексты объявлений ниже подходят и для Директа: заголовок ≤56 укладывается '
+                    'в лимит Директа, описание расширяется до 81</li>'
+                    '<li>Посадочные — те же ссылки, что в карточках, UTM подставляются автоматически '
+                    'и уходят в заявку</li>'
+                    '<li>Дисклеймер о противопоказаниях на креативах обязателен — он уже впечатан</li>'
+                    '</ul></div></div>')
+            if data:
+                for s in data['sections']:
+                    body += f'<div class="sec">{html.escape(s["title"])}</div>'
+                    body += (f'<div class="note">{html.escape(s.get("note",""))}<br>'
+                             'В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену '
+                             'не дублируем. Срок размещения не ставим — объявления вечные.</div>')
+                    body += render_items(s['items'], cid)
+            if posts:
+                body += '<div class="sec">Публикации</div>'
+                body += ('<div class="note">Публикация — новость клиники, а не реклама: без дат и сезонов, '
+                         'чтобы не устаревала. Лимит 3000 символов. Самая свежая показывается первой → '
+                         'самую сильную тему заливаем последней. Публиковать хотя бы раз в месяц: '
+                         'это влияет на локальное ранжирование карточки.</div>')
+                body += render_posts(posts['items'], cid)
         panes.append(f'''<section class="pane" id="pane-{cid}"
   data-accent="{b['accent']}" data-accent-soft="{soft(b['accent'])}"
   data-line="{b['line']}" data-soft="{soft(b['accent'], 0.05)}">{head}{body}</section>''')

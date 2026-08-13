@@ -45,17 +45,36 @@ body{margin:0;background:#f2f3f5;color:#1d2226;font:16px/1.55 Manrope,system-ui,
 .f__v i{color:#a4abb2}
 .f2{display:grid;grid-template-columns:150px 1fr;gap:14px}
 .empty{background:#fff;border:1px dashed #ccd2d8;border-radius:14px;padding:28px;color:#6c757d}
+.post{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 14px}
+.post h3{margin:0 0 10px;font-size:18px}
+.post h3 span{color:#9aa3ab;font-weight:400;font-size:13px}
+.post__gal{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.post__gal figure{margin:0;width:150px}
+.post__gal img{width:150px;height:96px;object-fit:cover;border-radius:8px;display:block}
+.post__gal .dl{width:150px;font-size:11.5px;padding:6px 8px}
+.post__txt{white-space:pre-wrap;background:var(--soft);border:1px solid var(--line);border-radius:8px;
+  padding:12px 14px;cursor:pointer;font-size:15px;line-height:1.5}
+.post__txt:hover{border-color:var(--accent);background:#fff}
+.post__txt.copied{border-color:var(--accent);background:var(--accent-soft)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h4{margin:0 0 8px;font-size:15px}
+.card ul{margin:0;padding-left:18px;color:#5a6167;font-size:14.5px}
+.card li{margin:3px 0}
+.card a{color:var(--accent)}
+.sec{margin:28px 0 12px;font-size:17px;font-weight:700}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
 @media(max-width:720px){.ad{grid-template-columns:1fr}.ad__pic img{width:100%;height:auto}
   .dl{width:100%}.f2{grid-template-columns:1fr}}
 </style></head><body>
 <div class="top"><div class="top__in">
   <h1>Материалы для кабинетов Яндекс.Бизнеса</h1>
   <p>Три клиники в одном месте. Клик по полю копирует текст, кнопка — скачивает картинку.</p>
-  <div class="tabs"><button class="tab" data-id="versal">Версаль <i>Реутов · 14</i></button><button class="tab" data-id="angel">Ангел-Дент <i>Реутов · нет материалов</i></button><button class="tab" data-id="venecia">Венеция <i>Мытищи · 14</i></button></div>
+  <div class="tabs"><button class="tab" data-id="versal">Версаль <i>Реутов · 19</i></button><button class="tab" data-id="angel">Ангел-Дент <i>Реутов · нет материалов</i></button><button class="tab" data-id="venecia">Венеция <i>Мытищи · 14</i></button></div>
 </div></div>
 <section class="pane" id="pane-versal"
   data-accent="#C2A14E" data-accent-soft="rgba(194,161,78,0.12)"
-  data-line="#E7DFCF" data-soft="rgba(194,161,78,0.05)"><div class="hd"><h2>Версаль — Реутов</h2><a href="https://versal-dent.ru" target="_blank" rel="noopener">https://versal-dent.ru</a></div><div class="note"><b>Свои объявления.</b> Заливать снизу вверх — свежие показываются первыми.<br>В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену не дублируем. Срок размещения не ставим — объявления вечные.</div>
+  data-line="#E7DFCF" data-soft="rgba(194,161,78,0.05)"><div class="hd"><h2>Версаль — Реутов</h2><a href="https://versal-dent.ru" target="_blank" rel="noopener">https://versal-dent.ru</a></div><div class="grid2"><div class="card"><h4>Что уже готово к заливке</h4><ul><li><b>Свои объявления</b> — 14 готово</li><li><b>Публикации</b> — 5 готово</li><li><b>Товары и услуги</b> — YML-фид на сайте, автозагрузка по ссылке</li><li><b>Акции</b> — состав — с promotions.html сайта</li><li><b>Истории</b> — линейка v1 собрана ранее, файлы — в Google Drive</li><li><b>Фотографии карточки</b> — реальные фото клиники</li></ul></div><div class="card"><h4>Яндекс Директ</h4><ul><li>Метрика подключена, 6 целей заведены: <b>lead_submit</b>, call_click, whatsapp_click, telegram_click, modal_open, form_start</li><li>Ключевая цель для оптимизации — <b>lead_submit</b> (+ call_click вторым весом)</li><li>Тексты объявлений ниже подходят и для Директа: заголовок ≤56 укладывается в лимит Директа, описание расширяется до 81</li><li>Посадочные — те же ссылки, что в карточках, UTM подставляются автоматически и уходят в заявку</li><li>Дисклеймер о противопоказаниях на креативах обязателен — он уже впечатан</li></ul></div></div><div class="sec">Свои объявления</div><div class="note">Заливать снизу вверх — свежие показываются первыми.<br>В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену не дублируем. Срок размещения не ставим — объявления вечные.</div>
 <article class="ad">
   <div class="ad__num">1</div>
   <div class="ad__pic">
@@ -293,11 +312,72 @@ body{margin:0;background:#f2f3f5;color:#1d2226;font:16px/1.55 Manrope,system-ui,
       <div class="f"><span class="f__k">Ссылка</span><div class="f__v" data-copy>https://versal-dent.ru/services/terapiya.html</div></div>
     </div>
   </div>
-</article></section><section class="pane" id="pane-angel"
+</article><div class="sec">Публикации</div><div class="note">Публикация — новость клиники, а не реклама: без дат и сезонов, чтобы не устаревала. Лимит 3000 символов. Самая свежая показывается первой → самую сильную тему заливаем последней. Публиковать хотя бы раз в месяц: это влияет на локальное ранжирование карточки.</div><article class="post"><h3>Клиника изнутри <span>668 / 3000 символов</span></h3><div class="post__gal"><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3022035a-5664-44e7-8cf0-bda14be4d579.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/3022035a-5664-44e7-8cf0-bda14be4d579.jpg" data-name="versal-klinika-1.jpg">Скачать</button></figure><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/fcf871c7-3af0-4096-bc92-79a2865e73d9.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/fcf871c7-3af0-4096-bc92-79a2865e73d9.jpg" data-name="versal-klinika-2.jpg">Скачать</button></figure><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6df5dd57-f255-406f-a3e2-1e2b5d233aeb.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6df5dd57-f255-406f-a3e2-1e2b5d233aeb.jpg" data-name="versal-klinika-3.jpg">Скачать</button></figure></div><div class="post__txt" data-copy>Показываем «Версаль» изнутри — так выглядит клиника, в которую вы придёте.
+
+Мы в Реутове, на улице Победы, 22 — десять минут от метро «Новокосино». Работаем ежедневно с 10:00 до 20:00, без выходных.
+
+Что стоит знать до первого визита:
+• приём идёт строго по записи, ждать в коридоре не придётся;
+• на первичной консультации врач осматривает, показывает снимки на экране и объясняет, что происходит с зубами, — простыми словами;
+• план лечения выдаём письменно, с ценами по каждой позиции;
+• цены фиксируются в договоре и не меняются по ходу лечения.
+
+Записаться: +7 (965) 188-58-88 или на versal-dent.ru.
+
+Имеются противопоказания, необходима консультация специалиста.</div></article><article class="post"><h3>Профгигиена: зачем раз в полгода <span>772 / 3000 символов</span></h3><div class="post__gal"><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/872b9de0-a21c-46aa-8342-53d35f6f48ea.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/872b9de0-a21c-46aa-8342-53d35f6f48ea.jpg" data-name="versal-gigiena-1.jpg">Скачать</button></figure><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6ebb8896-8749-40bd-8aef-d922a10e659f.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/6ebb8896-8749-40bd-8aef-d922a10e659f.jpg" data-name="versal-gigiena-2.jpg">Скачать</button></figure></div><div class="post__txt" data-copy>Напоминаем про профессиональную гигиену — самую недооценённую процедуру в стоматологии.
+
+Зубной камень не снимается щёткой: он образуется там, куда щетинки не достают, и постепенно отодвигает десну от зуба. Дальше — кровоточивость, запах, оголение шеек и подвижность. Кариес между зубами тоже начинается под налётом, где его не видно.
+
+Как проходит комплексная гигиена в «Версале»:
+• ультразвук — снимаем камень над и под десной;
+• Air Flow — убираем пигментированный налёт от кофе, чая и сигарет;
+• полировка пастой и щётками — гладкая эмаль дольше остаётся чистой;
+• по показаниям — фторирование для укрепления эмали.
+
+Занимает около часа. Рекомендуем раз в полгода, курильщикам и людям с брекетами — чаще.
+
+Имеются противопоказания, необходима консультация специалиста.</div></article><article class="post"><h3>Чем мы лечим: оснащение клиники <span>767 / 3000 символов</span></h3><div class="post__gal"><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1ac19bfd-cebe-4d87-82e7-f5a328d90af1.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1ac19bfd-cebe-4d87-82e7-f5a328d90af1.jpg" data-name="versal-tehnologii-1.jpg">Скачать</button></figure><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ed24d49e-e8f1-4218-88ea-e0e6f99c815f.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ed24d49e-e8f1-4218-88ea-e0e6f99c815f.jpg" data-name="versal-tehnologii-2.jpg">Скачать</button></figure><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/49103ad9-8763-4fca-ac05-a91be90cfe9a.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/49103ad9-8763-4fca-ac05-a91be90cfe9a.jpg" data-name="versal-tehnologii-3.jpg">Скачать</button></figure><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/388fe504-b1ea-4a56-b06f-aa579850df33.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/388fe504-b1ea-4a56-b06f-aa579850df33.jpg" data-name="versal-tehnologii-4.jpg">Скачать</button></figure></div><div class="post__txt" data-copy>Рассказываем про оснащение — от него зависит и точность работы, и ваш комфорт.
+
+• Компьютерная томография. 3D-снимок челюстей: видны каналы, скрытые очаги воспаления, объём кости под имплант. Без КТ имплантацию не начинаем — иначе это работа вслепую.
+• Цифровое сканирование вместо слепков. Никакой слепочной массы во рту: коронку и элайнеры моделируем по 3D-модели, посадка точнее.
+• Digital Smile Design. Моделируем улыбку до начала лечения — вы видите будущий результат заранее и участвуете в выборе формы зубов.
+• Стерилизация класса B. Инструменты проходят автоклав — тот же класс, что в хирургических операционных; каждый набор вскрывается при вас.
+
+Записаться на консультацию: +7 (965) 188-58-88.
+
+Имеются противопоказания, необходима консультация специалиста.</div></article><article class="post"><h3>Острая боль — примем в день обращения <span>659 / 3000 символов</span></h3><div class="post__gal"><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0acc7db0-b099-4603-9e40-dcf08803c7a5.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/0acc7db0-b099-4603-9e40-dcf08803c7a5.jpg" data-name="versal-bol-1.jpg">Скачать</button></figure><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1dadc638-5f7c-47c9-bca8-4ece53d4c432.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/1dadc638-5f7c-47c9-bca8-4ece53d4c432.jpg" data-name="versal-bol-2.jpg">Скачать</button></figure></div><div class="post__txt" data-copy>Если зуб заболел — звоните сразу, не дожидаясь понедельника.
+
+«Версаль» работает ежедневно с 10:00 до 20:00, включая выходные. При острой боли стараемся принять в день обращения: снимем боль, сделаем снимок и объясним, что дальше.
+
+Когда тянуть нельзя:
+• боль пульсирующая, усиливается ночью;
+• припухла щека или десна;
+• больно накусывать на зуб;
+• повысилась температура.
+
+Это признаки воспаления, которое само не пройдёт: чем дольше ждать, тем выше шанс, что зуб придётся удалять, а не лечить.
+
+Мы в Реутове, улица Победы, 22 — десять минут от метро «Новокосино». Телефон: +7 (965) 188-58-88.
+
+Имеются противопоказания, необходима консультация специалиста.</div></article><article class="post"><h3>Консультация ортодонта — бесплатно <span>751 / 3000 символов</span></h3><div class="post__gal"><figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ace9a17d-820a-4c42-83fb-56bfaef09902.jpg" alt="" loading="lazy"><button class="dl" data-dl="https://d2ol7oe51mr4n9.cloudfront.net/user_3Di09CVa1BatdZIdE0tir1KKUxw/ace9a17d-820a-4c42-83fb-56bfaef09902.jpg" data-name="versal-ortodont-1.jpg">Скачать</button></figure></div><div class="post__txt" data-copy>Хотите ровные зубы, но не знаете, с чего начать? Первичная консультация ортодонта в «Версале» — бесплатно (обычно 1 000 ₽).
+
+На приёме врач:
+• осмотрит прикус и объяснит, что именно вас беспокоит с точки зрения ортодонтии;
+• рассчитает ТРГ — телерентгенограмму, по которой видно положение челюстей;
+• подберёт вариант: брекеты или элайнеры, и честно скажет, сколько это займёт времени;
+• назовёт стоимость — она фиксируется в договоре.
+
+Никаких обязательств: можно прийти, всё узнать и подумать.
+
+Брекеты и элайнеры ставим взрослым в любом возрасте — ограничение по годам это миф, значение имеет только состояние дёсен и костной ткани.
+
+Записаться: +7 (965) 188-58-88 или versal-dent.ru.
+
+Имеются противопоказания, необходима консультация специалиста.</div></article></section><section class="pane" id="pane-angel"
   data-accent="#4b5563" data-accent-soft="rgba(75,85,99,0.12)"
-  data-line="#e3e6ea" data-soft="rgba(75,85,99,0.05)"><div class="hd"><h2>Ангел-Дент — Реутов</h2></div><div class="empty">Материалы для кабинета этой клиники пока не собраны: в репозитории лежат только скрипты и реестры, самих картинок нет. Скажите — соберу такой же пакет объявлений, и вкладка заполнится.</div></section><section class="pane" id="pane-venecia"
+  data-line="#e3e6ea" data-soft="rgba(75,85,99,0.05)"><div class="hd"><h2>Ангел-Дент — Реутов</h2></div><div class="empty">Материалы для кабинета этой клиники пока не собраны: в репозитории лежат только скрипты и реестры, самих картинок нет. Скажите — соберу такой же пакет, и вкладка заполнится.</div></section><section class="pane" id="pane-venecia"
   data-accent="#0F6E66" data-accent-soft="rgba(15,110,102,0.12)"
-  data-line="#DCE8E3" data-soft="rgba(15,110,102,0.05)"><div class="hd"><h2>Венеция — Мытищи</h2><a href="https://venecia-dent.ru" target="_blank" rel="noopener">https://venecia-dent.ru</a></div><div class="note"><b>Свои объявления.</b> Заливать снизу вверх — свежие показываются первыми.<br>В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену не дублируем. Срок размещения не ставим — объявления вечные.</div>
+  data-line="#DCE8E3" data-soft="rgba(15,110,102,0.05)"><div class="hd"><h2>Венеция — Мытищи</h2><a href="https://venecia-dent.ru" target="_blank" rel="noopener">https://venecia-dent.ru</a></div><div class="grid2"><div class="card"><h4>Что уже готово к заливке</h4><ul><li><b>Свои объявления</b> — 14 готово</li><li><b>Публикации</b> — нет</li><li><b>Товары и услуги</b> — YML-фид на сайте, автозагрузка по ссылке</li><li><b>Акции</b> — состав — с promotions.html сайта</li><li><b>Истории</b> — линейка v1 собрана ранее, файлы — в Google Drive</li><li><b>Фотографии карточки</b> — реальные фото клиники</li></ul></div><div class="card"><h4>Яндекс Директ</h4><ul><li>Метрика подключена, 6 целей заведены: <b>lead_submit</b>, call_click, whatsapp_click, telegram_click, modal_open, form_start</li><li>Ключевая цель для оптимизации — <b>lead_submit</b> (+ call_click вторым весом)</li><li>Тексты объявлений ниже подходят и для Директа: заголовок ≤56 укладывается в лимит Директа, описание расширяется до 81</li><li>Посадочные — те же ссылки, что в карточках, UTM подставляются автоматически и уходят в заявку</li><li>Дисклеймер о противопоказаниях на креативах обязателен — он уже впечатан</li></ul></div></div><div class="sec">Свои объявления</div><div class="note">Заливать снизу вверх — свежие показываются первыми.<br>В поле «Цена» — только число, «от» кабинет не принимает; в заголовке цену не дублируем. Срок размещения не ставим — объявления вечные.</div>
 <article class="ad">
   <div class="ad__num">1</div>
   <div class="ad__pic">
