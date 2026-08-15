@@ -819,13 +819,14 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False,
         para(doc, f"Основание: {basis}", align="just", size=10)
     para(doc)
 
+    # наименование — как в счетах Сферикса: без адресов сайтов и периода,
+    # всё это уже зафиксировано в договоре (владелец, 15.08.2026)
     if name_override:
         name = name_override
     elif basis == "contract":
-        name = (f"Услуги по продвижению сайтов {sites_sentence(cfg)} за {month_label}"
-                f" по договору № {c['no']} от {date_dots(c['date'])}")
+        name = f"Оплата по договору № {c['no']} от {date_dots(c['date'])} г."
     else:
-        name = f"Услуги по продвижению сайтов {sites_sentence(cfg)} за {month_label}"
+        name = "Оплата услуг по продвижению"
     if partial:
         name += " (частичная оплата)"
     rows = [
@@ -852,8 +853,6 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False,
         payment_qr_png(cfg, no, inv_date, amount, tf.name)
         para(doc)
         doc.add_picture(tf.name, width=Cm(3.6))
-        para(doc, "Оплата по QR-коду — наведите камеру в приложении банка: "
-                  "реквизиты и сумма подставятся автоматически.", size=8, italic=True)
 
     fname = f"Счёт № {no} от {date_dots(inv_date)} ({money(amount).replace(chr(160), ' ')}).docx"
     return save(doc, fname)
@@ -1070,7 +1069,7 @@ def cmd_invoice(cfg, args):
     build_invoice(cfg, no, inv_date, amount, args.month, partial=args.partial,
                   basis=args.basis, name_override=args.name or "")
     log_doc(cfg, "invoice", no, inv_date, amount,
-            f"Счёт № {no} за {args.month}",
+            f"Счёт № {no} за {args.month}" if args.month else f"Счёт № {no}",
             "частичная оплата" if args.partial else "")
     return cfg
 
@@ -1124,7 +1123,7 @@ def main():
     p.set_defaults(fn=cmd_contract, month=None)
 
     p = sub.add_parser("invoice", help="счёт на оплату")
-    p.add_argument("--month", required=True, help='расчётный период, напр. "август 2026"')
+    p.add_argument("--month", default="", help='период для реестра, напр. "август 2026" (в счёте не печатается)')
     p.add_argument("--amount", type=float, help="сумма, руб. (по умолчанию — из договора)")
     p.add_argument("--no", type=int, help="номер счёта (по умолчанию — следующий)")
     p.add_argument("--date", help="дата ISO, напр. 2026-08-01 (по умолчанию — сегодня)")

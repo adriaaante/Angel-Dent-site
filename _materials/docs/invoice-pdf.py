@@ -87,13 +87,13 @@ def build(no, inv_date, amount, month_label, basis="contract", name_override="")
         story += [Paragraph(line, st(10, align=4)), Spacer(0, 0.12 * cm)]
     story += [Spacer(0, 0.3 * cm)]
 
+    # без адресов сайтов и периода — они зафиксированы в договоре
     if name_override:
         name = name_override
     elif basis == "contract":
-        name = (f"Услуги по продвижению сайтов {bd.sites_sentence(cfg)} за "
-                f"{month_label} по договору № {c['no']} от {bd.date_dots(c['date'])}")
+        name = f"Оплата по договору № {c['no']} от {bd.date_dots(c['date'])} г."
     else:
-        name = f"Услуги по продвижению сайтов {bd.sites_sentence(cfg)} за {month_label}"
+        name = "Оплата услуг по продвижению"
     items = Table(
         [[Paragraph(h, st(10, bold=True, align=a)) for h, a in
           zip(("№", "Товары (работы, услуги)", "Кол-во", "Ед.", "Цена", "Сумма"),
@@ -126,11 +126,6 @@ def build(no, inv_date, amount, month_label, basis="contract", name_override="")
     story += [
         Spacer(0, 0.7 * cm),
         Image(tf.name, width=3.6 * cm, height=3.6 * cm, hAlign="LEFT"),
-        Spacer(0, 0.15 * cm),
-        Paragraph("Оплата по QR-коду — наведите камеру в приложении банка: "
-                  "реквизиты и сумма подставятся автоматически.",
-                  ParagraphStyle("q", fontName="Serif", fontSize=8, leading=10,
-                                 textColor="#444444")),
     ]
     doc.build(story)
     print(f"  ✓ {out.relative_to(ROOT)}")
@@ -140,7 +135,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--no", required=True)
     ap.add_argument("--date", required=True)
-    ap.add_argument("--month", required=True)
+    ap.add_argument("--month", default="")
     ap.add_argument("--amount", type=float, required=True)
     ap.add_argument("--basis", default="contract",
                     help='«Основание»: по умолчанию договор; свой текст; "" — не печатать')
