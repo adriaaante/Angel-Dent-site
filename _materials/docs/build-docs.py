@@ -177,6 +177,39 @@ def heading(doc, text, size=14):
     para(doc, text, bold=True, align="center", size=size, space_after=2)
 
 
+def fix_layout(t, widths_cm):
+    """Жёсткая раскладка таблицы: tblGrid + ширина каждой ячейки.
+
+    python-docx выставляет только tcW у ячеек, а tblGrid оставляет с
+    равными колонками. Word это прощает, но Google Docs и LibreOffice
+    читают именно tblGrid — и таблица разъезжалась: колонка «№» шириной
+    с колонку описания. Владелец заметил это на счёте 15.08.2026.
+    """
+    tbl = t._tbl
+    tblPr = tbl.tblPr
+    layout = tblPr.find(qn("w:tblLayout"))
+    if layout is None:
+        layout = tblPr.makeelement(qn("w:tblLayout"), {})
+        # схема tblPr требует строгий порядок детей: tblLayout должен
+        # стоять ДО tblLook, иначе LibreOffice/Google Docs не открывают файл
+        look = tblPr.find(qn("w:tblLook"))
+        if look is not None:
+            look.addprevious(layout)
+        else:
+            tblPr.append(layout)
+    layout.set(qn("w:type"), "fixed")
+    grid = tbl.tblGrid
+    for gc in list(grid):
+        grid.remove(gc)
+    for w in widths_cm:
+        gc = grid.makeelement(qn("w:gridCol"), {})
+        gc.set(qn("w:w"), str(int(w * 567)))
+        grid.append(gc)
+    for row in t.rows:
+        for cell, w in zip(row.cells, widths_cm):
+            cell.width = Cm(w)
+
+
 def table(doc, rows, widths=None, header=True, align_cols=None, font=10):
     t = doc.add_table(rows=0, cols=len(rows[0]))
     t.style = "Table Grid"
@@ -198,9 +231,7 @@ def table(doc, rows, widths=None, header=True, align_cols=None, font=10):
             r.font.size = Pt(font)
             r.bold = header and i == 0
     if widths:
-        for row in t.rows:
-            for j, w in enumerate(widths):
-                row.cells[j].width = Cm(w)
+        fix_layout(t, widths)
     return t
 
 
@@ -721,35 +752,36 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False):
     ex, cu, c = cfg["executor"], cfg["customer"], cfg["contract"]
     doc = new_doc()
 
-    # шапка с банковскими реквизитами
+    # шапка с банковскими реквизитами — как в счетах Сферикса: ячейка
+    # банка объединена по вертикали, колонки фиксированной ширины
     t = doc.add_table(rows=3, cols=3)
     t.style = "Table Grid"
     data = [
         [f"Банк получателя: {ex['bank']}", "БИК", ex["bic"]],
-        ["", "Сч. №", ex["corr_account"]],
+        [None, "Сч. №", ex["corr_account"]],
         [f"ИНН {ex['inn']}   ОГРНИП {ex['ogrnip']}\nПолучатель: {ex['short']}",
          "Сч. №", ex["account"]],
     ]
     for row, vals in zip(t.rows, data):
         for cell, val in zip(row.cells, vals):
+            if val is None:
+                continue
             cell.text = ""
             p = cell.paragraphs[0]
             p.paragraph_format.space_after = Pt(0)
             p.add_run(str(val)).font.size = Pt(9)
-    for row in t.rows:
-        row.cells[0].width = Cm(9)
-        row.cells[1].width = Cm(2.5)
-        row.cells[2].width = Cm(5.5)
+    t.cell(0, 0).merge(t.cell(1, 0))
+    fix_layout(t, [10.0, 2.2, 5.4])
 
     para(doc)
-    heading(doc, f"Счёт на оплату № {no} от {date_ru(inv_date)}")
+    para(doc, f"Счёт на оплату № {no} от {date_ru(inv_date)}", bold=True, size=13)
     para(doc)
 
     para(doc, f"Поставщик (Исполнитель): {requisites_line(ex, 'executor')}.", align="just",
-         space_after=3)
+         space_after=3, size=10)
     para(doc, f"Покупатель (Заказчик): {requisites_line(cu, 'customer')}.", align="just",
-         space_after=3)
-    para(doc, f"Основание: {contract_ref(cfg)}", align="just")
+         space_after=3, size=10)
+    para(doc, f"Основание: {contract_ref(cfg)}", align="just", size=10)
     para(doc)
 
     name = (f"Услуги по продвижению сайтов {sites_sentence(cfg)} за {month_label}"
@@ -760,16 +792,16 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False):
         ["№", "Товары (работы, услуги)", "Кол-во", "Ед.", "Цена", "Сумма"],
         [1, name, 1, "усл.", money(amount), money(amount)],
     ]
-    table(doc, rows, widths=[1.0, 8.6, 1.6, 1.4, 2.6, 2.6],
+    table(doc, rows, widths=[1.0, 8.4, 1.6, 1.4, 2.6, 2.6],
           align_cols=["c", "l", "c", "c", "r", "r"])
 
     para(doc)
-    para(doc, f"Итого: {money(amount)}", align="right", space_after=0)
-    para(doc, "Без НДС", align="right", space_after=0)
-    para(doc, f"Всего к оплате: {money(amount)}", align="right", bold=True)
+    para(doc, f"Итого: {money(amount)}", align="right", space_after=0, size=10, bold=True)
+    para(doc, "Без НДС", align="right", space_after=0, size=10)
+    para(doc, f"Всего к оплате: {money(amount)}", align="right", bold=True, size=10)
 
-    para(doc, f"Всего наименований 1, на сумму {money(amount)} руб.")
-    para(doc, f"Всего к оплате: {rub_words(amount)}. Без НДС.", bold=True)
+    para(doc, f"Всего наименований 1, на сумму {money(amount)} руб.", size=10)
+    para(doc, f"Всего к оплате: {rub_words(amount)}. Без НДС.", bold=True, size=10)
     para(doc)
     para(doc, f"Оплата настоящего счёта означает согласие с условиями договора, указанного "
               f"в основании. График оплаты — согласно п. 3.2 договора: по "
@@ -777,7 +809,8 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False):
               f"позднее 15-го числа (за 15-е — конец месяца) каждого календарного месяца.",
          italic=True, size=9)
     para(doc)
-    para(doc, f"Индивидуальный предприниматель  _______________________  / {ex['sign_name']} /")
+    para(doc, f"Индивидуальный предприниматель  _______________________  / {ex['sign_name']} /",
+         size=10)
 
     fname = f"Счёт № {no} от {date_dots(inv_date)} ({money(amount).replace(chr(160), ' ')}).docx"
     return save(doc, fname)
@@ -818,7 +851,7 @@ def build_act(cfg, no, act_date, amount, period_label, paid_by="", retro=False):
         ["№", "Наименование работ, услуг", "Кол-во", "Ед.", "Цена", "Сумма"],
         [1, name, 1, "усл.", money(amount), money(amount)],
     ]
-    table(doc, rows, widths=[1.0, 8.6, 1.6, 1.4, 2.6, 2.6],
+    table(doc, rows, widths=[1.0, 8.4, 1.6, 1.4, 2.6, 2.6],
           align_cols=["c", "l", "c", "c", "r", "r"])
 
     para(doc)
@@ -939,7 +972,7 @@ def build_reconciliation(cfg):
     rows.append(["", "", "ИТОГО",
                  money(total_serv) if payments else BLANK[:10],
                  money(total_paid) if payments else BLANK[:10]])
-    table(doc, rows, widths=[1.0, 2.6, 7.4, 3.4, 3.4],
+    table(doc, rows, widths=[1.0, 2.6, 7.2, 3.4, 3.4],
           align_cols=["c", "c", "l", "r", "r"])
 
     para(doc)
