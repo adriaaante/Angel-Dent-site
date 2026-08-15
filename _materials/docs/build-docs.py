@@ -803,12 +803,6 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False):
     para(doc, f"Всего наименований 1, на сумму {money(amount)} руб.", size=10)
     para(doc, f"Всего к оплате: {rub_words(amount)}. Без НДС.", bold=True, size=10)
     para(doc)
-    para(doc, f"Оплата настоящего счёта означает согласие с условиями договора, указанного "
-              f"в основании. График оплаты — согласно п. 3.2 договора: по "
-              f"{money(c['monthly'] / 2)} руб. не позднее 1-го числа (за 1–14 число) и не "
-              f"позднее 15-го числа (за 15-е — конец месяца) каждого календарного месяца.",
-         italic=True, size=9)
-    para(doc)
     para(doc, f"Индивидуальный предприниматель  _______________________  / {ex['sign_name']} /",
          size=10)
 
