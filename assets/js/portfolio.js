@@ -196,6 +196,7 @@ window.AD_PORTFOLIO = {
       date: '11.2024',
       before: '../assets/img/portfolio/implant-gap.webp',
       after: '../assets/img/portfolio/implant-restored.webp',
+      illustrative: true,   // фото — не снимок пациента, а иллюстрация методики
       details: {
         problem: 'Женщина 47 лет, потеряла верхний жевательный зуб 6 лет назад, лунка зажила, но кости для импланта было недостаточно. От лечения откладывала из-за страха перед синус-лифтингом, начиталась пугающих историй в интернете.',
         diagnosis: 'КЛКТ показала высоту альвеолярного гребня в проекции зуба 2,6 мм при норме для имплантации не менее 8 мм. Слизистая гайморовой пазухи без признаков воспаления, перегородок и патологий — благоприятная анатомия для синус-лифтинга.',
@@ -272,6 +273,7 @@ window.AD_PORTFOLIO = {
       date: '07.2026',
       before: '../assets/img/portfolio/full-mouth-implants-before.webp',
       after: '../assets/img/portfolio/full-mouth-implants-after.webp',
+      illustrative: true,   // фото — не снимок пациента, а иллюстрация методики
       extra: [
         { src: '../assets/img/portfolio/full-mouth-implants-after-side.webp', caption: 'Результат сбоку: естественная форма и цвет новых зубов' }
       ],
@@ -375,6 +377,7 @@ window.AD_PORTFOLIO = {
       date: '07.2026',
       before: '../assets/img/portfolio/full-mouth-implants-before.webp',
       after: '../assets/img/portfolio/full-mouth-implants-after.webp',
+      illustrative: true,   // фото — не снимок пациента, а иллюстрация методики
       extra: [
         { src: '../assets/img/portfolio/full-mouth-implants-after-side.webp', caption: 'Результат сбоку: естественная форма и цвет новых зубов' }
       ],
@@ -402,6 +405,7 @@ window.AD_PORTFOLIO = {
       date: '05.2025',
       before: '../assets/img/portfolio/crowns-before.webp',
       after: '../assets/img/portfolio/crowns-after.webp',
+      illustrative: true,   // фото — не снимок пациента, а иллюстрация методики
       details: {
         problem: 'Мужчина 49 лет с большими старыми пломбами на четырёх жевательных зубах. Стенки зубов истончились, периодически откалывались фрагменты, появилась чувствительность от холодного. Нужна была надёжная защита зубов от разрушения.',
         diagnosis: 'Осмотр и прицельные снимки выявили, что объём пломб превышает 60% жевательной поверхности — реставрации больше не показаны, требуются коронки. Эндодонтического лечения зубы не требуют (на КТ пульпа интактна).',
@@ -534,6 +538,10 @@ window.AD_PORTFOLIO = {
     }).join('');
     var meta = [];
     if (item.date) meta.push('<span class="pf-meta__item">📅 ' + escapeHTML(item.date) + '</span>');
+    // Кейс проиллюстрирован не фотографией пациента, а типичной картиной
+    // по методике — говорим об этом прямо на карточке, а не мелким шрифтом
+    // под всем разделом.
+    if (item.illustrative) meta.push('<span class="pf-meta__item pf-meta__item--illu">Иллюстрация методики</span>');
 
     return (
       '<article class="pf-card" data-pf-index="' + idx + '">' +
@@ -629,6 +637,7 @@ window.AD_PORTFOLIO = {
     if (metaWrap) {
       var metaParts = [];
       if (item.date) metaParts.push('<span class="pf-meta__item">📅 ' + escapeHTML(item.date) + '</span>');
+      if (item.illustrative) metaParts.push('<span class="pf-meta__item pf-meta__item--illu">Иллюстрация методики</span>');
       if (metaParts.length) {
         metaWrap.innerHTML = metaParts.join('');
         metaWrap.hidden = false;
