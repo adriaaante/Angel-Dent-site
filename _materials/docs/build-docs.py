@@ -374,6 +374,37 @@ def save(doc, name):
 
 # ─────────────────────────────── реестр ────────────────────────────────────
 
+def payment_qr_string(cfg, no, inv_date, amount):
+    """Платёжный QR по ГОСТ Р 56042-2014 (формат ST00012, UTF-8).
+
+    Такой код читают приложения банков («оплатить по QR»): реквизиты и
+    сумма подставляются сами, руками ничего не набивают. Сумма — в
+    копейках.
+    """
+    ex = cfg["executor"]
+    return (
+        "ST00012|"
+        f"Name=ИП Зайдель Адриан Патрик|"
+        f"PersonalAcc={ex['account']}|"
+        f"BankName={ex['bank']}|"
+        f"BIC={ex['bic']}|"
+        f"CorrespAcc={ex['corr_account']}|"
+        f"PayeeINN={ex['inn']}|"
+        f"Sum={int(round(amount * 100))}|"
+        f"Purpose=Оплата по счёту № {no} от {date_dots(inv_date)}. Без НДС"
+    )
+
+
+def payment_qr_png(cfg, no, inv_date, amount, path):
+    import qrcode
+    from qrcode.constants import ERROR_CORRECT_M
+    q = qrcode.QRCode(error_correction=ERROR_CORRECT_M, box_size=10, border=2)
+    q.add_data(payment_qr_string(cfg, no, inv_date, amount))
+    q.make(fit=True)
+    q.make_image(fill_color="black", back_color="white").save(path)
+    return path
+
+
 def load_cfg():
     with REGISTRY.open(encoding="utf-8") as f:
         return json.load(f)
@@ -748,7 +779,8 @@ def build_contract(cfg):
 
 # ─────────────────────────────── СЧЁТ ──────────────────────────────────────
 
-def build_invoice(cfg, no, inv_date, amount, month_label, partial=False):
+def build_invoice(cfg, no, inv_date, amount, month_label, partial=False,
+                  basis="contract", name_override=""):
     ex, cu, c = cfg["executor"], cfg["customer"], cfg["contract"]
     doc = new_doc()
 
@@ -781,11 +813,19 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False):
          space_after=3, size=10)
     para(doc, f"Покупатель (Заказчик): {requisites_line(cu, 'customer')}.", align="just",
          space_after=3, size=10)
-    para(doc, f"Основание: {contract_ref(cfg)}", align="just", size=10)
+    if basis == "contract":
+        para(doc, f"Основание: {contract_ref(cfg)}", align="just", size=10)
+    elif basis:
+        para(doc, f"Основание: {basis}", align="just", size=10)
     para(doc)
 
-    name = (f"Услуги по продвижению сайтов {sites_sentence(cfg)} за {month_label}"
-            f" по договору № {c['no']} от {date_dots(c['date'])}")
+    if name_override:
+        name = name_override
+    elif basis == "contract":
+        name = (f"Услуги по продвижению сайтов {sites_sentence(cfg)} за {month_label}"
+                f" по договору № {c['no']} от {date_dots(c['date'])}")
+    else:
+        name = f"Услуги по продвижению сайтов {sites_sentence(cfg)} за {month_label}"
     if partial:
         name += " (частичная оплата)"
     rows = [
@@ -805,6 +845,15 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False):
     para(doc)
     para(doc, f"Индивидуальный предприниматель  _______________________  / {ex['sign_name']} /",
          size=10)
+
+    # платёжный QR — как в счетах Сферикса: после подписи
+    import tempfile
+    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tf:
+        payment_qr_png(cfg, no, inv_date, amount, tf.name)
+        para(doc)
+        doc.add_picture(tf.name, width=Cm(3.6))
+        para(doc, "Оплата по QR-коду — наведите камеру в приложении банка: "
+                  "реквизиты и сумма подставятся автоматически.", size=8, italic=True)
 
     fname = f"Счёт № {no} от {date_dots(inv_date)} ({money(amount).replace(chr(160), ' ')}).docx"
     return save(doc, fname)
@@ -1018,7 +1067,8 @@ def cmd_invoice(cfg, args):
     amount = args.amount if args.amount is not None else cfg["contract"]["monthly"]
     no = args.no or next_no(cfg, "doc_no")
     inv_date = args.date or date.today().isoformat()
-    build_invoice(cfg, no, inv_date, amount, args.month, partial=args.partial)
+    build_invoice(cfg, no, inv_date, amount, args.month, partial=args.partial,
+                  basis=args.basis, name_override=args.name or "")
     log_doc(cfg, "invoice", no, inv_date, amount,
             f"Счёт № {no} за {args.month}",
             "частичная оплата" if args.partial else "")
@@ -1079,6 +1129,10 @@ def main():
     p.add_argument("--no", type=int, help="номер счёта (по умолчанию — следующий)")
     p.add_argument("--date", help="дата ISO, напр. 2026-08-01 (по умолчанию — сегодня)")
     p.add_argument("--partial", action="store_true", help="частичная оплата")
+    p.add_argument("--basis", default="contract",
+                   help='строка «Основание»: по умолчанию договор; свой текст; "" — не печатать')
+    p.add_argument("--name", default="",
+                   help="своё наименование услуги в таблице (счёт на что угодно)")
     p.set_defaults(fn=cmd_invoice)
 
     p = sub.add_parser("act", help="акт сдачи-приёмки")

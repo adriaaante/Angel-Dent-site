@@ -20,8 +20,8 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import (Paragraph, SimpleDocTemplate, Spacer, Table,
-                                TableStyle)
+from reportlab.platypus import (Image, Paragraph, SimpleDocTemplate, Spacer,
+                                Table, TableStyle)
 
 ROOT = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("bd", ROOT / "build-docs.py")
@@ -46,7 +46,7 @@ def st(size=10, bold=False, align=0, leading=None):
         leading=leading or size * 1.25, alignment=align)
 
 
-def build(no, inv_date, amount, month_label):
+def build(no, inv_date, amount, month_label, basis="contract", name_override=""):
     cfg = bd.load_cfg()
     ex, cu, c = cfg["executor"], cfg["customer"], cfg["contract"]
     money, words = bd.money, bd.rub_words
@@ -75,15 +75,25 @@ def build(no, inv_date, amount, month_label):
     story += [Paragraph(f"Счёт на оплату № {no} от {bd.date_ru(inv_date)}",
                         st(13, bold=True)), Spacer(0, 0.4 * cm)]
 
-    for line in (
-            f"Поставщик (Исполнитель): {bd.requisites_line(ex, 'executor')}.",
-            f"Покупатель (Заказчик): {bd.requisites_line(cu, 'customer')}.",
-            f"Основание: {bd.contract_ref(cfg)}"):
+    lines = [
+        f"Поставщик (Исполнитель): {bd.requisites_line(ex, 'executor')}.",
+        f"Покупатель (Заказчик): {bd.requisites_line(cu, 'customer')}.",
+    ]
+    if basis == "contract":
+        lines.append(f"Основание: {bd.contract_ref(cfg)}")
+    elif basis:
+        lines.append(f"Основание: {basis}")
+    for line in lines:
         story += [Paragraph(line, st(10, align=4)), Spacer(0, 0.12 * cm)]
     story += [Spacer(0, 0.3 * cm)]
 
-    name = (f"Услуги по продвижению сайтов {bd.sites_sentence(cfg)} за "
-            f"{month_label} по договору № {c['no']} от {bd.date_dots(c['date'])}")
+    if name_override:
+        name = name_override
+    elif basis == "contract":
+        name = (f"Услуги по продвижению сайтов {bd.sites_sentence(cfg)} за "
+                f"{month_label} по договору № {c['no']} от {bd.date_dots(c['date'])}")
+    else:
+        name = f"Услуги по продвижению сайтов {bd.sites_sentence(cfg)} за {month_label}"
     items = Table(
         [[Paragraph(h, st(10, bold=True, align=a)) for h, a in
           zip(("№", "Товары (работы, услуги)", "Кол-во", "Ед.", "Цена", "Сумма"),
@@ -108,6 +118,20 @@ def build(no, inv_date, amount, month_label):
         Paragraph("Индивидуальный предприниматель  _______________________  "
                   f"/ {ex['sign_name']} /", s10),
     ]
+
+    # платёжный QR по ГОСТ Р 56042-2014 — после подписи, как у Сферикса
+    import tempfile
+    tf = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+    bd.payment_qr_png(cfg, no, inv_date, amount, tf.name)
+    story += [
+        Spacer(0, 0.7 * cm),
+        Image(tf.name, width=3.6 * cm, height=3.6 * cm, hAlign="LEFT"),
+        Spacer(0, 0.15 * cm),
+        Paragraph("Оплата по QR-коду — наведите камеру в приложении банка: "
+                  "реквизиты и сумма подставятся автоматически.",
+                  ParagraphStyle("q", fontName="Serif", fontSize=8, leading=10,
+                                 textColor="#444444")),
+    ]
     doc.build(story)
     print(f"  ✓ {out.relative_to(ROOT)}")
 
@@ -118,5 +142,8 @@ if __name__ == "__main__":
     ap.add_argument("--date", required=True)
     ap.add_argument("--month", required=True)
     ap.add_argument("--amount", type=float, required=True)
+    ap.add_argument("--basis", default="contract",
+                    help='«Основание»: по умолчанию договор; свой текст; "" — не печатать')
+    ap.add_argument("--name", default="", help="своё наименование услуги в таблице")
     a = ap.parse_args()
-    build(a.no, a.date, a.amount, a.month)
+    build(a.no, a.date, a.amount, a.month, basis=a.basis, name_override=a.name)
