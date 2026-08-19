@@ -487,6 +487,24 @@ p { margin: 0 0 1em; }
 .modal__sub { color: var(--c-text-muted); font-size: 14px; margin-bottom: 18px; }
 
 /* Responsive */
+/* Шапка: бургер уже с 1079px.
+   Полное меню + телефон + кнопка «Записаться» помещаются в строку только
+   начиная с 1080px. Раньше бургер включался лишь на 720px, и весь диапазон
+   721–1079px (iPad портретом — 768px, часть ноутбуков в половине экрана)
+   распирал страницу вбок: на 768px контент вылезал на 263px, появлялась
+   горизонтальная прокрутка. Проверено в Chromium по шагам ширины. */
+@media (max-width: 1079px) {
+  .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff;
+    flex-direction: column; gap: 0; padding: 8px 0; border-bottom: 1px solid var(--c-border);
+    box-shadow: var(--shadow); }
+  .nav.is-open { display: flex; }
+  .nav a { padding: 12px 20px; border-bottom: 1px solid var(--c-border); }
+  .nav a:last-child { border-bottom: 0; }
+  .burger { display: block; }
+  /* меню скрыто — прижимаем телефон и кнопку к правому краю явно */
+  .header__cta { margin-left: auto; }
+}
+
 @media (max-width: 1024px) {
   .hero__grid { grid-template-columns: 1fr; gap: 30px; }
   .usps__grid { grid-template-columns: repeat(2, 1fr); }
