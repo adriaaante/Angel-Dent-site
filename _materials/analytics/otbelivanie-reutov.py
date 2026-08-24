@@ -23,11 +23,16 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.utils import ImageReader
 from reportlab.platypus import (BaseDocTemplate, Frame, PageTemplate, Paragraph,
                                 Spacer, Table, TableStyle)
+from PIL import Image, ImageDraw
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "out" / "Отбеливание-цены-Реутов.pdf"
+# Логотип студии: любой отчёт/исследование для владельца подписываем FutureFlow.
+LOGO = HERE / "futureflow-logo.png"
+STUDIO_SITE = "futureflow.ru"
 FONTS = Path("/tmp/claude-0/-home-user/0c942a14-b9d6-5314-9918-7c11e119dac0/scratchpad/fonts")
 
 DATE = "24 августа 2026"
@@ -38,6 +43,7 @@ BLUE = colors.HexColor("#1E5FB3")
 LINE = colors.HexColor("#D8E1E8")
 OURS_BG = colors.HexColor("#FFF6E0")
 OURS_LINE = colors.HexColor("#E3B341")
+FF_BLUE = colors.HexColor("#3C8AD8")
 HEAD_BG = colors.HexColor("#EEF4FA")
 
 # Клиника, адрес, метод, цена, url. Цена — как опубликована на сайте клиники.
@@ -106,6 +112,27 @@ def styles() -> dict:
         "cellm": st("cellm", fontSize=8.6, leading=11.5, textColor=MUTED),
         "link": st("link", fontSize=8.6, leading=11.5, textColor=BLUE),
     }
+
+
+def chip_png(height_px: int = 240) -> Path:
+    """Тот же скруглённый логотип, но файлом — платипусу нужен путь."""
+    out = HERE / "out" / "_ff-chip.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    if not out.exists():
+        logo_chip(height_px)._image.save(out)  # noqa: SLF001
+    return out
+
+
+def logo_chip(height_px: int = 240) -> ImageReader:
+    """Логотип студии со скруглёнными углами — плашка в шапке отчёта."""
+    im = Image.open(LOGO).convert("RGBA")
+    w = round(im.width * height_px / im.height)
+    im = im.resize((w, height_px), Image.LANCZOS)
+    mask = Image.new("L", im.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, im.width - 1, im.height - 1],
+                                           radius=round(height_px * 0.16), fill=255)
+    im.putalpha(mask)
+    return ImageReader(im)
 
 
 def nbsp(text: str) -> str:
@@ -182,6 +209,25 @@ def hygiene_table(s) -> Table:
     return t
 
 
+def signature(s) -> Table:
+    """Плашка «Подготовлено FutureFlow» в конце отчёта."""
+    from reportlab.platypus import Image as RLImage
+    w = 34 * mm
+    img = RLImage(str(chip_png()), width=w, height=w * 905 / 2400)
+    txt = Paragraph(
+        f'Отчёт подготовлен студией <b>FutureFlow</b> · '
+        f'<link href="https://{STUDIO_SITE}"><u>{STUDIO_SITE}</u></link>', s["small"])
+    t = Table([[img, txt]], colWidths=[38 * mm, 130 * mm], hAlign="LEFT")
+    t.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("LEFTPADDING", (0, 0), (0, 0), 0),
+        ("TOPPADDING", (0, 0), (-1, -1), 6),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("LINEABOVE", (0, 0), (-1, 0), 0.6, LINE),
+    ]))
+    return t
+
+
 def build() -> None:
     register_fonts()
     s = styles()
@@ -189,22 +235,40 @@ def build() -> None:
 
     doc = BaseDocTemplate(str(OUT), pagesize=A4,
                           leftMargin=17 * mm, rightMargin=17 * mm,
-                          topMargin=16 * mm, bottomMargin=16 * mm,
+                          topMargin=27 * mm, bottomMargin=16 * mm,
                           title="Отбеливание зубов — цены в Реутове",
-                          author="Ангел-Дент · Версаль")
+                          author="FutureFlow")
     frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="f")
 
-    def footer(canvas, d):
+    chip = logo_chip()
+    chip_w, chip_h = 30 * mm, 30 * mm * 905 / 2400
+
+    def decorate(canvas, d):
         canvas.saveState()
+        # Шапка: плашка студии справа + тонкая линия под ней.
+        top = A4[1] - doc.topMargin + 4 * mm
+        canvas.drawImage(chip, A4[0] - doc.rightMargin - chip_w, top,
+                         width=chip_w, height=chip_h, mask="auto")
         canvas.setFont("Onest", 7.5)
         canvas.setFillColor(MUTED)
-        canvas.drawString(doc.leftMargin, 10 * mm,
-                          f"Цены собраны {DATE} с сайтов клиник · "
-                          f"«открыть» — кликабельная ссылка на страницу с ценой")
+        canvas.drawString(doc.leftMargin, top + chip_h / 2 - 2,
+                          "Аналитика для ООО «АНГЕЛ-ДЕНТ»")
+        canvas.setStrokeColor(LINE)
+        canvas.setLineWidth(0.4)
+        canvas.line(doc.leftMargin, top - 2.5 * mm, A4[0] - doc.rightMargin, top - 2.5 * mm)
+
+        # Подвал: подпись студии слева, страница справа.
+        canvas.setFont("Onest", 7.5)
+        canvas.setFillColor(FF_BLUE)
+        canvas.drawString(doc.leftMargin, 10 * mm, "Подготовлено FutureFlow")
+        w = canvas.stringWidth("Подготовлено FutureFlow", "Onest", 7.5)
+        canvas.setFillColor(MUTED)
+        canvas.drawString(doc.leftMargin + w, 10 * mm,
+                          f" · {STUDIO_SITE} · цены собраны {DATE} с сайтов клиник")
         canvas.drawRightString(A4[0] - doc.rightMargin, 10 * mm, f"стр. {d.page}")
         canvas.restoreState()
 
-    doc.addPageTemplates([PageTemplate(id="main", frames=[frame], onPage=footer)])
+    doc.addPageTemplates([PageTemplate(id="main", frames=[frame], onPage=decorate)])
 
     P = lambda t, k="p": Paragraph(nbsp(t), s[k])
     story = [
@@ -278,6 +342,8 @@ def build() -> None:
         Spacer(1, 6),
         P("Правка цен на сайте потянет пересборку YML-фида Яндекс.Бизнеса, "
           "карточек акций и витрины — сайт у нас источник правды для них.", "small"),
+        Spacer(1, 8),
+        signature(s),
     ]
     doc.build(story)
     print(f"{OUT.relative_to(HERE.parent.parent)}  {OUT.stat().st_size // 1024} КБ")
