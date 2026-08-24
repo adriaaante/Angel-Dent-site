@@ -61,7 +61,25 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://angel-denta.ru/services/all-on-4.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/services/elajnery.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://angel-denta.ru/services/otbelivanie.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/services/zub-mudrosti.html</loc>
     <lastmod>2026-08-24</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
