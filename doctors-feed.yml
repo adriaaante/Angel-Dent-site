@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shop version="2.0" date="2026-08-31 19:23">
+  <name>Ангел-Дент</name>
+  <company>ООО «АНГЕЛ-ДЕНТ»</company>
+  <url>https://angel-denta.ru/</url>
+  <picture>https://angel-denta.ru/assets/img/logo.png</picture>
+  <email>angel.dent@bk.ru</email>
+  <doctors>
+    <doctor id="drobkova">
+      <name>Дробкова Кристина Олеговна</name>
+      <url>https://angel-denta.ru/doctors/drobkova.html</url>
+      <surname>Дробкова</surname>
+      <first_name>Кристина</first_name>
+      <patronymic>Олеговна</patronymic>
+      <picture>https://angel-denta.ru/assets/img/doctors/drobkova.png</picture>
+      <description>Главный врач, стоматолог-ортодонт. Брекеты, элайнеры, исправление прикуса у взрослых и подростков.</description>
+    </doctor>
+    <doctor id="geworkyan">
+      <name>Геворкян Санатрук Иванович</name>
+      <url>https://angel-denta.ru/doctors/geworkyan.html</url>
+      <surname>Геворкян</surname>
+      <first_name>Санатрук</first_name>
+      <patronymic>Иванович</patronymic>
+      <picture>https://angel-denta.ru/assets/img/doctors/geworkyan.png</picture>
+      <description>Стоматолог-хирург, имплантолог. Удаление зубов, дентальная имплантация.</description>
+    </doctor>
+    <doctor id="rustamli">
+      <name>Рустамли Руслан Рустамович</name>
+      <url>https://angel-denta.ru/doctors/rustamli.html</url>
+      <surname>Рустамли</surname>
+      <first_name>Руслан</first_name>
+      <patronymic>Рустамович</patronymic>
+      <picture>https://angel-denta.ru/assets/img/doctors/rustamli.png</picture>
+      <description>Стоматолог-хирург, имплантолог. Удаление зубов любой сложности, имплантация.</description>
+    </doctor>
+    <doctor id="rustamov">
+      <name>Рустамов Эмиль Дилгамович</name>
+      <url>https://angel-denta.ru/doctors/rustamov.html</url>
+      <surname>Рустамов</surname>
+      <first_name>Эмиль</first_name>
+      <patronymic>Дилгамович</patronymic>
+      <picture>https://angel-denta.ru/assets/img/doctors/rustamov.png</picture>
+      <description>Стоматолог-ортопед. Протезирование зубов: коронки, виниры, протезы на имплантах.</description>
+    </doctor>
+  </doctors>
+  <clinics>
+    <clinic id="clinic">
+      <name>Стоматология «Ангел-Дент»</name>
+      <url>https://angel-denta.ru/</url>
+      <picture>https://angel-denta.ru/assets/img/logo.png</picture>
+      <city>г. Реутов</city>
+      <address>Московская область, г. Реутов, ул. Победы, д. 22</address>
+      <email>angel.dent@bk.ru</email>
+      <phone>+79104588808</phone>
+      <company_id>1155929397</company_id>
+    </clinic>
+  </clinics>
+  <services>
+    <service id="konsultaciya-ortodonta">
+      <name>Первичная консультация ортодонта</name>
+    </service>
+    <service id="priyom-hirurga">
+      <name>Приём стоматолога-хирурга</name>
+    </service>
+    <service id="priyom-ortopeda">
+      <name>Приём стоматолога-ортопеда</name>
+    </service>
+  </services>
+  <offers>
+    <offer id="drobkova-konsultaciya-ortodonta">
+      <url>https://angel-denta.ru/doctors/drobkova.html</url>
+      <online_schedule>false</online_schedule>
+      <oms>false</oms>
+      <appointment>true</appointment>
+      <price>
+        <base_price>0</base_price>
+        <currency>RUR</currency>
+      </price>
+      <service id="konsultaciya-ortodonta" />
+      <clinic id="clinic">
+        <doctor id="drobkova">
+          <speciality>стоматолог-ортодонт</speciality>
+          <adult_appointment>true</adult_appointment>
+          <children_appointment>false</children_appointment>
+          <house_call>false</house_call>
+          <telemed>false</telemed>
+          <is_base_service>true</is_base_service>
+        </doctor>
+      </clinic>
+    </offer>
+    <offer id="geworkyan-priyom-hirurga">
+      <url>https://angel-denta.ru/doctors/geworkyan.html</url>
+      <online_schedule>false</online_schedule>
+      <oms>false</oms>
+      <appointment>true</appointment>
+      <service id="priyom-hirurga" />
+      <clinic id="clinic">
+        <doctor id="geworkyan">
+          <speciality>стоматолог-хирург</speciality>
+          <adult_appointment>true</adult_appointment>
+          <children_appointment>false</children_appointment>
+          <house_call>false</house_call>
+          <telemed>false</telemed>
+          <is_base_service>true</is_base_service>
+        </doctor>
+      </clinic>
+    </offer>
+    <offer id="rustamli-priyom-hirurga">
+      <url>https://angel-denta.ru/doctors/rustamli.html</url>
+      <online_schedule>false</online_schedule>
+      <oms>false</oms>
+      <appointment>true</appointment>
+      <service id="priyom-hirurga" />
+      <clinic id="clinic">
+        <doctor id="rustamli">
+          <speciality>стоматолог-хирург</speciality>
+          <adult_appointment>true</adult_appointment>
+          <children_appointment>false</children_appointment>
+          <house_call>false</house_call>
+          <telemed>false</telemed>
+          <is_base_service>true</is_base_service>
+        </doctor>
+      </clinic>
+    </offer>
+    <offer id="rustamov-priyom-ortopeda">
+      <url>https://angel-denta.ru/doctors/rustamov.html</url>
+      <online_schedule>false</online_schedule>
+      <oms>false</oms>
+      <appointment>true</appointment>
+      <service id="priyom-ortopeda" />
+      <clinic id="clinic">
+        <doctor id="rustamov">
+          <speciality>стоматолог-ортопед</speciality>
+          <adult_appointment>true</adult_appointment>
+          <children_appointment>false</children_appointment>
+          <house_call>false</house_call>
+          <telemed>false</telemed>
+          <is_base_service>true</is_base_service>
+        </doctor>
+      </clinic>
+    </offer>
+  </offers>
+</shop>
