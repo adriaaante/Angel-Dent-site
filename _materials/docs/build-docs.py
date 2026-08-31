@@ -423,6 +423,18 @@ def next_no(cfg, counter):
     return n
 
 
+def fmt_no(cfg, n):
+    """Номер документа с буквенной серией проекта, напр. «АД-1548».
+
+    Серия введена владельцем 31.08.2026: у ИП одна книга учёта и сквозная
+    нумерация, но по номеру должно быть сразу видно, что документ по
+    клиникам Ангел-Дент, и он не должен путаться с документами других
+    проектов. Документы, выпущенные ДО этой даты, остаются без префикса —
+    задним числом номера не переписываем.
+    """
+    return f"{cfg['counters'].get('prefix', '')}{n}"
+
+
 def log_doc(cfg, kind, no, doc_date, amount, title, note=""):
     """Записать документ в реестр (без дублей по kind+no)."""
     entry = {"kind": kind, "no": str(no), "date": doc_date,
@@ -1064,7 +1076,7 @@ def month_to_iso(label):
 
 def cmd_invoice(cfg, args):
     amount = args.amount if args.amount is not None else cfg["contract"]["monthly"]
-    no = args.no or next_no(cfg, "doc_no")
+    no = args.no or fmt_no(cfg, next_no(cfg, "doc_no"))
     inv_date = args.date or date.today().isoformat()
     build_invoice(cfg, no, inv_date, amount, args.month, partial=args.partial,
                   basis=args.basis, name_override=args.name or "")
@@ -1076,7 +1088,7 @@ def cmd_invoice(cfg, args):
 
 def cmd_act(cfg, args):
     amount = args.amount if args.amount is not None else cfg["contract"]["monthly"]
-    no = args.no or next_no(cfg, "act_no")
+    no = args.no or fmt_no(cfg, next_no(cfg, "act_no"))
     act_date = args.date or date.today().isoformat()
     build_act(cfg, no, act_date, amount, args.month, paid_by=args.paid_by, retro=args.retro)
     log_doc(cfg, "act", no, act_date, amount, f"Акт № {no} за {args.month}",
@@ -1125,7 +1137,7 @@ def main():
     p = sub.add_parser("invoice", help="счёт на оплату")
     p.add_argument("--month", default="", help='период для реестра, напр. "август 2026" (в счёте не печатается)')
     p.add_argument("--amount", type=float, help="сумма, руб. (по умолчанию — из договора)")
-    p.add_argument("--no", type=int, help="номер счёта (по умолчанию — следующий)")
+    p.add_argument("--no", help="номер счёта, напр. АД-1548 (по умолчанию — следующий по счётчику)")
     p.add_argument("--date", help="дата ISO, напр. 2026-08-01 (по умолчанию — сегодня)")
     p.add_argument("--partial", action="store_true", help="частичная оплата")
     p.add_argument("--basis", default="contract",
@@ -1137,7 +1149,7 @@ def main():
     p = sub.add_parser("act", help="акт сдачи-приёмки")
     p.add_argument("--month", required=True, help='период, напр. "август 2026"')
     p.add_argument("--amount", type=float, help="сумма, руб. (по умолчанию — из договора)")
-    p.add_argument("--no", type=int, help="номер акта (по умолчанию — следующий)")
+    p.add_argument("--no", help="номер акта, напр. АД-4 (по умолчанию — следующий по счётчику)")
     p.add_argument("--date", help="дата ISO (по умолчанию — сегодня)")
     p.add_argument("--paid-by", default="", help='напр. "счёта № 1547 от 01.08.2026 г."')
     p.add_argument("--retro", action="store_true", help="акт за период до заключения договора")
