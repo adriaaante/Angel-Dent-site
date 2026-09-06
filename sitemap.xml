@@ -121,6 +121,18 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://angel-denta.ru/doctors/kuzminov.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://angel-denta.ru/doctors/gushchina.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://angel-denta.ru/about.html</loc>
     <lastmod>2026-05-18</lastmod>
     <priority>0.7</priority>
