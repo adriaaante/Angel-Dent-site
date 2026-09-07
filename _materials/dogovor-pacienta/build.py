@@ -155,6 +155,50 @@ def add_footer(doc):
         run = par.add_run(); _set_font(run, 8); run._r.append(el)
 
 
+def form_table(doc, rows, label_w=5.2, total_w=17.0, tall=frozenset()):
+    """Таблица «подпись поля | значение» с тонкой сеткой.
+
+    Пустое значение — клетка под рукописное заполнение; строки из `tall`
+    выше (Ф. И. О., адрес, подпись), остальные компактные.
+    """
+    from docx.enum.table import WD_TABLE_ALIGNMENT
+    from docx.oxml import OxmlElement
+    from docx.shared import RGBColor
+    table = doc.add_table(rows=len(rows), cols=2)
+    table.style = "Table Grid"
+    table.alignment = WD_TABLE_ALIGNMENT.LEFT
+    set_widths(table, [label_w, total_w - label_w])
+    # тонкая серая сетка вместо чёрной по умолчанию
+    borders = table._tbl.tblPr.find(qn("w:tblBorders"))
+    if borders is None:
+        borders = OxmlElement("w:tblBorders")
+        table._tbl.tblPr.append(borders)
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        el = borders.find(qn(f"w:{edge}"))
+        if el is None:
+            el = OxmlElement(f"w:{edge}")
+            borders.append(el)
+        el.set(qn("w:val"), "single")
+        el.set(qn("w:sz"), "4")
+        el.set(qn("w:color"), "A6A6A6")
+    for row, (label, value) in zip(table.rows, rows):
+        row.height = Cm(0.95 if label in tall else 0.62)
+        lc, vc = row.cells
+        lc.text = ""
+        par = lc.paragraphs[0]
+        par.paragraph_format.space_after = Pt(0)
+        run = par.add_run(label)
+        _set_font(run, 9)
+        run.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+        vc.text = ""
+        par = vc.paragraphs[0]
+        par.paragraph_format.space_after = Pt(0)
+        _set_font(par.add_run(placeholders(value)))
+        for cell in (lc, vc):
+            cell.vertical_alignment = 1  # WD_ALIGN_VERTICAL.CENTER
+    return table
+
+
 def build_docx() -> Path:
     doc = docx_base()
     add_footer(doc)
@@ -199,73 +243,59 @@ def build_docx() -> Path:
         cell_text(row.cells[1], [c])
     p(doc, "", space=8)
 
-    # ── Реквизиты и подписи: отдельным листом, чтобы блок не рвался ────────
+    # ── Реквизиты и подписи: отдельным листом, таблицами-формами ───────────
+    # Подчёркивания в две колонки в Word «плывут» — владелец попросил чистые
+    # таблицы: слева подпись поля, справа значение или пустая клетка под руку.
     doc.add_page_break()
     p(doc, "15. Реквизиты и подписи Сторон", bold=True, align="left", size=11,
-      space=4, keep_with_next=True)
+      space=6, keep_with_next=True)
 
     c, b, sg, cl = T.COMPANY, T.BANK, T.SIGNATORY, T.CLINIC
-    p(doc, "ИСПОЛНИТЕЛЬ", bold=True, align="left", space=2)
-    req = set_widths(borderless(doc.add_table(rows=1, cols=2)), [8.75, 8.75])
-    cell_text(req.rows[0].cells[0], [
-        c["full"],
-        f"Место нахождения: {c['address']}",
-        f"Место оказания услуг: {cl['address']}",
-        f"ОГРН {c['ogrn']}   ИНН {c['inn']}   КПП {c['kpp']}",
-        f"Лицензия № {c['license']}, бессрочно",
-    ])
-    cell_text(req.rows[0].cells[1], [
-        f"Расчётный счёт {b['account']}",
-        f"Банк: {b['bank']}",
-        f"Корр. счёт {b['corr']}   БИК {b['bik']}",
-        f"Телефон {cl['phone']}   Сайт {cl['site']}",
-        f"Электронная почта {cl['email']}",
-    ])
-    p(doc, "", space=4)
-    p(doc, f"{sg['short_position']} ____________________ / {sg['short_name']}   М. П.",
-      align="left", space=1)
-    p(doc, "                              (подпись)", align="left", space=8, size=9)
+    p(doc, "ИСПОЛНИТЕЛЬ", bold=True, align="left", space=3, keep_with_next=True)
+    form_table(doc, [
+        ("Наименование", c["full"]),
+        ("Место нахождения", c["address"]),
+        ("Место оказания услуг", cl["address"]),
+        ("ОГРН / ИНН / КПП", f"{c['ogrn']} / {c['inn']} / {c['kpp']}"),
+        ("Лицензия", f"№ {c['license']}, предоставлена бессрочно"),
+        ("Банк", f"{b['bank']}, БИК {b['bik']}"),
+        ("Расчётный счёт", b["account"]),
+        ("Корреспондентский счёт", b["corr"]),
+        ("Телефон, почта, сайт", f"{cl['phone']} · {cl['email']} · {cl['site']}"),
+        ("Подпись", f"{sg['short_position']}  __________________  "
+                    f"/ {sg['short_name']}      М. П."),
+    ], tall={"Подпись"})
+    p(doc, "", space=8)
 
-    # Пациент — вторая и последняя сторона. Законный представитель — одной
-    # строкой, только когда пациент — ребёнок или недееспособный.
-    p(doc, "ПАЦИЕНТ", bold=True, align="left", space=2)
-    pat = set_widths(borderless(doc.add_table(rows=1, cols=2)), [8.75, 8.75])
-    cell_text(pat.rows[0].cells[0], [
-        "Ф. И. О. ____________________________",
-        "____________________________________",
-        "Дата рождения ______________________",
-        "Паспорт: серия ______ № _____________",
-        "выдан _______________________________",
-        "____________________________________",
-    ])
-    cell_text(pat.rows[0].cells[1], [
-        "Адрес места жительства ______________",
-        "____________________________________",
-        "Телефон ____________________________",
-        "Электронная почта __________________",
-        "",
-        "Подпись ____________________________",
-    ])
+    p(doc, "ПАЦИЕНТ", bold=True, align="left", space=3, keep_with_next=True)
+    form_table(doc, [
+        ("Фамилия, имя, отчество", ""),
+        ("Дата рождения", ""),
+        ("Паспорт: серия, номер", ""),
+        ("Кем и когда выдан", ""),
+        ("Адрес места жительства", ""),
+        ("Телефон", ""),
+        ("Электронная почта", ""),
+        ("Подпись", ""),
+    ], tall={"Фамилия, имя, отчество", "Кем и когда выдан", "Адрес места жительства",
+             "Подпись"})
+    p(doc, "", space=8)
+
+    p(doc, "ЗАКОННЫЙ ПРЕДСТАВИТЕЛЬ ПАЦИЕНТА — заполняется, если Пациент не достиг "
+           "15 лет или признан недееспособным", bold=True, align="left", space=3,
+      keep_with_next=True)
+    form_table(doc, [
+        ("Фамилия, имя, отчество", ""),
+        ("Паспорт: серия, номер, кем и когда выдан", ""),
+        ("Адрес места жительства, телефон", ""),
+        ("Кем приходится Пациенту", ""),
+        ("Документ о полномочиях (свидетельство о рождении, акт органа опеки)", ""),
+        ("Подпись", ""),
+    ], tall={"Фамилия, имя, отчество", "Паспорт: серия, номер, кем и когда выдан",
+             "Адрес места жительства, телефон", "Подпись"})
     p(doc, "", space=6)
-
-    p(doc, "Законный представитель Пациента (заполняется, если Пациент не достиг "
-           "15 лет или признан недееспособным)", bold=True, align="left", space=2)
-    rep = set_widths(borderless(doc.add_table(rows=1, cols=2)), [8.75, 8.75])
-    cell_text(rep.rows[0].cells[0], [
-        "Ф. И. О. ____________________________",
-        "____________________________________",
-        "Паспорт: серия ______ № _____________",
-        "выдан _______________________________",
-    ])
-    cell_text(rep.rows[0].cells[1], [
-        "Адрес, телефон _____________________",
-        "____________________________________",
-        "Кем приходится, документ о полномочиях",
-        "____________________________________",
-    ])
-    p(doc, "", space=3)
-    p(doc, "Подпись представителя ____________________________", align="left", space=3)
-    p(doc, "Экземпляр Договора получен. Со всеми условиями Договора, прейскурантом и "
+    p(doc, "Подписывая Договор, Пациент (законный представитель) подтверждает, что "
+           "экземпляр Договора получен, а с его условиями, прейскурантом и "
            "информацией, указанной в п. 13.5, ознакомлен(а) до подписания.",
       size=9, italic=True)
 
