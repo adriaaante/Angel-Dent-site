@@ -129,15 +129,15 @@ def cell_text(cell, lines, bold_first=False, size=None):
         _set_font(par.add_run(placeholders(line)), size, bold=bold_first and i == 0)
 
 
-def add_footer(doc):
-    """Только номер страницы: подписи сторон — в разделе 15 (решение владельца)."""
+def add_footer(doc, title="Договор на оказание платных медицинских "
+                          "(стоматологических) услуг"):
+    """Название документа и номер страницы; подписи — только в конце бланка."""
     from docx.oxml import OxmlElement
     footer = doc.sections[0].footer
     par = footer.paragraphs[0]
     par.alignment = WD_ALIGN_PARAGRAPH.CENTER
     par.paragraph_format.space_before = Pt(2)
-    _set_font(par.add_run("Договор на оказание платных медицинских (стоматологических) "
-                          "услуг · страница "), 8)
+    _set_font(par.add_run(f"{title} · страница "), 8)
     for tag, txt in (("begin", None), (None, "PAGE"), ("end", None)):
         if tag:
             el = OxmlElement("w:fldChar"); el.set(qn("w:fldCharType"), tag)
@@ -156,7 +156,7 @@ def add_footer(doc):
 
 
 def form_table(doc, rows, label_w=5.2, total_w=17.0, tall=frozenset(),
-               extra_tall=frozenset()):
+               extra_tall=frozenset(), row_h=0.58):
     """Таблица «подпись поля | значение» с тонкой сеткой.
 
     Пустое значение — клетка под рукописное заполнение; строки из `tall`
@@ -183,7 +183,8 @@ def form_table(doc, rows, label_w=5.2, total_w=17.0, tall=frozenset(),
         el.set(qn("w:sz"), "4")
         el.set(qn("w:color"), "A6A6A6")
     for row, (label, value) in zip(table.rows, rows):
-        row.height = Cm(1.1 if label in extra_tall else 0.85 if label in tall else 0.58)
+        row.height = Cm(1.1 if label in extra_tall else
+                        0.85 if label in tall else row_h)
         lc, vc = row.cells
         lc.text = ""
         par = lc.paragraphs[0]
