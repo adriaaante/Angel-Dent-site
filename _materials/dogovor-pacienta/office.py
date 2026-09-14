@@ -158,6 +158,9 @@ def build_admin() -> Path:
             B._set_font(par.add_run(value), 9)
     B.p(doc, "", space=8)
 
+    K.heading(doc, X.ADMIN_MINIMUM_TITLE)
+    K.bullets(doc, X.ADMIN_MINIMUM, size=10)
+    B.p(doc, "", space=6)
     K.heading(doc, X.ADMIN_STAND_TITLE)
     K.bullets(doc, X.ADMIN_STAND, size=10)
     B.p(doc, "", space=6)

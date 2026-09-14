@@ -179,28 +179,37 @@ def build_pdn() -> Path:
 
 
 def build_photo() -> Path:
-    """Согласие на съёмку и публикацию изображений (ст. 152.1 ГК РФ)."""
-    doc = B.docx_base()
+    """Съёмка и публикация изображений: ст. 152.1 ГК РФ + ст. 10.1 № 152-ФЗ."""
+    doc = B.docx_base(compact=True)
     B.add_footer(doc, "Согласие на фотографирование, видеосъёмку и использование "
                       "изображений")
     F.clinic_head(doc)
     F.title(doc, X.PHOTO_TITLE, X.PHOTO_INTRO)
 
+    B.p(doc, X.PHOTO_OPERATOR, space=5, size=9.5)
     B.form_table(doc, [
         ("Фамилия, имя, отчество", ""),
         ("Дата рождения", ""),
+    ] + X.PHOTO_CONTACT_ROWS + [
         ("Законный представитель (для Пациента до 18 лет): Ф. И. О., документ о "
          "полномочиях", ""),
-    ], tall={"Фамилия, имя, отчество",
-             "Законный представитель (для Пациента до 18 лет): Ф. И. О., документ о "
-             "полномочиях"})
-    B.p(doc, "", space=6)
+    ], row_h=0.5, tall={"Фамилия, имя, отчество"},
+       extra_tall={"Законный представитель (для Пациента до 18 лет): Ф. И. О., "
+                   "документ о полномочиях"})
+    B.p(doc, "", space=5)
 
     for block in X.PHOTO_BLOCKS:
-        B.p(doc, block, space=4)
+        B.p(doc, block, space=3)
     checkboxes(doc, X.PHOTO_CHECKS)
-    B.p(doc, "", space=5)
-    heading(doc, "Условия использования")
+    B.p(doc, "", space=4)
+    heading(doc, "Цель, состав данных и ресурсы (приказ Роскомнадзора № 18)")
+    B.p(doc, X.PHOTO_PURPOSE, space=3)
+    B.p(doc, X.PHOTO_CATEGORIES, space=3)
+    B.p(doc, X.PHOTO_RESOURCES, space=4)
+    heading(doc, "Условия и запреты, установленные Пациентом")
+    bullets(doc, X.PHOTO_CONDITIONS, size=10)
+    B.p(doc, "", space=4)
+    heading(doc, "Условия использования и срок")
     for block in X.PHOTO_TERMS:
         B.p(doc, block, space=3)
     B.p(doc, "", space=6)
@@ -213,32 +222,11 @@ def build_photo() -> Path:
     return path
 
 
-def build_disclosure() -> Path:
-    """Кому клиника вправе сообщать сведения о лечении."""
-    doc = B.docx_base()
-    B.add_footer(doc, "Согласие на передачу сведений, составляющих врачебную тайну")
-    F.clinic_head(doc)
-    F.title(doc, X.DISCLOSURE_TITLE, X.DISCLOSURE_INTRO)
-
-    B.form_table(doc, X.DISCLOSURE_ROWS, tall={X.DISCLOSURE_ROWS[0][0]})
-    B.p(doc, "", space=5)
-    B.p(doc, "В соответствии с пунктом 5 части 5 статьи 19 и частью 3 статьи 13 "
-             "Федерального закона от 21.11.2011 № 323-ФЗ разрешаю передавать "
-             "сведения, составляющие врачебную тайну, следующим лицам:", space=4)
-    B.form_table(doc, X.DISCLOSURE_PERSON_ROWS,
-                 tall={r[0] for r in X.DISCLOSURE_PERSON_ROWS})
-    B.p(doc, "", space=5)
-    for block in X.DISCLOSURE_BODY:
-        B.p(doc, block, space=3)
-    B.p(doc, "", space=6)
-    B.form_table(doc, [
-        ("Подпись Пациента (законного представителя), расшифровка", ""),
-        ("Дата", ""),
-    ], tall={"Подпись Пациента (законного представителя), расшифровка"})
-    path = OUT / "Согласие-на-информирование-третьих-лиц.docx"
-    doc.save(path)
-    return path
-
+# ⚠️ Отдельного бланка «Согласие на информирование третьих лиц» больше нет
+# (14.09.2026): он слово в слово повторял блок в ИДС по приказу № 1051н — там
+# пациент и так называет лиц, которым можно сообщать сведения (п. 5 ч. 5 ст. 19
+# № 323-ФЗ). Условия из того бланка перенесены в ИДС (IDS_DISCLOSURE_TERMS),
+# документ и лишняя подпись убраны.
 
 def build_escort() -> Path:
     """Ребёнка привёл не родитель: согласие представителя на сопровождение."""
@@ -270,7 +258,7 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     made = [build_consent(item) for item in X.CONSENTS]
     made += [build_refusal(), build_partial_refusal(), build_pdn(),
-             build_photo(), build_disclosure(), build_escort()]
+             build_photo(), build_escort()]
     if "--pdf" in sys.argv:
         made += [pdf for pdf in (B.build_pdf(d) for d in list(made)) if pdf]
     for f in made:

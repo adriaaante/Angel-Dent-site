@@ -80,7 +80,7 @@ def checklist(doc, rows):
 
 
 def build_ids() -> Path:
-    doc = B.docx_base()
+    doc = B.docx_base(compact=True)   # часть 2 укоротилась — держим бланк в 2 листа
     B.add_footer(doc, "Информированное добровольное согласие на медицинское "
                       "вмешательство")
     clinic_head(doc)
@@ -106,7 +106,8 @@ def build_ids() -> Path:
              "возможные осложнения по каждому из них приведены здесь же.",
         align="left", size=9, space=4, italic=True)
     checklist(doc, F.IDS_PROCEDURES)
-    B.p(doc, "", space=5)
+    B.p(doc, "", space=3)
+    B.p(doc, F.IDS_PART2_NOTE, size=9, space=5, italic=True)
     for block in F.IDS_EXPLAIN:
         B.p(doc, block, space=2)
 
@@ -114,7 +115,10 @@ def build_ids() -> Path:
     B.p(doc, F.IDS_DISCLOSURE, space=3, keep_with_next=True)
     B.form_table(doc, [("Фамилия, имя, отчество, контактный телефон", ""),
                        ("Фамилия, имя, отчество, контактный телефон", "")])
-    B.p(doc, "", space=6)
+    B.p(doc, "", space=3)
+    for block in F.IDS_DISCLOSURE_TERMS:
+        B.p(doc, block, size=9.5, space=2)
+    B.p(doc, "", space=5)
     B.form_table(doc, F.IDS_SIGN_ROWS,
                  tall={F.IDS_SIGN_ROWS[0][0], F.IDS_SIGN_ROWS[1][0]})
 
