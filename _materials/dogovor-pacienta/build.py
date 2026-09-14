@@ -49,15 +49,17 @@ def _set_font(run, size=None, bold=False, italic=False):
     run._element.rPr.rFonts.set(qn("w:eastAsia"), BODY_FONT)
 
 
-def docx_base() -> Document:
+def docx_base(compact: bool = False) -> Document:
+    """compact=True — плотнее интервалы: длинный бланк не «роняет» подписи
+    на отдельную страницу, где кроме них ничего нет."""
     doc = Document()
     st = doc.styles["Normal"]
     st.font.name = BODY_FONT
     st.font.size = Pt(BODY_SIZE)
     st.element.rPr.rFonts.set(qn("w:eastAsia"), BODY_FONT)
     pf = st.paragraph_format
-    pf.space_after = Pt(3)
-    pf.line_spacing = 1.1
+    pf.space_after = Pt(2 if compact else 3)
+    pf.line_spacing = 1.03 if compact else 1.1
     for s in doc.sections:
         s.top_margin = Cm(1.8)
         s.bottom_margin = Cm(1.6)

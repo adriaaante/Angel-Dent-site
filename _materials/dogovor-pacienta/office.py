@@ -52,7 +52,7 @@ def numbered_sections(doc, blocks):
 
 
 def build_rules() -> Path:
-    doc = B.docx_base()
+    doc = B.docx_base(compact=True)
     B.add_footer(doc, "Правила внутреннего распорядка для пациентов")
     F.clinic_head(doc)
     approval_block(doc)
@@ -148,7 +148,7 @@ def build_admin() -> Path:
     F.clinic_head(doc)
     F.title(doc, X.ADMIN_TITLE, X.ADMIN_INTRO)
 
-    table = P.grid(doc, X.ADMIN_HEAD, [4.2, 7.0, 4.4, 10.8], len(X.ADMIN_ROWS),
+    table = P.grid(doc, X.ADMIN_HEAD, [3.8, 6.4, 4.0, 10.0], len(X.ADMIN_ROWS),
                    row_h=0.6)
     for row, values in zip(table.rows[1:], X.ADMIN_ROWS):
         for cell, value in zip(row.cells, values):

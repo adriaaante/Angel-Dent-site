@@ -53,7 +53,7 @@ def heading(doc, text):
 
 def build_consent(item: dict) -> Path:
     """ИДС по виду лечения: цели и методы → риски → особенности → подписи."""
-    doc = B.docx_base()
+    doc = B.docx_base(compact=True)
     short = item["title"].split("\n")[-1]
     B.add_footer(doc, f"Информированное добровольное согласие: {short[:70]}")
     F.clinic_head(doc)
@@ -240,11 +240,37 @@ def build_disclosure() -> Path:
     return path
 
 
+def build_escort() -> Path:
+    """Ребёнка привёл не родитель: согласие представителя на сопровождение."""
+    doc = B.docx_base(compact=True)
+    B.add_footer(doc, "Согласие законного представителя на сопровождение ребёнка")
+    F.clinic_head(doc)
+    F.title(doc, X.ESCORT_TITLE, X.ESCORT_INTRO)
+
+    heading(doc, "Ребёнок и законный представитель")
+    B.form_table(doc, X.ESCORT_ROWS, row_h=0.52,
+                 tall={X.ESCORT_ROWS[0][0], X.ESCORT_ROWS[1][0],
+                       X.ESCORT_ROWS[2][0], X.ESCORT_ROWS[3][0]})
+    B.p(doc, "", space=3)
+    heading(doc, "Сопровождающее лицо")
+    B.form_table(doc, X.ESCORT_PERSON_ROWS, row_h=0.52,
+                 tall={X.ESCORT_PERSON_ROWS[0][0]})
+    B.p(doc, "", space=3)
+    for block in X.ESCORT_BODY:
+        B.p(doc, block, space=3)
+    B.p(doc, "", space=4)
+    B.form_table(doc, X.ESCORT_TERM_ROWS, row_h=0.55,
+                 tall={X.ESCORT_TERM_ROWS[1][0], X.ESCORT_TERM_ROWS[2][0]})
+    path = OUT / "Согласие-на-сопровождение-ребёнка.docx"
+    doc.save(path)
+    return path
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     made = [build_consent(item) for item in X.CONSENTS]
     made += [build_refusal(), build_partial_refusal(), build_pdn(),
-             build_photo(), build_disclosure()]
+             build_photo(), build_disclosure(), build_escort()]
     if "--pdf" in sys.argv:
         made += [pdf for pdf in (B.build_pdf(d) for d in list(made)) if pdf]
     for f in made:

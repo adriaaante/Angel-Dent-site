@@ -83,24 +83,24 @@ def build_plan() -> Path:
 
 
 def build_addendum() -> Path:
-    doc = B.docx_base()
+    doc = B.docx_base(compact=True)
     B.add_footer(doc, "Дополнительное соглашение об изменении плана лечения")
     F.clinic_head(doc)
     F.title(doc, X.ADD_TITLE, X.ADD_INTRO)
 
-    B.form_table(doc, X.ADD_HEAD_ROWS, tall={X.ADD_HEAD_ROWS[0][0]})
-    B.p(doc, "", space=5)
+    B.form_table(doc, X.ADD_HEAD_ROWS, tall={X.ADD_HEAD_ROWS[0][0]}, row_h=0.5)
+    B.p(doc, "", space=3)
     for block in X.ADD_BODY:
         B.p(doc, block, space=3)
     B.p(doc, "", space=4)
-    B.form_table(doc, X.ADD_REASON_ROWS, extra_tall={X.ADD_REASON_ROWS[0][0]})
-    B.p(doc, "", space=5)
+    B.form_table(doc, X.ADD_REASON_ROWS, tall={X.ADD_REASON_ROWS[0][0]})
+    B.p(doc, "", space=3)
 
     K.heading(doc, "Изменения в плане лечения")
-    grid(doc, X.ADD_TABLE_HEAD, [1.0, 4.6, 6.4, 1.8, 3.2], X.ADD_ROWS)
-    B.p(doc, "", space=5)
-    B.form_table(doc, X.ADD_TOTAL_ROWS, tall={X.ADD_TOTAL_ROWS[1][0]})
-    B.p(doc, "", space=6)
+    grid(doc, X.ADD_TABLE_HEAD, [1.0, 4.6, 6.4, 1.8, 3.2], X.ADD_ROWS, row_h=0.56)
+    B.p(doc, "", space=3)
+    B.form_table(doc, X.ADD_TOTAL_ROWS, row_h=0.5)
+    B.p(doc, "", space=4)
     B.form_table(doc, X.ADD_SIGN_ROWS, extra_tall={X.ADD_SIGN_ROWS[0][0]},
                  tall={X.ADD_SIGN_ROWS[1][0]})
     path = OUT / "Дополнительное-соглашение-об-изменении-плана-лечения.docx"
