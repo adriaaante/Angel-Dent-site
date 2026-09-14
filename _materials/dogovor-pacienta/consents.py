@@ -20,6 +20,7 @@ sys.path.insert(0, str(HERE))
 import build as B  # noqa: E402
 import consents_text as X  # noqa: E402
 import forms as F  # noqa: E402
+import papers as P  # noqa: E402  — grid
 
 OUT = HERE / "out"
 
@@ -85,6 +86,23 @@ def build_consent(item: dict) -> Path:
              "вмешательство на изложенных условиях.", bold=True, space=6)
 
     B.form_table(doc, X.SIGN_ROWS, tall={X.SIGN_ROWS[0][0], X.SIGN_ROWS[1][0]})
+
+    # Лист учёта дозовых нагрузок печатается на обороте согласия на рентген:
+    # подписываются они в один момент, шапка у них общая, и лист сразу
+    # остаётся в карте — отдельный бланк на это заводить незачем.
+    if item.get("key") == "rentgen":
+        doc.add_page_break()
+        import extra as E
+        import extra_text as XT
+        F.clinic_head(doc)
+        F.title(doc, XT.DOSE_TITLE, XT.DOSE_INTRO)
+        B.form_table(doc, XT.DOSE_HEAD_ROWS, tall={XT.DOSE_HEAD_ROWS[0][0]})
+        B.p(doc, "", space=5)
+        P.grid(doc, XT.DOSE_TABLE_HEAD, [2.0, 6.0, 3.0, 2.4, 3.6], XT.DOSE_ROWS,
+               row_h=0.62, size=9)
+        B.p(doc, "", space=5)
+        bullets(doc, XT.DOSE_NOTES, size=9.5)
+
     path = OUT / f"{item['file']}.docx"
     doc.save(path)
     return path

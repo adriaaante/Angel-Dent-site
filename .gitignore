@@ -19,3 +19,8 @@ __pycache__/
 
 # контактный лист сторожа ориентации сканов — служебный, в git не нужен
 assets/img/docs/_originals/_orientation-sheet.png
+
+# Пакет документов клиники — пересобирается из out/ командой
+# python3 _materials/dogovor-pacienta/package.py
+_materials/dogovor-pacienta/package/
+_materials/dogovor-pacienta/Документы-клиники.zip

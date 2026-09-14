@@ -178,27 +178,17 @@ def build_docs_request() -> Path:
     return path
 
 
-def build_dose() -> Path:
-    doc = B.docx_base()
-    B.add_footer(doc, "Лист учёта дозовых нагрузок пациента")
-    F.clinic_head(doc)
-    F.title(doc, X.DOSE_TITLE, X.DOSE_INTRO)
-
-    B.form_table(doc, X.DOSE_HEAD_ROWS, tall={X.DOSE_HEAD_ROWS[0][0]})
-    B.p(doc, "", space=6)
-    P.grid(doc, X.DOSE_TABLE_HEAD, [2.0, 6.0, 3.0, 2.4, 3.6], X.DOSE_ROWS,
-           row_h=0.62, size=9)
-    B.p(doc, "", space=6)
-    K.bullets(doc, X.DOSE_NOTES, size=9.5)
-    path = OUT / "Лист-учёта-дозовых-нагрузок.docx"
-    doc.save(path)
-    return path
-
+# ⚠️ Отдельного бланка «Лист учёта дозовых нагрузок» нет (14.09.2026):
+# он печатается на обороте ИДС на рентгенологическое исследование
+# (`consents.py` → build_consent, ветка key == "rentgen"). Подписываются они
+# в один момент, шапка общая, лист сразу ложится в карту — второй документ
+# и вторая шапка были лишними. Тексты листа остались в `extra_text.py`
+# (DOSE_*), оттуда их и берёт `consents.py`.
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     made = [build_inspection(), build_reply(), build_log(), build_notice(),
-            build_docs_request(), build_dose()]
+            build_docs_request()]
     if "--pdf" in sys.argv:
         made += [pdf for pdf in (B.build_pdf(d) for d in list(made)) if pdf]
     for f in made:
