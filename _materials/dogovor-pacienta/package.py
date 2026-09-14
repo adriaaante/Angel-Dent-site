@@ -318,7 +318,9 @@ h2 .num{color:var(--accent)}
     color:var(--accent);text-decoration:none;border-radius:9px;padding:9px 16px;
     font-weight:600;font-size:14.5px}
 .dl:hover{background:var(--accent);color:#fff}
-.hint{margin:20px 0 0;color:var(--muted);font-size:14.5px}
+.hint{margin:14px 0 0;color:var(--muted);font-size:14.5px}
+.where{margin:0;color:var(--muted);font-size:14px}
+.kit .where{flex:0 0 auto}
 .box{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
      border-radius:12px;padding:18px 22px;margin:24px 0}
 .box.warn{border-left-color:var(--warn);background:var(--warn-soft)}
@@ -425,7 +427,10 @@ def page(zip_name: str = "") -> str:
         f"<span class=chip>{must} обязательных</span>"
         f"<span class=chip>{len(KITS)} комплектов для печати</span>"
         "<span class=chip>Общие для трёх клиник</span></div>",
-        DOWNLOAD_ALL.format(zip=html.escape(zip_name)) if zip_name else
+        (DOWNLOAD_ALL.format(zip=html.escape(zip_name)) +
+         "<p class=hint>Внутри архива — та же страница с кнопками скачивания "
+         "у каждого бланка, папки по разделам и готовые комплекты для печати.</p>")
+        if zip_name else
         "<p class=hint>Все бланки лежат в папках рядом с этой страницей — "
         "кнопка «Скачать .docx» у каждого открывает нужный файл.</p>",
         "</div></header><div class=wrap>",
@@ -450,8 +455,11 @@ def page(zip_name: str = "") -> str:
                 f"<dt>Кто подписывает</dt><dd>{html.escape(who)}</dd>"
                 "</dl>"
                 f"<p class=why>{html.escape(why)}</p>"
-                f"<a class=dl href='{quote(sect)}/{quote(file)}.docx'>"
-                "⤓ Скачать .docx</a></div>")
+                + (f"<a class=dl href='{quote(sect)}/{quote(file)}.docx'>"
+                   "⤓ Скачать .docx</a>" if not zip_name else
+                   f"<p class=where>Файл: <b>{html.escape(sect)}</b> → "
+                   f"{html.escape(file)}.docx</p>")
+                + "</div>")
 
     parts.append("<h2><span class=num>+</span> Готовые комплекты для печати</h2>")
     parts.append("<p class=sect-note>Один PDF на типовую ситуацию: администратор "
@@ -462,8 +470,10 @@ def page(zip_name: str = "") -> str:
             "<div class=kit>"
             f"<b>{html.escape(title)}</b>"
             f"<span>{html.escape(' · '.join(nice(f) for f in files))}</span>"
-            f"<a class=dl href='{quote('Комплекты для печати')}/{quote(title)}.pdf'>"
-            "⤓ PDF</a></div>")
+            + (f"<a class=dl href='{quote('Комплекты для печати')}/{quote(title)}.pdf'>"
+               "⤓ PDF</a>" if not zip_name else
+               "<span class=where>в папке «Комплекты для печати»</span>")
+            + "</div>")
 
     parts.append(
         "<footer>Комплект собран для ООО «АНГЕЛ-ДЕНТ» (клиники «Ангел-Дент», "
