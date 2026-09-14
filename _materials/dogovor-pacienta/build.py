@@ -61,6 +61,9 @@ def docx_base(compact: bool = False) -> Document:
     pf.space_after = Pt(2 if compact else 3)
     pf.line_spacing = 1.03 if compact else 1.1
     for s in doc.sections:
+        # python-docx по умолчанию отдаёт Letter (216×279 мм) — в России печатают
+        # на A4, иначе поля «съезжают» и Word показывает чужой формат листа.
+        s.page_width, s.page_height = Cm(21.0), Cm(29.7)
         s.top_margin = Cm(1.8)
         s.bottom_margin = Cm(1.6)
         s.left_margin = Cm(2.0)      # поле под подшивку, но без «канцелярских» полей
