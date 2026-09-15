@@ -125,6 +125,34 @@ def set_widths(table, widths_cm):
     return table
 
 
+LOGO = HERE / "assets" / "logo-doc.png"
+
+
+def brand_head(doc, lines, logo_cm=1.9):
+    """Фирменная шапка бланка: знак клиники слева, реквизиты справа.
+
+    Логотип лежит в `assets/logo-doc.png` — знак сайта, обрезанный по краям и
+    положенный на белый квадрат (в Word прозрачный PNG на печати даёт серую
+    подложку). Таблица без границ: в Word это единственный способ поставить
+    картинку рядом с текстом так, чтобы блок не «разъезжался».
+    """
+    table = borderless(doc.add_table(rows=1, cols=2))
+    set_widths(table, [logo_cm + 0.5, 17.0 - logo_cm - 0.5])
+    cells = table.rows[0].cells
+    par = cells[0].paragraphs[0]
+    par.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    par.paragraph_format.space_after = Pt(0)
+    if LOGO.exists():
+        par.add_run().add_picture(str(LOGO), width=Cm(logo_cm))
+    cells[1].text = ""
+    for i, (line, bold) in enumerate(lines):
+        par = cells[1].paragraphs[0] if i == 0 else cells[1].add_paragraph()
+        par.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        par.paragraph_format.space_after = Pt(1)
+        _set_font(par.add_run(line), 9.5, bold=bold)
+    return table
+
+
 def cell_text(cell, lines, bold_first=False, size=None):
     cell.text = ""
     for i, line in enumerate(lines):
@@ -209,6 +237,15 @@ def form_table(doc, rows, label_w=5.2, total_w=17.0, tall=frozenset(),
 def build_docx() -> Path:
     doc = docx_base()
     add_footer(doc)
+
+    brand_head(doc, [
+        (f"Стоматология {T.CLINIC['name']}", True),
+        (f"{T.CLINIC['address']}, тел. {T.CLINIC['phone']}", False),
+        (T.COMPANY["full"], False),
+        (f"Лицензия на медицинскую деятельность № {T.COMPANY['license']}, "
+         "предоставлена бессрочно", False),
+    ])
+    p(doc, "", space=8)
 
     for line in T.TITLE.split("\n"):
         p(doc, line, bold=True, align="center", size=12.5, space=2, keep_with_next=True)

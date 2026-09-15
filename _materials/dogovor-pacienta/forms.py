@@ -28,16 +28,29 @@ IDS_NAME = "Информированное-добровольное-соглас
 CARD_NAME = "Медицинская-карта-043у"
 
 
-def clinic_head(doc):
-    """Шапка бланка: клиника и лицензия — заполнять не нужно."""
+def clinic_head(doc, compact: bool = False):
+    """Шапка бланка: знак клиники, реквизиты и лицензия — заполнять не нужно.
+
+    compact=True — для длинных внутренних бланков (памятка администратору):
+    знак мельче и строки слиты, чтобы шапка не сталкивала хвост на лишний лист.
+    """
     c = C.COMPANY
-    B.p(doc, c["full"], bold=True, align="left", space=1, size=9.5)
-    B.p(doc, f"Место оказания услуг: стоматология {C.CLINIC['name']}, "
-             f"{C.CLINIC['address']}, тел. {C.CLINIC['phone']}",
-        align="left", space=1, size=9.5)
-    B.p(doc, f"Лицензия на осуществление медицинской деятельности "
-             f"№ {c['license']}, предоставлена бессрочно",
-        align="left", space=6, size=9.5)
+    if compact:
+        B.brand_head(doc, [
+            (f"Стоматология {C.CLINIC['name']} · {C.CLINIC['address']} · "
+             f"тел. {C.CLINIC['phone']}", True),
+            (f"{c['full']} · лицензия № {c['license']}, бессрочно", False),
+        ], logo_cm=1.3)
+        B.p(doc, "", space=2)
+        return
+    B.brand_head(doc, [
+        (f"Стоматология {C.CLINIC['name']}", True),
+        (f"{C.CLINIC['address']}, тел. {C.CLINIC['phone']}", False),
+        (c["full"], False),
+        (f"Лицензия на медицинскую деятельность № {c['license']}, "
+         "предоставлена бессрочно", False),
+    ])
+    B.p(doc, "", space=6)
 
 
 def title(doc, text, sub=None):

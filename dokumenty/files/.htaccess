@@ -1,0 +1,9 @@
+# Файлы бланков отдаются ТОЛЬКО через file.php, после ввода PIN.
+# Прямая ссылка на .docx/.pdf/.zip из этой папки должна давать 403.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

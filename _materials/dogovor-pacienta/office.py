@@ -145,7 +145,7 @@ def build_admin() -> Path:
         s.bottom_margin = Cm(1.2)
     B.add_footer(doc, "Памятка администратору и врачу: какой документ когда "
                       "подписывается")
-    F.clinic_head(doc)
+    F.clinic_head(doc, compact=True)
     F.title(doc, X.ADMIN_TITLE, X.ADMIN_INTRO)
 
     table = P.grid(doc, X.ADMIN_HEAD, [3.8, 6.4, 4.0, 10.0], len(X.ADMIN_ROWS),
@@ -156,16 +156,18 @@ def build_admin() -> Path:
             par = cell.paragraphs[0]
             par.paragraph_format.space_after = Pt(0)
             B._set_font(par.add_run(value), 9)
-    B.p(doc, "", space=8)
+    B.p(doc, "", space=5)
 
+    # Кегль списков 9,5 и сжатые отступы: памятка должна укладываться в три
+    # листа — четвёртый с двумя строками администратор просто не подшивает.
     K.heading(doc, X.ADMIN_MINIMUM_TITLE)
-    K.bullets(doc, X.ADMIN_MINIMUM, size=10)
-    B.p(doc, "", space=6)
+    K.bullets(doc, X.ADMIN_MINIMUM, size=9.5)
+    B.p(doc, "", space=4)
     K.heading(doc, X.ADMIN_STAND_TITLE)
-    K.bullets(doc, X.ADMIN_STAND, size=10)
-    B.p(doc, "", space=6)
+    K.bullets(doc, X.ADMIN_STAND, size=9.5)
+    B.p(doc, "", space=4)
     K.heading(doc, X.ADMIN_MISTAKES_TITLE)
-    K.bullets(doc, X.ADMIN_MISTAKES, size=10)
+    K.bullets(doc, X.ADMIN_MISTAKES, size=9.5)
     path = OUT / "Памятка-администратору-какой-документ-когда.docx"
     doc.save(path)
     return path

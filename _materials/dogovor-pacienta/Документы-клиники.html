@@ -52,6 +52,27 @@ h2 .num{color:var(--accent)}
 .kit span{color:var(--muted);font-size:14px;flex:1 1 260px}
 footer{border-top:1px solid var(--line);margin-top:46px;padding-top:22px;
        color:var(--muted);font-size:14px}
+.brand{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.brand img{width:64px;height:64px;object-fit:contain;flex:0 0 auto}
+.brand b{display:block;font-size:17px;letter-spacing:-.01em}
+.brand span{color:var(--muted);font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);
+     background:#fff;color:var(--ink);text-decoration:none;border-radius:11px;
+     padding:11px 18px;font-weight:600;font-size:15px;cursor:pointer;font-family:inherit}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:#174d94;color:#fff}
+.btn.ghost{background:transparent;border-style:dashed;color:var(--muted)}
+.kit-actions{display:flex;gap:8px;flex:0 0 auto}
+.dl.sm{padding:8px 13px;font-size:14px}
+@media print{
+  body{background:#fff}
+  header{border:0;padding:0 0 12px}
+  .bar,.dl,.kit-actions,.btn,.hint{display:none!important}
+  .card,.kit,.box{break-inside:avoid;box-shadow:none}
+  a[href]:after{content:""}
+}
 @media(max-width:640px){
   h1{font-size:24px}.rows{grid-template-columns:1fr;gap:2px 0}
   .rows dt{margin-top:8px;font-size:13.5px}

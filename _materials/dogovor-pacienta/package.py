@@ -30,6 +30,7 @@ from urllib.parse import quote
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "out"
 PKG = HERE / "package"
+WEB = HERE.parent.parent / "dokumenty"
 ZIP = HERE / "Документы-клиники.zip"
 
 # Разделы пакета: папка → (заголовок на странице, пояснение)
@@ -333,6 +334,27 @@ h2 .num{color:var(--accent)}
 .kit span{color:var(--muted);font-size:14px;flex:1 1 260px}
 footer{border-top:1px solid var(--line);margin-top:46px;padding-top:22px;
        color:var(--muted);font-size:14px}
+.brand{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.brand img{width:64px;height:64px;object-fit:contain;flex:0 0 auto}
+.brand b{display:block;font-size:17px;letter-spacing:-.01em}
+.brand span{color:var(--muted);font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);
+     background:#fff;color:var(--ink);text-decoration:none;border-radius:11px;
+     padding:11px 18px;font-weight:600;font-size:15px;cursor:pointer;font-family:inherit}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:#174d94;color:#fff}
+.btn.ghost{background:transparent;border-style:dashed;color:var(--muted)}
+.kit-actions{display:flex;gap:8px;flex:0 0 auto}
+.dl.sm{padding:8px 13px;font-size:14px}
+@media print{
+  body{background:#fff}
+  header{border:0;padding:0 0 12px}
+  .bar,.dl,.kit-actions,.btn,.hint{display:none!important}
+  .card,.kit,.box{break-inside:avoid;box-shadow:none}
+  a[href]:after{content:""}
+}
 @media(max-width:640px){
   h1{font-size:24px}.rows{grid-template-columns:1fr;gap:2px 0}
   .rows dt{margin-top:8px;font-size:13.5px}
@@ -404,19 +426,81 @@ def nice(file: str) -> str:
     return NICE.get(file, file.replace("-", " "))
 
 
-DOWNLOAD_ALL = ("<a class=dl-all href='{zip}'>⤓ Скачать весь пакет одним "
-                "архивом</a>")
+BRAND = """
+<div class=brand>
+  <img src="/assets/img/logo.png" alt="Ангел-Дент">
+  <div><b>Стоматология «Ангел-Дент»</b>
+  <span>г. Реутов, ул. Победы, 22 · ООО «АНГЕЛ-ДЕНТ» ·
+  лицензия № Л041-01162-50/00299266</span></div>
+</div>
+"""
 
 
-def page(zip_name: str = "") -> str:
-    """zip_name пустой — страница внутри архива (ссылаться не на что)."""
+def page(mode: str = "zip", zip_name: str = "") -> str:
+    """Одна страница в трёх видах:
+
+    zip  — внутри архива: ссылки на соседние папки, кнопки «скачать архив» нет;
+    hub  — рядом с архивом (Диск, хаб кабинетов): кнопка архива есть, у бланков
+           написано, в какой папке их искать;
+    web  — на хостинге за PIN-кодом: всё скачивается через file.php, есть
+           кнопки «Печать» и «Скачать», в шапке знак клиники.
+    """
+    web = mode == "web"
     must = sum(1 for d in DOCS if d[5])
+
+    def doc_link(sect: str, file: str) -> str:
+        if web:
+            return (f"<a class=dl href='file.php?f={quote(sect)}/{quote(file)}.docx'>"
+                    "⤓ Скачать .docx</a>")
+        if mode == "zip":
+            return (f"<a class=dl href='{quote(sect)}/{quote(file)}.docx'>"
+                    "⤓ Скачать .docx</a>")
+        return (f"<p class=where>Файл: <b>{html.escape(sect)}</b> → "
+                f"{html.escape(file)}.docx</p>")
+
+    def kit_link(title: str) -> str:
+        kits_dir = "Комплекты для печати"
+        if web:
+            src = f"file.php?f={quote(kits_dir)}/{quote(title)}.pdf"
+            return ("<span class=kit-actions>"
+                    f"<a class='dl sm' href='{src}'>⤓ Скачать PDF</a>"
+                    f"<a class='dl sm' href='{src}&inline=1' target=_blank "
+                    "rel=noopener>🖨 Печать</a></span>")
+        if mode == "zip":
+            return (f"<a class=dl href='{quote(kits_dir)}/{quote(title)}.pdf'>"
+                    "⤓ Скачать PDF</a>")
+        return "<span class=where>в папке «Комплекты для печати»</span>"
+
+    if web:
+        head_actions = (
+            "<div class=bar>"
+            "<a class='btn primary' href='file.php?f="
+            + quote(ZIP.name) + "'>⤓ Скачать все документы одним архивом</a>"
+            "<button class=btn onclick='window.print()'>🖨 Печатать страницу</button>"
+            "<a class='btn ghost' href='?exit=1'>Выйти</a>"
+            "</div>"
+            "<p class=hint>У каждого бланка своя кнопка «Скачать .docx», "
+            "у каждого комплекта — «Скачать PDF» и «Печать». Страница закрыта "
+            "кодом и от поисковиков.</p>")
+    elif zip_name:
+        head_actions = (
+            f"<a class=dl-all href='{html.escape(zip_name)}'>⤓ Скачать весь "
+            "пакет одним архивом</a>"
+            "<p class=hint>Внутри архива — та же страница с кнопками скачивания "
+            "у каждого бланка, папки по разделам и готовые комплекты для печати.</p>")
+    else:
+        head_actions = ("<p class=hint>Все бланки лежат в папках рядом с этой "
+                        "страницей — кнопка «Скачать .docx» у каждого открывает "
+                        "нужный файл.</p>")
+
     parts = [
         "<!doctype html><html lang=ru><meta charset=utf-8>",
         "<meta name=viewport content='width=device-width,initial-scale=1'>",
+        "<meta name=robots content='noindex,nofollow'>" if web else "",
         "<title>Документы клиники — когда какой подписывается</title>",
         f"<style>{CSS}</style>",
         "<header><div class=wrap>",
+        BRAND if web else "",
         "<h1>Документы клиники: когда какой подписывается</h1>",
         "<p class=lead>Полный комплект бланков для стоматологии под "
         "Правила предоставления платных медицинских услуг (ПП РФ № 659, "
@@ -427,12 +511,7 @@ def page(zip_name: str = "") -> str:
         f"<span class=chip>{must} обязательных</span>"
         f"<span class=chip>{len(KITS)} комплектов для печати</span>"
         "<span class=chip>Общие для трёх клиник</span></div>",
-        (DOWNLOAD_ALL.format(zip=html.escape(zip_name)) +
-         "<p class=hint>Внутри архива — та же страница с кнопками скачивания "
-         "у каждого бланка, папки по разделам и готовые комплекты для печати.</p>")
-        if zip_name else
-        "<p class=hint>Все бланки лежат в папках рядом с этой страницей — "
-        "кнопка «Скачать .docx» у каждого открывает нужный файл.</p>",
+        head_actions,
         "</div></header><div class=wrap>",
         INTRO_MIN, INTRO_WARN,
     ]
@@ -446,19 +525,15 @@ def page(zip_name: str = "") -> str:
                 continue
             tag = ("<span class='tag must'>обязательный</span>" if obligatory
                    else "<span class='tag opt'>по ситуации</span>")
-            title_h = nice(file)
             parts.append(
                 "<div class=card>"
-                f"<h3>{html.escape(title_h)}{tag}</h3>"
+                f"<h3>{html.escape(nice(file))}{tag}</h3>"
                 "<dl class=rows>"
                 f"<dt>Когда</dt><dd>{html.escape(when)}</dd>"
                 f"<dt>Кто подписывает</dt><dd>{html.escape(who)}</dd>"
                 "</dl>"
                 f"<p class=why>{html.escape(why)}</p>"
-                + (f"<a class=dl href='{quote(sect)}/{quote(file)}.docx'>"
-                   "⤓ Скачать .docx</a>" if not zip_name else
-                   f"<p class=where>Файл: <b>{html.escape(sect)}</b> → "
-                   f"{html.escape(file)}.docx</p>")
+                + doc_link(sect, file)
                 + "</div>")
 
     parts.append("<h2><span class=num>+</span> Готовые комплекты для печати</h2>")
@@ -470,9 +545,7 @@ def page(zip_name: str = "") -> str:
             "<div class=kit>"
             f"<b>{html.escape(title)}</b>"
             f"<span>{html.escape(' · '.join(nice(f) for f in files))}</span>"
-            + (f"<a class=dl href='{quote('Комплекты для печати')}/{quote(title)}.pdf'>"
-               "⤓ PDF</a>" if not zip_name else
-               "<span class=where>в папке «Комплекты для печати»</span>")
+            + kit_link(title)
             + "</div>")
 
     parts.append(
@@ -483,7 +556,7 @@ def page(zip_name: str = "") -> str:
         "руководитель приказом.<br><br>"
         "Подготовлено FutureFlow · futureflow.ru</footer>")
     parts.append("</div></html>")
-    return "\n".join(parts)
+    return "\n".join(p for p in parts if p)
 
 
 # ───────────────────────────── сборка ─────────────────────────────
@@ -509,6 +582,33 @@ def build_kits(target: Path) -> list[str]:
         doc.close()
         made.append(title)
     return made
+
+
+def publish(root: Path) -> None:
+    """Копия пакета на сайт клиники: angel-denta.ru/dokumenty/ за PIN-кодом.
+
+    Папка `dokumenty/files/` закрыта .htaccess и отдаётся только через
+    `file.php` после входа, поэтому прямых ссылок на бланки не существует.
+    Сюда кладётся то же, что и в архив, плюс сам архив и веб-версия страницы.
+    """
+    if not WEB.exists():
+        print("  · сайт не найден — публикация пропущена")
+        return
+    files = WEB / "files"
+    for old in files.iterdir():
+        if old.name != ".htaccess":
+            shutil.rmtree(old) if old.is_dir() else old.unlink()
+    for item in root.iterdir():
+        if item.name == "Документы-клиники.html":
+            continue
+        if item.is_dir():
+            shutil.copytree(item, files / item.name)
+        else:
+            shutil.copy2(item, files / item.name)
+    shutil.copy2(ZIP, files / ZIP.name)
+    (files / "page.html").write_text(page("web"), encoding="utf-8")
+    total = sum(p.stat().st_size for p in files.rglob("*") if p.is_file())
+    print(f"  ✓ страница на сайт: dokumenty/ (PIN, {total // 1024 // 1024} МБ)")
 
 
 def main() -> None:
@@ -545,9 +645,11 @@ def main() -> None:
     print(f"  ✓ страница: {(root / 'Документы-клиники.html').name}")
     # Вторая версия страницы — для выкладывания рядом с архивом (хаб, Диск):
     # там кнопка «скачать весь пакет» уже осмысленна.
-    (HERE / "Документы-клиники.html").write_text(page(ZIP.name), encoding="utf-8")
+    (HERE / "Документы-клиники.html").write_text(page("hub", ZIP.name),
+                                                 encoding="utf-8")
     print(f"  ✓ архив: {ZIP.name} ({ZIP.stat().st_size // 1024} КБ)")
     print("  ✓ страница для хаба: Документы-клиники.html (рядом с архивом)")
+    publish(root)
 
 
 if __name__ == "__main__":
