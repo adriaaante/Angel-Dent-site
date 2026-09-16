@@ -3,3 +3,15 @@
     Header always set X-Robots-Tag "noindex, nofollow, noarchive"
 </IfModule>
 Options -Indexes
+
+# Подстраховка: если PHP-обработчик отвалится, config.php не должен отдаться
+# текстом — в нём хеш кода доступа (как в api/.htaccess для токена бота).
+<Files "config.php">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>
