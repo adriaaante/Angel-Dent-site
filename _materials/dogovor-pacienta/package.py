@@ -20,6 +20,7 @@
 """
 from __future__ import annotations
 
+import base64
 import html
 import shutil
 import sys
@@ -334,6 +335,12 @@ h2 .num{color:var(--accent)}
 .kit span{color:var(--muted);font-size:14px;flex:1 1 260px}
 footer{border-top:1px solid var(--line);margin-top:46px;padding-top:22px;
        color:var(--muted);font-size:14px}
+.ff{display:flex;align-items:center;gap:13px;margin-top:18px}
+.ff img{height:42px;width:auto;flex:0 0 auto}
+.ff span{font-size:14px;line-height:1.45}
+.ff b{color:var(--ink)}
+.ff a{color:var(--accent);text-decoration:none}
+.ff a:hover{text-decoration:underline}
 .brand{display:flex;align-items:center;gap:16px;margin-bottom:18px}
 .brand img{width:64px;height:64px;object-fit:contain;flex:0 0 auto}
 .brand b{display:block;font-size:17px;letter-spacing:-.01em}
@@ -424,6 +431,20 @@ NICE = {
 
 def nice(file: str) -> str:
     return NICE.get(file, file.replace("-", " "))
+
+
+def studio_badge() -> str:
+    """Подпись студии с логотипом. Знак встроен в страницу data-URI: она живёт
+    и на хостинге, и внутри архива, где соседних файлов с картинкой нет."""
+    badge = HERE / "assets" / "futureflow-badge.png"
+    if not badge.exists():
+        return ("<p style='margin-top:16px'>Подготовлено FutureFlow · "
+                "<a href='https://futureflow.ru'>futureflow.ru</a></p>")
+    data = base64.b64encode(badge.read_bytes()).decode()
+    return ("<div class=ff>"
+            f"<img src='data:image/png;base64,{data}' alt='FutureFlow'>"
+            "<span>Подготовлено студией <b>FutureFlow</b><br>"
+            "<a href='https://futureflow.ru'>futureflow.ru</a></span></div>")
 
 
 BRAND = """
@@ -553,8 +574,8 @@ def page(mode: str = "zip", zip_name: str = "") -> str:
         "«Версаль», «Венеция»). Бланки одинаковы для трёх клиник — различаются "
         "только адрес места оказания услуг, телефон и почта в шапке. "
         "Гарантийные сроки в положении — предложение студии: их утверждает "
-        "руководитель приказом.<br><br>"
-        "Подготовлено FutureFlow · futureflow.ru</footer>")
+        "руководитель приказом."
+        + studio_badge() + "</footer>")
     parts.append("</div></html>")
     return "\n".join(p for p in parts if p)
 
