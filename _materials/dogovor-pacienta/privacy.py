@@ -68,10 +68,10 @@ def build_order() -> Path:
         B.clause(doc, f"{i}.", item)
     B.p(doc, "", space=10)
     B.form_table(doc, [
-        (C.SIGNATORY["short_position"],
-         f"__________________ / {C.SIGNATORY['short_name']}"),
+        (C.SIGNATORY_ORDERS["short_position"],
+         f"__________________ / {C.SIGNATORY_ORDERS['short_name']}"),
         ("С приказом ознакомлены (Ф. И. О., подпись, дата)", ""),
-    ], tall={C.SIGNATORY["short_position"]},
+    ], tall={C.SIGNATORY_ORDERS["short_position"]},
        extra_tall={"С приказом ознакомлены (Ф. И. О., подпись, дата)"})
 
     # Приложение № 2 — перечень допущенных лиц (приложение № 1 — сама Политика)

@@ -31,8 +31,8 @@ def approval_block(doc):
     """Гриф утверждения в правом верхнем углу — как в локальных актах."""
     table = B.set_widths(B.borderless(doc.add_table(rows=1, cols=2)), [9.0, 8.0])
     B.cell_text(table.rows[0].cells[0], [""])
-    lines = ["УТВЕРЖДАЮ", f"{C.SIGNATORY['short_position']} {C.COMPANY['short']}",
-             f"__________________ / {C.SIGNATORY['short_name']}",
+    lines = ["УТВЕРЖДАЮ", f"{C.SIGNATORY_ORDERS['short_position']} {C.COMPANY['short']}",
+             f"__________________ / {C.SIGNATORY_ORDERS['short_name']}",
              "«____» ______________ 20___ г."]
     cell = table.rows[0].cells[1]
     cell.text = ""
@@ -125,10 +125,10 @@ def build_order() -> Path:
     B.p(doc, "", space=10)
 
     B.form_table(doc, [
-        (f"{C.SIGNATORY['short_position']}",
-         f"__________________ / {C.SIGNATORY['short_name']}"),
+        (f"{C.SIGNATORY_ORDERS['short_position']}",
+         f"__________________ / {C.SIGNATORY_ORDERS['short_name']}"),
         ("С приказом ознакомлены (Ф. И. О., подпись, дата)", ""),
-    ], tall={f"{C.SIGNATORY['short_position']}"},
+    ], tall={f"{C.SIGNATORY_ORDERS['short_position']}"},
        extra_tall={"С приказом ознакомлены (Ф. И. О., подпись, дата)"})
     path = OUT / "Приказ-об-утверждении-документов-и-прейскуранта.docx"
     doc.save(path)
