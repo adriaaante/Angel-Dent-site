@@ -331,11 +331,22 @@ h2 .num{color:var(--accent)}
 .box li{margin-bottom:6px}
 .kit{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:#fff;
      border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
-.kit b{font-size:15.5px}
+/* Название комплекта — колонка фиксированной ширины: иначе состав
+   у каждой карточки начинается со своей вертикали. */
+.kit b{font-size:15.5px;flex:0 0 258px}
+@media(max-width:860px){.kit b{flex:1 1 100%}}
 .kit span{color:var(--muted);font-size:14px;flex:1 1 240px;min-width:0}
 footer{border-top:1px solid var(--line);margin-top:46px;padding-top:22px;
        color:var(--muted);font-size:14px}
 .ff{display:flex;align-items:center;gap:13px;margin-top:18px}
+.ff--mark{flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.ff-line{display:inline-flex;align-items:center;gap:7px}
+.ff--mark img{height:17px;width:17px;transform:translateY(2px)}
+.ff--mark b{color:var(--accent);font-size:15.5px;letter-spacing:-.01em}
+.legal-note{margin-top:16px;padding:14px 16px;background:#fff;
+     border:1px solid var(--line);border-radius:12px;font-size:13.5px;
+     line-height:1.55;color:#4a5866}
+.legal-note b{color:var(--ink)}
 .ff img{height:42px;width:auto;flex:0 0 auto}
 .ff span{font-size:14px;line-height:1.45}
 .ff b{color:var(--ink)}
@@ -436,16 +447,42 @@ def nice(file: str) -> str:
     return NICE.get(file, file.replace("-", " "))
 
 
+# Как подписывать страницу: 'mark' — знак и название строкой (как в наших
+# продуктах), 'chip' — прежняя плашка с белым логотипом на синем.
+BADGE_STYLE = "mark"
+
+DISCLAIMER = (
+    "Комплект бланков подготовила студия <b>FutureFlow</b> по нормам, "
+    "действующим на дату сборки: Правила предоставления платных медицинских "
+    "услуг (ПП РФ № 659), приказы Минздрава России № 1051н и № 956н, "
+    "№ 152-ФЗ, Закон «О защите прав потребителей». Это <b>типовые бланки, а "
+    "не юридическая услуга и не консультация</b>. Перед применением их "
+    "утверждает руководитель клиники: значения, оставленные на его усмотрение "
+    "(гарантийные сроки, размер аванса, сроки приостановки, банковские "
+    "реквизиты), вносятся и утверждаются приказом. Ответственность за "
+    "использование бланков, их заполнение и решения по конкретным пациентам "
+    "несёт клиника; в спорной ситуации привлекайте своего юриста. "
+    "Законодательство меняется — комплект стоит перепроверять при изменении "
+    "норм."
+)
+
+
 def studio_badge() -> str:
-    """Подпись студии с логотипом. Знак встроен в страницу data-URI: она живёт
-    и на хостинге, и внутри архива, где соседних файлов с картинкой нет."""
-    badge = HERE / "assets" / "futureflow-badge.png"
-    if not badge.exists():
-        return ("<p style='margin-top:16px'>Подготовлено FutureFlow · "
+    """Подпись студии. Знак встроен data-URI: страница живёт и на хостинге,
+    и внутри архива, где соседних файлов с картинкой нет."""
+    name = "futureflow-mark.png" if BADGE_STYLE == "mark" else "futureflow-badge.png"
+    logo = HERE / "assets" / name
+    if not logo.exists():
+        return ("<p class=ff-plain>Подготовлено FutureFlow · "
                 "<a href='https://futureflow.ru'>futureflow.ru</a></p>")
-    data = base64.b64encode(badge.read_bytes()).decode()
-    return ("<div class=ff>"
-            f"<img src='data:image/png;base64,{data}' alt='FutureFlow'>"
+    data = base64.b64encode(logo.read_bytes()).decode()
+    img = f"<img src='data:image/png;base64,{data}' alt='FutureFlow'>"
+    if BADGE_STYLE == "mark":
+        return ("<div class='ff ff--mark'>"
+                "<span class=ff-line>Разработано " + img +
+                "<b>FutureFlow</b></span>"
+                "<a href='https://futureflow.ru'>futureflow.ru</a></div>")
+    return ("<div class=ff>" + img +
             "<span>Подготовлено студией <b>FutureFlow</b><br>"
             "<a href='https://futureflow.ru'>futureflow.ru</a></span></div>")
 
@@ -574,10 +611,10 @@ def page(mode: str = "zip", zip_name: str = "") -> str:
 
     parts.append(
         "<footer>Комплект собран для ООО «АНГЕЛ-ДЕНТ» (клиники «Ангел-Дент», "
-        "«Версаль», «Венеция»). Бланки одинаковы для трёх клиник — различаются "
-        "только адрес места оказания услуг, телефон и почта в шапке. "
-        "Гарантийные сроки в положении — предложение студии: их утверждает "
-        "руководитель приказом."
+        "«Версаль», «Венеция») — различаются только адрес места оказания "
+        "услуг, телефон и почта в шапке. "
+        "Бланки одинаковы для трёх клиник."
+        "<div class=legal-note>" + DISCLAIMER + "</div>"
         + studio_badge() + "</footer>")
     parts.append("</div></html>")
     return "\n".join(p for p in parts if p)
