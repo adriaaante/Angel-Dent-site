@@ -50,7 +50,7 @@ h2 .num{color:var(--accent)}
 .kit{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:#fff;
      border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:10px}
 .kit b{font-size:15.5px}
-.kit span{color:var(--muted);font-size:14px;flex:1 1 260px}
+.kit span{color:var(--muted);font-size:14px;flex:1 1 240px;min-width:0}
 footer{border-top:1px solid var(--line);margin-top:46px;padding-top:22px;
        color:var(--muted);font-size:14px}
 .ff{display:flex;align-items:center;gap:13px;margin-top:18px}
@@ -71,7 +71,10 @@ footer{border-top:1px solid var(--line);margin-top:46px;padding-top:22px;
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn.primary:hover{background:#174d94;color:#fff}
 .btn.ghost{background:transparent;border-style:dashed;color:var(--muted)}
-.kit-actions{display:flex;gap:8px;flex:0 0 auto}
+/* Кнопки комплекта — всегда у правого края карточки.
+   Селектор обязан быть сильнее `.kit span` (класс + тип), иначе блок кнопок
+   как обычный span растягивается вместе с описанием и справа зияет пустота. */
+.kit .kit-actions{display:flex;gap:8px;flex:0 0 auto;margin-left:auto}
 .dl.sm{padding:8px 13px;font-size:14px}
 @media print{
   body{background:#fff}
