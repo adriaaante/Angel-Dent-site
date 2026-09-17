@@ -116,6 +116,18 @@ def rub_words(amount):
             f"{kop:02d} {_plural(kop, ('копейка', 'копейки', 'копеек'))}")
 
 
+def invoice_filename(no, inv_date, amount, ext):
+    """Имя файла счёта — читаемое в мессенджере.
+
+    Раньше было «Счёт № АД-1550 от 17.09.2026 (60 000,00).docx»: в Telegram
+    скобки и запятая схлопываются, и владелец видит «60 00000.pdf». Поэтому
+    без копеек, без скобок и без «№»: «Счёт АД-1550 от 17.09.2026 на
+    60 000 руб.pdf».
+    """
+    rub = f"{int(round(amount)):,}".replace(",", " ")
+    return f"Счёт {no} от {date_dots(inv_date)} на {rub} руб.{ext}"
+
+
 def money(amount):
     """90000 -> '90 000,00'"""
     return f"{amount:,.2f}".replace(",", " ").replace(".", ",")
@@ -866,7 +878,7 @@ def build_invoice(cfg, no, inv_date, amount, month_label, partial=False,
         para(doc)
         doc.add_picture(tf.name, width=Cm(3.6))
 
-    fname = f"Счёт № {no} от {date_dots(inv_date)} ({money(amount).replace(chr(160), ' ')}).docx"
+    fname = invoice_filename(no, inv_date, amount, "docx")
     return save(doc, fname)
 
 

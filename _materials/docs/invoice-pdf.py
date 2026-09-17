@@ -51,8 +51,7 @@ def build(no, inv_date, amount, month_label, basis="contract", name_override="")
     ex, cu, c = cfg["executor"], cfg["customer"], cfg["contract"]
     money, words = bd.money, bd.rub_words
 
-    out = ROOT / "out" / (f"Счёт № {no} от {bd.date_dots(inv_date)} "
-                          f"({money(amount).replace(chr(160), ' ')}).pdf")
+    out = ROOT / "out" / bd.invoice_filename(no, inv_date, amount, "pdf")
     doc = SimpleDocTemplate(
         str(out), pagesize=A4, leftMargin=2 * cm, rightMargin=2 * cm,
         topMargin=1.5 * cm, bottomMargin=1.5 * cm, title=f"Счёт № {no}")
